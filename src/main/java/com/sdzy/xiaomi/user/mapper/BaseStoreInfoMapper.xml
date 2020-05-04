@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.user.mapper.BaseStoreInfoMapper">
+<resultMap id="BaseResultMap" type="com.sdzy.xiaomi.user.model.BaseStoreInfo">
+    <id column="storeId" jdbcType="VARCHAR" property="storeId" />
+      <result column="storeAccount" jdbcType="VARCHAR" property="storeAccount" />
+      <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="storeType" jdbcType="INTEGER" property="storeType" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="storeFullName" jdbcType="VARCHAR" property="storeFullName" />
+    <result column="contactor" jdbcType="VARCHAR" property="contactor" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="storeAddress" jdbcType="VARCHAR" property="storeAddress" />
+    <result column="priceScheme" jdbcType="VARCHAR" property="priceScheme" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="payMethod" jdbcType="INTEGER" property="payMethod" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+	<result column="storePic" jdbcType="VARCHAR" property="storePic" />
+	<result column="storeVideo" jdbcType="VARCHAR" property="storeVideo" />
+	<result column="shopTime" jdbcType="VARCHAR" property="shopTime" />
+	<result column="idNumber" jdbcType="VARCHAR" property="idNumber" />
+	<result column="idPic" jdbcType="VARCHAR" property="idPic" />
+	<result column="storeDescription" jdbcType="VARCHAR" property="storeDescription" />
+	<result column="alipayAppId" jdbcType="VARCHAR" property="alipayAppId" />
+	<result column="wxAppId" jdbcType="VARCHAR" property="wxAppId" />
+	<result column="wxMachId" jdbcType="VARCHAR" property="wxMachId" />
+	<result column="longitude" jdbcType="VARCHAR" property="longitude" />
+	<result column="latitude" jdbcType="VARCHAR" property="latitude" />
+	<result column="storeCode" jdbcType="VARCHAR" property="storeCode" />
+	<result column="proviceCode" jdbcType="VARCHAR" property="proviceCode" />
+	<result column="proviceName" jdbcType="VARCHAR" property="proviceName" />
+	<result column="cityCode" jdbcType="VARCHAR" property="cityCode" />
+	<result column="cityName" jdbcType="VARCHAR" property="cityName" />
+	<result column="zoneCode" jdbcType="VARCHAR" property="zoneCode" />
+	<result column="zoneName" jdbcType="VARCHAR" property="zoneName" />
+	<result column="companyNo" jdbcType="VARCHAR" property="companyNo" /> 
+    <result column="companyFullName" jdbcType="VARCHAR" property="companyFullName" />   
+    <result column="dataUploadAccount" jdbcType="VARCHAR" property="dataUploadAccount" />   
+    <result column="dataUploadPassword" jdbcType="VARCHAR" property="dataUploadPassword" />
+    <result column="uploadCode" jdbcType="VARCHAR" property="uploadCode" />    
+    <result column="storeLogo" jdbcType="VARCHAR" property="storeLogo"/>
+    <result column="needUpload" jdbcType="INTEGER" property="needUpload"/>
+    <result column="isMac" jdbcType="VARCHAR" property="isMac"/>
+    
+    <result column="socialAutoType" jdbcType="INTEGER" property="socialAutoType"/>
+    
+  </resultMap>
+	<update id="updateLogo">
+		update baseStoreInfo set storeLogo=#{logoPath} where storeId=#{storeId}
+	</update >
+	<select id="selectStore" resultType="java.util.Map">
+		select storeName,storeId from baseStoreInfo 
+	</select>
+	
+	<!-- 统计所有药店  onLine：线上交易占比--> 
+	<select id="selectAllStore" resultType="java.util.Map">
+				 SELECT SUM(discountFee)sellAmount,SUM(flow)flow,companyId,SUM(saleCounts)saleCount,SUM(saleOrderNos)saleOrderNo ,SUM(onlines)online  FROM 
+		      (SELECT c.* ,d.flow,companyId ,onlines FROM
+		        (SELECT a.* FROM    
+		          (SELECT SUM(saleCount)saleCounts,COUNT(saleOrderNo)saleOrderNos, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,SUM(IFNULL(sellAmount,0)) discountFee            
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+		          INNER JOIN  
+		          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+				FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+		          ON a.createDate = b.createDate AND a.storeId = b.storeId 	   
+			  ) c 
+			  LEFT OUTER JOIN
+			  (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) d
+			  ON c.createDate = d.createDate AND c.storeId = d.storeId
+			  INNER JOIN baseStoreInfo bsf
+			   ON d.storeId=bsf.storeId AND bsf.status=1	 
+			  LEFT OUTER JOIN
+			  (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,SUM(IFNULL(sellAmount,0)) onlines            
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1 AND so.orderSource=2) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId)e
+			   ON e.storeId=bsf.storeId) f
+    		WHERE  
+ 		    <if test="companyId!=null and companyId!=''">     companyId=#{companyId} and</if>
+		  			 <if test="dateType!=null and dateType==1">   TO_DAYS( createDate) = TO_DAYS(NOW())</if>
+		  				<if test="dateType!=null and dateType==2">  TO_DAYS(NOW()) - TO_DAYS( createDate) = 1 </if>
+		  				<if test="dateType!=null and dateType==3">  YEARWEEK(date_format( createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				<if test="dateType!=null and dateType==4">  DATE_FORMAT( createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				<if test="dateType!=null and dateType==5">  YEAR( createDate)=YEAR(NOW())</if>		  	
+	 </select>
+	 <!--根据类别销售 对类别排行  -->
+	 <select id="selectCategoryRank" resultType="java.util.Map">
+	 		  
+	 SELECT cate.SA,cate.codeId,cate.codeName,bsf.companyId companyId FROM(SELECT codeId, codeName,sod.storeId,SUM(sod.sellAmount) AS SA
+		  FROM baseProduct bp,sysCategoryCode sc, saleOrderDetail sod
+		WHERE bp.drugCategoryId = sc.codeValue AND sod.storeId=bp.storeId
+		  AND sc.codeType = 'drugCategory'  AND sod.productId = bp.productId <if test="dateType!=null and dateType==1">AND TO_DAYS(sod.createDate) = TO_DAYS(NOW())</if>
+		  				<if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(sod.createDate) = 1 </if>
+		  				<if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(sod.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				<if test="dateType!=null and dateType==4">AND DATE_FORMAT(sod.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(sod.createDate)=YEAR(NOW())</if>
+	GROUP BY codeId,storeId)cate,baseStoreInfo bsf 
+		WHERE   bsf.storeId=cate.storeId AND bsf.status=1  <if test="companyId!=null and companyId!=''"> AND   bsf.companyId=#{companyId}</if> GROUP BY codeId ORDER BY cate.SA DESC 
+	 		 
+	 </select>
+	 <!-- 根据产品类别销售对药品排行 -->
+	<select id="selectProductRank" resultType="java.util.Map">
+		SELECT   SUM(sod.sellAmount)sellAmount,sod.productId,sod.productName FROM baseProduct bp,sysCategoryCode sc ,saleOrderDetail sod ,baseStoreInfo bsf
+  		WHERE bp.drugCategoryId = sc.codeValue AND sc.codeType = 'drugCategory' AND sod.productId=bp.productId
+  		 AND sc.codeId=#{codeId} and sod.storeId=bsf.storeId and bsf.status=1 <if test="companyId!=null and companyId!=''">and bsf.companyId=#{companyId}</if>
+  			           <if test="dateType!=null and dateType==1">AND TO_DAYS(sod.createDate) = TO_DAYS(NOW())</if>
+		  				<if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(sod.createDate) = 1 </if>
+		  				<if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(sod.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				<if test="dateType!=null and dateType==4">AND DATE_FORMAT(sod.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(sod.createDate)=YEAR(NOW())</if>
+	    GROUP BY sod.productId
+	    ORDER BY SUM(sod.sellAmount) DESC limit 5
+	</select>
+	<!-- 根据产品类别销售对药店排行 -->
+	<select id="selectStoreNameRank" resultType="java.util.Map">
+			 SELECT   bs.storeName,SUM(sod.sellAmount)sale
+  		FROM baseStoreInfo bs, baseProduct bp,sysCategoryCode sc ,saleOrderDetail sod
+ 		WHERE bp.drugCategoryId = sc.codeValue  AND sod.storeId=bs.storeId AND bp.storeId=bs.storeId AND sc.codeType = 'drugCategory'  AND sod.productId=bp.productId
+    		AND bs.status=1  AND sc.codeId=#{codeId} <if test="companyId!=null and companyId!=''">and bs.companyId=#{companyId}</if>
+    		     <if test="dateType!=null and dateType==1">AND TO_DAYS(sod.createDate) = TO_DAYS(NOW())</if>
+		  				<if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(sod.createDate) = 1 </if>
+		  				<if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(sod.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				<if test="dateType!=null and dateType==4">AND DATE_FORMAT(sod.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(sod.createDate)=YEAR(NOW())</if>
+   		     GROUP BY sod.storeId  ORDER BY SUM(sod.sellAmount) DESC
+	</select>
+	 <select id="selectStoreSaleRank" resultType="java.util.Map">		
+			 SELECT SUM(discountFee)sellAmount,storeName ,companyId FROM 
+		      (SELECT c.* ,storeName storeName ,companyId  FROM
+		        (SELECT a.* FROM    
+		          (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(IFNULL(sellAmount,0)) discountFee        
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+		          INNER JOIN  
+		          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+				 FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+		          ON a.createDate = b.createDate AND a.storeId = b.storeId ) c 	     
+			   INNER JOIN baseStoreInfo bsf
+			   ON c.storeId=bsf.storeId and bsf.status=1        
+	          ) f	    
+	    WHERE 1= 1  
+    	<if test="companyId!=null and companyId!=''">and companyId=#{companyId}</if>
+						 <if test="dateType!=null and dateType==1">AND TO_DAYS(createDate) = TO_DAYS(NOW())</if>
+		  				 <if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(createDate) = 1 </if>
+		  				 <if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				 <if test="dateType!=null and dateType==4">AND DATE_FORMAT(createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(createDate)=YEAR(NOW())</if>	
+     GROUP BY storeId  ORDER BY SUM(discountFee) DESC limit 10		
+	
+	
+	</select>
+		<!--统计门店总数YaoDian  -->
+	<select id="selectStoreCount" resultType="java.lang.String">
+		select count(storeId)storeCount from baseStoreInfo where status=1 <if test="companyId!=null and companyId!=''"> and companyId=#{companyId}</if>
+	</select>
+	<!--统计门店总数YaoDianServiceCenter  -->
+	<select id="selectStoreAllCount" resultType="java.lang.String">
+			select count(storeId)storeAllCount from  sysStore where status=1 <if test="companyId!=null and companyId!=''">and companyId=#{companyId}</if>
+	</select>
+	
+	<!--根据支付类型排行  -->
+	<select id="selectPayRank" resultType="java.util.Map">
+		 SELECT SUM(sellAmount) ,payType,companyId  FROM 
+	      (SELECT c.* , companyId FROM
+	        (SELECT a.* FROM    
+	          (SELECT  storeId, payType, DATE_FORMAT(createDate,'%Y-%m-%d')AS createDate ,SUM(IFNULL(sellAmount,0))sellAmount             
+	          FROM (SELECT sod.*,so.payType payType FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1  GROUP BY createDate , storeId) a
+	          INNER JOIN  
+	          (SELECT storeId, DATE_FORMAT(payDate,'%Y-%m-%d') AS createDate
+			FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1   GROUP BY createDate, storeId) b
+	          ON a.createDate = b.createDate AND a.storeId = b.storeId ) c	   	   	  
+		  INNER JOIN baseStoreInfo bsf
+		   ON c.storeId=bsf.storeId and bsf.status=1  ) f	 	 	           
+	         WHERE   <if test="dateType!=null and dateType==1"> TO_DAYS(createDate) = TO_DAYS(NOW())  </if>
+			  				 <if test="dateType!=null and dateType==2">TO_DAYS(NOW()) - TO_DAYS(createDate) = 1   </if>
+			  				 <if test="dateType!=null and dateType==3">YEARWEEK(date_format(createDate,'%Y-%m-%d')) = YEARWEEK(now())   </if>
+			  				 <if test="dateType!=null and dateType==4"> DATE_FORMAT(createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )  </if>
+			  				 <if test="dateType!=null and dateType==5"> YEAR(createDate)=YEAR(NOW())  </if>
+			  			<if test="companyId!=null and companyId!=''">and  companyId=#{companyId} </if>  										
+	              GROUP BY payType ORDER BY SUM(sellAmount)  DESC
+	              
+	</select>
+	<!-- 根据省排行 -->
+	<select id="selectRegionRank" resultType="java.util.Map">
+		SELECT SUM(sellAmount)AS sell,ses.adds FROM(SELECT SUBSTRING( storeAddress,1,LOCATE('省', storeAddress)) adds,
+		  		  SUM(sellAmount)sellAmount,
+		  		  	sod.createDate
+		  			FROM baseStoreInfo bsf,saleOrderDetail sod 
+		  			WHERE bsf.storeId = sod.storeId 
+		  				 <if test="companyId!=null and companyId!=''">AND bsf.companyId=#{companyId} </if> 
+		  			     <if test="dateType!=null and dateType==1">AND TO_DAYS(sod.createDate) = TO_DAYS(NOW())</if>
+		  				 <if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(sod.createDate) = 1 </if>
+		  				 <if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(sod.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				 <if test="dateType!=null and dateType==4">AND DATE_FORMAT(sod.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(sod.createDate)=YEAR(NOW())</if>										
+					  GROUP BY storeAddress
+					 ) ses  GROUP BY adds ORDER BY sell DESC 
+	</select>
+	<!-- 根据市排行 -->
+	<select id="selectRegionRankCity" resultType="java.util.Map">
+			 SELECT SUM(discountFee) AS sell,adds  FROM 
+		      (SELECT c.* , companyId,SUBSTRING(storeAddress,LOCATE('省',storeAddress)+1,LOCATE('市',storeAddress)-LOCATE('省',storeAddress))adds   FROM
+		        (SELECT a.* FROM    
+		          (SELECT    storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,SUM(IFNULL(sellAmount,0)) discountFee            
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+		          INNER JOIN  
+		          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+				FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+		          ON a.createDate = b.createDate AND a.storeId = b.storeId ) c 	   	  	  
+			  INNER JOIN baseStoreInfo bsf
+			   ON c.storeId=bsf.storeId and bsf.status=1 ) f 	                    			      
+			 WHERE   YEAR(createDate)=YEAR(NOW())   
+			  <if test="companyId!=null and companyId!=''">AND  companyId=#{companyId} </if> 		  
+		 	 <if test="dateType!=null and dateType==1">AND TO_DAYS( createDate) = TO_DAYS(NOW())</if>
+		  				 <if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS( createDate) = 1 </if>
+		  				 <if test="dateType!=null and dateType==3">AND YEARWEEK(date_format( createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				 <if test="dateType!=null and dateType==4">AND DATE_FORMAT( createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR( createDate)=YEAR(NOW())</if>																	     
+			GROUP BY adds
+			 ORDER BY sell DESC		 
+					 
+					 
+	</select>
+	<!-- 处方药销售总数 -->
+	<select id="selectIsRxDrugRank" resultType="java.util.Map">			
+					  SELECT SUM(sod.sellAmount)RxSell FROM saleOrderDetail sod ,baseStoreInfo bsf WHERE isRxDrug=1 and
+					  bsf.storeId=sod.storeId and bsf.status=1	  <if test="companyId!=null and companyId!=''">AND bsf.companyId=#{companyId} </if> 		  					  
+					    <if test="dateType!=null and dateType==1">AND TO_DAYS(sod.createDate) = TO_DAYS(NOW())</if>
+		  				 <if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(sod.createDate) = 1 </if>
+		  				 <if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(sod.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+		  				 <if test="dateType!=null and dateType==4">AND DATE_FORMAT(sod.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+		  				 <if test="dateType!=null and dateType==5">AND YEAR(sod.createDate)=YEAR(NOW())</if>																				  			      			
+	</select>
+	<!-- 会员总数 -->
+	<select id="selectMemberCount" resultType="java.util.Map">
+			SELECT COUNT(1) FROM baseMember m,baseStoreInfo bf WHERE m.status=1 AND  bf.status=1 AND m.storeId=bf.storeId	<if test="companyId!=null and companyId!=''"> and bf.companyId=#{companyId} </if>				       			
+	</select>
+	 <!-- 滚动条 -->
+	<select id="realTimeSales" resultType="java.util.Map">
+			SELECT a.* FROM (SELECT sod.createDate,bsf.storeName,sod.productName,sod.saleCount,sod.unit,bsf.companyId FROM saleOrderDetail sod 
+		LEFT JOIN baseStoreInfo bsf
+		ON sod.storeId=bsf.storeId)a
+     WHERE  TO_DAYS(createDate) = TO_DAYS(NOW())
+     	<if test="companyId!=null and companyId!=''">and companyId=#{companyId}</if>
+   ORDER BY createDate DESC   LIMIT 20  
+	</select>
+	<!-- 地球仪-->
+	<select id="sellAmountGoupByHour" resultType="java.util.Map">
+		 SELECT SUM(counts)count,companyId,hours  FROM 
+      (SELECT c.* , companyId FROM
+        (SELECT a.* FROM    
+          (SELECT createDate,   storeId, DATE_FORMAT(createDate,'%H') AS hours ,SUM(IFNULL(sellAmount,0))counts            
+          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 AND TO_DAYS(createDate)=TO_DAYS(NOW())  GROUP BY hours, storeId) a
+          INNER JOIN  
+          (SELECT storeId, DATE_FORMAT(payDate,'%H') AS hours
+		FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 AND TO_DAYS(payDate)=TO_DAYS(NOW())  GROUP BY hours, storeId) b
+          ON a.hours = b.hours AND a.storeId = b.storeId ) c 		   	    
+	  LEFT OUTER JOIN baseStoreInfo bsf
+	   ON c.storeId=bsf.storeId   ) f 	 	 	                    
+      WHERE  1=1  <if test="companyId!=null and companyId!=''">  and companyId=#{companyId} </if>
+			   GROUP BY hours 	
+			
+   
+		 
+	</select>
+	<!--           以下是展厅监控端              -->
+	
+	<select id="selectStoreRankRegion" resultType="com.sdzy.xiaomi.user.model.BaseStoreInfo">
+	   	   SELECT SUM(discountFee)sellAmount,storeName , storeAddress,longitude,latitude FROM 
+		      (SELECT c.* ,storeName storeName , storeAddress,longitude,latitude   FROM
+		        (SELECT a.* FROM    
+		          (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(IFNULL(sellAmount,0)) discountFee        
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+		          INNER JOIN  
+		          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+				 FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+		          ON a.createDate = b.createDate AND a.storeId = b.storeId ) c 	     
+			   INNER JOIN baseStoreInfo bsf
+			   ON c.storeId=bsf.storeId AND bsf.status=1        
+	          ) f	    
+	    WHERE 1= 1  
+			 <if test="address!=null and address!=''">
+ 		    AND storeAddress LIKE CONCAT('%',#{address},'%')  </if>   
+		    GROUP BY storeId ORDER BY SUM(discountFee) DESC 
+		    
+		    
+		    
+	</select>	
+	<!-- 查询门店详情 -->
+	<select id="selectStoreDetail" resultType="com.sdzy.xiaomi.user.model.BaseStoreInfo">
+		 select * from baseStoreInfo where storeId=#{storeId} 
+	</select>
+	<select id="selectStoreByCompany" resultType="java.util.Map">
+		 SELECT  companyName, companyId FROM  baseCompanyInfo   WHERE   companyName like concat('%',#{companyName},'%');
+		  
+	</select>
+	
+	<select id="selectStoreByName" resultType="java.util.Map">
+			select storeName,storeId from baseStoreInfo 
+			where <if test="companyId!=null and companyId!=''"> companyId=#{companyId} and </if> storeName like concat('%',#{storeName},'%')
+	</select>
+	
+	<select id="selectMonitorVideo" resultType="java.util.Map">
+		select monitorVideoUrl,storeVideo,storePic from baseStoreInfo where storeId=#{storeId}
+	</select>
+	
+	<!--展厅监控端 查询门店销售额，客流量，毛利率-->
+	<select id="selectSaleDetail" resultType="java.util.Map">
+			<!-- 	SELECT  a.grossProfit,a.sellAmount,b.flow FROM (SELECT storeId,createDate,SUM(IFNULL(sellAmount, 0) - IFNULL(tradeAmount, 0) - IFNULL(promotionGiveAmount, 0)) grossProfit,SUM(sellAmount)sellAmount
+		     FROM (SELECT sod.* FROM saleOrderDetail sod,saleOrder so 
+		    	WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		     WHERE IFNULL(deleteFlag, 0) != - 1 GROUP BY storeId  )a
+			INNER JOIN
+			(SELECT storeId,COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 GROUP BY  storeId)b
+			ON a.storeId=#{storeId} and a.storeId=b.storeId
+			  <if test="dateType!=null and dateType==1">AND TO_DAYS(a.createDate) = TO_DAYS(NOW())</if>
+			  <if test="dateType!=null and dateType==2">AND TO_DAYS(NOW()) - TO_DAYS(a.createDate) = 1 </if>
+			<if test="dateType!=null and dateType==3">AND YEARWEEK(date_format(a.createDate,'%Y-%m-%d')) = YEARWEEK(now())</if>
+			<if test="dateType!=null and dateType==4">AND DATE_FORMAT(a.createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )</if>
+			<if test="dateType!=null and dateType==5">AND YEAR(a.createDate)=YEAR(NOW())</if>															
+ -->	</select>
+ 
+   <select id="findByStoreCode" resultMap="BaseResultMap">
+    SELECT * FROM baseStoreInfo WHERE storeCode = #{storeCode}
+  </select>
+</mapper>

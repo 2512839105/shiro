@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.user.mapper.BaseMemberMapper">
+<resultMap id="BaseResultMap" type="com.sdzy.xiaomi.user.model.BaseMember">
+    <id column="memberId" jdbcType="VARCHAR" property="memberId" />
+    <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyName" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="memberNo" jdbcType="VARCHAR" property="memberNo" />
+    <result column="memberName" jdbcType="VARCHAR" property="memberName" />
+    <result column="memberTypeName" jdbcType="VARCHAR" property="memberTypeName" />
+    <result column="memberType" jdbcType="INTEGER" property="memberType" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="webchart" jdbcType="VARCHAR" property="webchart" />
+    <result column="idCard" jdbcType="VARCHAR" property="idCard" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="totalScore" jdbcType="INTEGER" property="totalScore" />
+    <result column="remainScore" jdbcType="INTEGER" property="remainScore" />
+    <result column="storedMoney" jdbcType="DECIMAL" property="storedMoney" />
+    <result column="medicalHistory" jdbcType="VARCHAR" property="medicalHistory" />
+    <result column="lastExpenseDate1" jdbcType="TIMESTAMP" property="lastExpenseDate1" />
+    <result column="lastExpenseDate2" jdbcType="TIMESTAMP" property="lastExpenseDate2" />
+    <result column="auditState" jdbcType="INTEGER" property="auditState" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+    <result column="modifyUserName" jdbcType="VARCHAR" property="modifyUserName" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="memberCardNo" jdbcType="VARCHAR" property="memberCardNo" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+  </resultMap>
+
+	<select id="selectByStoreId" resultType="java.util.Map">
+	
+		select * from baseMember where  status=1 and auditState =1 and storeId=#{storeId}
+	 
+	</select>
+	
+	 <select id="findById" resultType="com.sdzy.xiaomi.user.model.BaseMember"> 
+       select * from  baseMember where memberId = #{modelId}
+  </select>
+    <select id="findByParams" resultMap="BaseResultMap">
+    SELECT * FROM baseMember WHERE (memberNo = #{memberNo} OR mobile = #{memberNo} OR memberCardNo = #{memberNo}  OR memberName = #{memberNo}) AND status = 1 AND auditState = 1 AND storeId = #{storeId}
+  </select>
+</mapper>
