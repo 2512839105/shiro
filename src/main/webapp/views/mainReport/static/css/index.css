@@ -1,0 +1,485 @@
+/* element-ui */
+.el-dialog__wrapper {
+	background: #fff;
+}
+
+/* liMarquee */
+.str_wrap {overflow:hidden;//zoom:1;width:100%;font-size:12px;line-height:16px;position:relative;-moz-user-select: none;-khtml-user-select: none;user-select: none;;white-space:nowrap;}
+/* .str_wrap.str_active {background:#f1f1f1;} */
+.str_move {margin-left: 500px; white-space:nowrap;position:absolute; top:0; left:0;cursor:move;}
+.str_move_clone {display:inline-block;//display:inline;//zoom:1;vertical-align:top;position:absolute; left:100%;top:0;}
+.str_vertical .str_move_clone {left:0;top:100%;}
+.str_down .str_move_clone {left:0;bottom:100%;}
+.str_vertical .str_move,
+.str_down .str_move {white-space:normal;width:100%;}
+.str_static .str_move,
+.no_drag .str_move,
+.noStop .str_move{cursor:inherit;}
+.str_wrap img {max-width:none !important;}
+
+
+body{
+	min-width: 1920px;
+	min-height: 1080px;
+}
+
+#main {
+	background: #24255d;
+}
+
+.container{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 952px;	
+	color: #fff;
+	background: url('../../../../statics/images/mainReport/center-bg.png') 100% 100% no-repeat;
+	background-position: center top;
+}
+
+.container .left {
+	width: 30%;
+}
+
+.city-search {
+	display: flex;
+	width: 100%;
+	height: 86px;
+	padding-top: 10px;
+	
+}
+
+.city-search-content {
+	height: 60px;
+	line-height: 60px;
+	padding: 0 10px;
+	border-radius: 20px;
+	color: #5fe4f9;
+	background: #3556c8;
+	font-size: 18px;
+	font-weight: bold;
+	box-shadow: 0 0 20px 6px #5d4fae;
+}
+.city-search-content .el-dropdown {
+	font-size: 18px;
+	color: #3ce1f2;
+}
+
+.city-search-content span {
+	display: inline-block;
+	margin-left: 10px;
+}
+.city-search-content span .glyphicon {
+	top: 4px;
+	left: 2px;
+	cursor: pointer;
+}
+
+.item {
+	margin-bottom: 14px
+}
+
+.item .left-title {
+	display: flex;
+	padding-left: 30px;
+}
+
+.item .detail {
+	width: 100%;
+	height: 352px;
+}
+
+.detail-nav {
+	display: flex;
+	padding-top: 20px;
+	padding-left: 6px;
+}
+
+.detail .swiper-container {
+	width: 520px;
+	height: 60px;
+}
+
+.detail-nav .detail-item {
+	width: 100px;
+	padding: 8px 4px;
+	margin-right: 6px;
+	border-radius: 10px;
+	text-align: center;
+	font-weight: bold;
+	color: #30c5f3;
+	background: #2b346f;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+.detail-nav .detail-item.active{
+	color: #fff;
+	background: #87b7ff;
+}
+
+.rank {
+	display: flex;
+	padding-top: 10px;
+	padding-left: 40px;
+	min-height: 246px;
+}
+
+.rank-body {
+	width: 50%;
+}
+
+.rank-item {
+	display: flex;
+	justify-content: space-between;
+	width: 180px;
+	padding: 4px;
+	margin-top: 14px;
+	color: #24c5fd;
+	background: linear-gradient(to right, rgba(255, 0, 0, 0) , #223c99);
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.rank-item.rank-category {
+	width: 236px;
+}
+
+.detail-title {
+	display: flex;
+	justify-content: space-between;
+	padding: 26px 72px 0 40px;
+}
+.detail-right {
+	padding: 26px 40px 0 72px;
+}
+
+.detail-title .title-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.detail-body {
+	display: flex;
+	padding-left: 40px;
+}
+
+.drug-store-count {
+	font-size: 24px;
+	font-weight: bold;
+	color: #f9f999;
+}
+
+.drug-product-count {
+	font-size: 20px;
+	font-weight: bold;
+	color: #5fe4f9;
+}
+
+.left-bottom {
+	background: url('../../../../statics/images/mainReport/right-top.png') 100% 100% no-repeat;
+}
+
+.left-top {
+	background: url('../../../../statics/images/mainReport/right-bottom.png') 100% 100% no-repeat;
+}
+
+.drug-product-canvas {
+	margin-left: 20px;
+	width: 310px;
+	height: 270px;
+}
+
+.container .center {
+	width: 40%;
+	padding-top: 80px;
+}
+
+.center-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.center-content .nav {
+	display: flex;
+	flex-direction: row;
+}
+
+.nav .nav-item {
+	height: 80px;
+	line-height: 80px;
+	margin-right: 6px;
+	padding: 0 6px;
+	font-weight: bold;
+	font-size: 24px;
+	background: #804891;
+	cursor: pointer;
+}
+
+.nav .nav-item:last-child {
+	margin-right: 0;
+}
+
+.nav .nav-item.active {
+	color: #f8f18c;
+}
+
+.count-money {
+	width: 500px;
+	border-radius: 10px;
+	text-align: center;
+	margin-top: 8px;
+	color: #fef7bc;
+	background: #804891;
+	font-size: 38px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.money {
+	display: flex;
+	flex-direction: row;
+	margin-top: 8px;
+}
+
+.money-icon{
+	height: 56px;
+	line-height: 76px;
+	margin-right: 4px;
+	font-size: 38px;
+	color: #fef7bc;
+	
+}
+
+.money-item {
+	height: 56px;
+	line-height: 54px;
+	padding: 0 2px;
+	margin-right: 4px;
+	font-size: 62px;
+	font-weight: bold;
+	color: #fef7bc;
+	background: #804891;
+}
+
+.order {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 480px;
+}
+
+.order-item {
+	width: 50%;
+	margin-top: 10px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.canvas-bg {
+	position: absolute;
+	top: 0;
+	left: 150px;
+	width: 480px;
+	height: 480px;
+	background: url('../../../../statics/images/mainReport/canvas-bg.png') 100% 100% no-repeat;
+	background-position: center 0;
+	animation: imgTransform 120s linear infinite;
+}
+
+.canvas-report {
+	position: relative;
+	width: 100%;
+	margin-top: 40px;
+	background-position: center 0;
+}
+.sell-canvas {
+	width: 100%;
+	height: 560px;
+}
+
+.container .right {
+	width: 30%;
+	padding-right: 10px;
+}
+
+.container .right .now-time {
+	height: 86px;
+	width: 100%;
+	padding-top: 6px;
+	padding-right: 20px;
+	text-align: right;
+	font-size: 28px;
+}
+
+.container .right .now-time .glyphicon {
+	margin-left: 10px;
+	padding: 8px;
+	border-radius: 4px;
+	color: #5fe4f9;
+	background: #3556c8;
+	cursor: pointer;
+}
+
+.container .right .now-time .glyphicon:hover{
+	color: #bdf4fd;
+}
+
+.item .right-title {
+	display: flex;
+	flex-direction: row-reverse;
+	padding-right: 30px;
+}
+
+.city-detail {
+	width: 56%;
+}
+.city-rank-body {
+	height: 150px;
+	margin-bottom: 6px;
+}
+
+.city-title-body {
+	width: 144px;
+	height: 90px;
+	margin-top: 10px;
+	margin-left: 68px;
+	padding: 10px;
+	border: 2px solid #356ad0;
+	color: #81e7fd;
+	background: #073fac;
+}
+
+.city-adds-sell {
+	display: flex;
+	justify-content: space-between;
+}
+
+.city-title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.data-body {
+	display: flex;
+	align-items: center;
+	margin-bottom: 4px;
+	font-size: 12px;
+}
+
+.now-body {
+	flex: 1;
+	height: 10px;
+	margin-left: 6px;
+	background: #54dfff;
+	
+}
+.yes-body {
+	height: 10px;
+	width: 50px;
+	margin-left: 6px;
+	background: #ccf8fb;
+}
+
+.city-rank-title {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.city-rank-items {
+	display: flex;
+	flex-direction: column;
+	color: #46def5;
+}
+
+.city-rank-item {
+	display: flex;
+	flex-direction: row;
+	font-weight: bold;
+}
+
+.city-rank-item .item-detail {
+	display: flex;
+	flex-direction: column;
+	margin-left: 6px;
+	margin-bottom: 4px;
+}
+
+.item-detail .progress {
+	width: 180px;
+	height: 4px;
+	margin-bottom: 0px;
+	background-color: #256dd1;
+}
+.item-detail .progress .progress-bar {
+	background: #46def5;
+}
+
+.right-bottom {
+	background: url('../../../../statics/images/mainReport/left-top.png') 100% 100% no-repeat;
+}
+
+.right-top {
+	display: flex;
+	padding-top: 20px;
+	padding-left: 20px;
+	background: url('../../../../statics/images/mainReport/left-bottom.png') 100% 100% no-repeat;
+}
+
+
+.footer-container {
+	overflow: hidden;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row;
+	height: 498px;
+	width: 100%;
+	margin-top: -370px;
+	background: url('../../../../statics/images/mainReport/footer-container.png') 100% 100% no-repeat;
+	background-position: 0 0;
+}
+
+.footer-img {
+	width: 500px;
+	height: 128px;
+	background: url('../../../../statics/images/mainReport/footer-icon.png') 100% 100% no-repeat;
+	background-position: 20px center;
+}
+
+.footer {
+	flex: 1;
+	height: 128px;
+	line-height: 128px;
+	font-size: 48px;
+	color: #56d2ff;
+}
+.footer span {
+	display: inline-block;
+	margin-right: 50px;
+}
+
+.text-hidden {
+	padding-left: 10px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+@keyframes imgTransform
+{
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
+

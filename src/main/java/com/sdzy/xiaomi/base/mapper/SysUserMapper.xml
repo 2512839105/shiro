@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.base.mapper.SysUserMapper">
+<resultMap id="BaseResultMap" type="com.sdzy.xiaomi.base.entity.SysUser">
+    <id column="userId" jdbcType="VARCHAR" property="userId" />
+    <result column="userAccount" jdbcType="VARCHAR" property="userAccount" />
+    <result column="userCode" jdbcType="VARCHAR" property="userCode" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userGroupId" jdbcType="VARCHAR" property="userGroupId" />
+    <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pwdStatus" jdbcType="INTEGER" property="pwdStatus" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="exitDate" jdbcType="VARCHAR" property="exitDate" />
+    <result column="entryDate" jdbcType="VARCHAR" property="entryDate" />
+    <result column="degree" jdbcType="VARCHAR" property="degree" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="cardNo" jdbcType="VARCHAR" property="cardNo" />
+    <result column="fileNumber" jdbcType="VARCHAR" property="fileNumber" />
+    <result column="postName" jdbcType="VARCHAR" property="postName" />
+    <result column="deptName" jdbcType="VARCHAR" property="deptName" />
+    <result column="jobTitle" jdbcType="VARCHAR" property="jobTitle" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="autoLoginKeys" jdbcType="VARCHAR" property="autoLoginKeys" />
+    <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="lastLogoutTime" jdbcType="TIMESTAMP" property="lastLogoutTime" />
+    <!--新加-->
+    <result column="storeAccount" jdbcType="VARCHAR" property="storeAccount" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="storeAddress" jdbcType="VARCHAR" property="storeAddress" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyName" />
+  </resultMap>
+
+		<select id="selectStoreId" resultType="java.util.Map">
+			select storeId from baseStoreInfo where storeAccount=#{storeAccount}
+		</select>
+		
+		<select id="selectUserAccount" resultType="java.lang.String">
+			select * from sysUser 
+			   where
+			    storeId=#{storeId} and userAccount=#{userAccount} 
+		</select>
+		<!--  -->
+		<select id="selectUserPassword" resultType="com.sdzy.xiaomi.base.entity.SysUser">
+		    SELECT * FROM
+		      (SELECT a.*,b.companyName, c.storeAccount, c.storeCode , c.storeAddress , c.storeType FROM sysUser a
+		       LEFT JOIN baseCompanyInfo b ON a.companyId = b.companyId
+		       LEFT JOIN baseStoreInfo c ON a.storeId = c.storeId) sysUser
+		    where userAccount = #{userAccount, jdbcType=VARCHAR}
+		</select>
+		
+		<select id="selectStore" resultType="java.util.Map">
+			select *from baseStoreInfo where storeId=#{storeId}
+		</select>
+		
+		
+		<select id="selectByphoneNumber" resultType="com.sdzy.xiaomi.base.entity.SysUser">
+			select storeName,storeId from baseStoreInfo
+		 	where mobile=#{phoneNumber}
+		</select>	
+		
+		<!--查询门店所有用户信息  -->
+		<select id="selectByStoreId" resultType="java.util.Map">	 
+				select * from  sysUser where status=1 and storeId=#{storeId} and IFNULL(deleteFlag,0) != -1	 
+		</select>  
+		
+		<select id="findById" resultType="com.sdzy.xiaomi.base.entity.SysUser">
+		     select * from  sysUser where userId = #{modelId}
+		 </select> 
+		 
+		 <select id="insert" >
+		 	 update sysUser set wxAccount=#{wxAccount}, wxName=#{wxName},isAllowWxLogin=#{isAllowWxLogin} where userId=#{userId}
+		 </select>
+		 
+		 <select id="selectByAccount" resultType="java.util.Map">
+		 	select *from sysUser where userAccount=#{userAccount} and storeId=#{storeId}
+		 </select>
+		 
+		<select id="listByParam" resultMap="BaseResultMap">
+	    	select * from  sysUser where 1=1 <![CDATA[ AND RIGHT(userAccount,5) <> 'admin'  ]]>
+	    	<if test="whereList != null"><foreach collection="whereList" item="item"><choose><when test="item.opStr == 'in' ">and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+	    </select>
+		
+	    <select id="findByUserAccount" resultMap="BaseResultMap">
+			SELECT * FROM
+			      (SELECT a.*,b.companyName, c.storeAccount, c.storeCode , c.storeAddress , c.storeType FROM sysUser a
+			       LEFT JOIN baseCompanyInfo b ON a.companyId = b.companyId
+			       LEFT JOIN baseStoreInfo c ON a.storeId = c.storeId) sysUser
+			    where userAccount = #{userAccount, jdbcType=VARCHAR}
+	    </select>
+		<select id="findByPhone" resultMap="BaseResultMap">
+		     			SELECT * FROM
+			      (SELECT a.*,b.companyName, c.storeAccount, c.storeCode , c.storeAddress , c.storeType FROM sysUser a
+			       LEFT JOIN baseCompanyInfo b ON a.companyId = b.companyId
+			       LEFT JOIN baseStoreInfo c ON a.storeId = c.storeId) sysUser
+			    where mobile = #{mobile}
+		</select>
+</mapper>

@@ -1,0 +1,38 @@
+
+ul#treeSelect li ul{ margin:0; padding:0 0 0 18px}
+ul#treeSelect li ul.line{ background:url(../images/line_conn.gif) 0 0 repeat-y;}
+
+ul#treeSelect li a {padding:1px 3px 0 0; margin:0; cursor:pointer; height:17px; color:#333; background-color: transparent;
+	text-decoration:none; vertical-align:top; display: inline-block}
+ul#treeSelect li a:hover {text-decoration:underline}
+
+
+ul#treeSelect li span {line-height:16px; margin-right:2px}
+#treeSelect li span.button {line-height:0; margin:0; width:16px; height:16px; display: inline-block; vertical-align:middle;
+	border:0 none; cursor: pointer;outline:none;
+	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;
+	background-image:url("../images/zTreeStandard.png"); *background-image:url("../images/zTreeStandard.gif")}
+
+ul#treeSelect li span.button.chk {width:13px; height:13px; margin:0 3px 0 0; cursor: auto}
+ul#treeSelect li span.button.chk.checkbox_false_full {background-position:0 0}
+ul#treeSelect li span.button.chk.checkbox_false_full_focus {background-position:0 -14px}
+ul#treeSelect li span.button.chk.checkbox_false_part {background-position:0 -28px}
+ul#treeSelect li span.button.chk.checkbox_false_part_focus {background-position:0 -42px}
+ul#treeSelect li span.button.chk.checkbox_false_disable {background-position:0 -56px}
+ul#treeSelect li span.button.chk.checkbox_true_full {background-position:-14px 0}
+ul#treeSelect li span.button.chk.checkbox_true_full_focus {background-position:-14px -14px}
+ul#treeSelect li span.button.chk.checkbox_true_part {background-position:-14px -28px}
+ul#treeSelect li span.button.chk.checkbox_true_part_focus {background-position:-14px -42px}
+ul#treeSelect li span.button.chk.checkbox_true_disable {background-position:-14px -56px}
+
+ul#treeSelect{border: 1px #ccc solid;-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;padding: 10px;}
+ul#treeSelect li{line-height: 35px;border-top: 1px #eee solid;margin-top: -1px;outline: none;}
+ul#treeSelect li .button{-moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;position: relative;margin-right: 4px;}
+ul#treeSelect li .ico_docu,ul#treeSelect li .ico_open,ul#treeSelect li .ico_close{padding: 0;width: 0;}
+ul#treeSelect li .button:before{position: absolute;left: 0;/*top: 50%;*/}
+ul#treeSelect li .ico_docu,ul#treeSelect li .roots_docu,ul#treeSelect li .center_docu,ul#treeSelect li .center_open,ul#treeSelect li .center_close, ul#treeSelect li .bottom_close,ul#treeSelect li .bottom_open, ul#treeSelect li .bottom_docu,ul#treeSelect li .ico_open,ul#treeSelect li .ico_close{background: none;}
+.center_open,.center_close,.bottom_open,.bottom_close {font-family: "iconfont" !important;font-size: 16px;font-style: normal;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;background: none;}
+.center_open:before , .bottom_open:before{ content: "\e61f";}
+.center_close:before , .bottom_close:before{ content: "\e624";}
+.center_open,.center_close,.bottom_open,.bottom_close{color: #428bca;background: none;}
+.center_open:hover,.center_close:hover,.bottom_open:hover,.bottom_close:hover{color: #428bca;}

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.promotion.mapper.PromotionProductDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.promotion.model.PromotionProduct">
+    <id column="promotionProductId" jdbcType="VARCHAR" property="promotionProductId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="promotionStrategyId" jdbcType="VARCHAR" property="promotionStrategyId" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productUrl" jdbcType="VARCHAR" property="productUrl" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+    <result column="averagePrice" jdbcType="DECIMAL" property="averagePrice" />
+    <result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="promotionPrice" jdbcType="DECIMAL" property="promotionPrice" />
+    <result column="spromotionType" jdbcType="INTEGER" property="spromotionType" />
+    <result column="sreachedCountOrAmount" jdbcType="DECIMAL" property="sreachedCountOrAmount" />
+    <result column="sreachedCAToGiveCount" jdbcType="DECIMAL" property="sreachedCAToGiveCount" />
+    <result column="sreachedCAToReduceMoney" jdbcType="DECIMAL" property="sreachedCAToReduceMoney" />
+    <result column="sreachedCAToDiscount" jdbcType="DECIMAL" property="sreachedCAToDiscount" />
+    <result column="sreachedCAToAddMoney" jdbcType="DECIMAL" property="sreachedCAToAddMoney" />
+    <result column="spromotiomGiveType" jdbcType="INTEGER" property="spromotiomGiveType" />
+    <result column="limitBuyCount" jdbcType="DECIMAL" property="limitBuyCount" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from promotionProduct
+    where promotionProductId = #{promotionProductId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.promotion.model.PromotionProduct">
+    insert into promotionProduct (promotionProductId, storeId, promotionStrategyId, 
+      supplierId, supplierName, productId, 
+      productCode, productUrl, productName, 
+      genericName, standard, unit, 
+      producingArea, produceFactory, tradePrice, 
+      averagePrice, retailPrice, promotionPrice, 
+      spromotionType, sreachedCountOrAmount, 
+      sreachedCAToGiveCount, sreachedCAToReduceMoney, 
+      sreachedCAToDiscount, sreachedCAToAddMoney, 
+      spromotiomGiveType, limitBuyCount, status, 
+      createDate, modifyDate, remark
+      )
+    values (#{promotionProductId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{promotionStrategyId,jdbcType=VARCHAR}, 
+      #{supplierId,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{productCode,jdbcType=VARCHAR}, #{productUrl,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{genericName,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{producingArea,jdbcType=VARCHAR}, #{produceFactory,jdbcType=VARCHAR}, #{tradePrice,jdbcType=DECIMAL}, 
+      #{averagePrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, #{promotionPrice,jdbcType=DECIMAL}, 
+      #{spromotionType,jdbcType=INTEGER}, #{sreachedCountOrAmount,jdbcType=DECIMAL}, 
+      #{sreachedCAToGiveCount,jdbcType=DECIMAL}, #{sreachedCAToReduceMoney,jdbcType=DECIMAL}, 
+      #{sreachedCAToDiscount,jdbcType=DECIMAL}, #{sreachedCAToAddMoney,jdbcType=DECIMAL}, 
+      #{spromotiomGiveType,jdbcType=INTEGER}, #{limitBuyCount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.promotion.model.PromotionProduct">
+    update promotionProduct
+    set storeId = #{storeId,jdbcType=VARCHAR},
+      promotionStrategyId = #{promotionStrategyId,jdbcType=VARCHAR},
+      supplierId = #{supplierId,jdbcType=VARCHAR},
+      supplierName = #{supplierName,jdbcType=VARCHAR},
+      productId = #{productId,jdbcType=VARCHAR},
+      productCode = #{productCode,jdbcType=VARCHAR},
+      productUrl = #{productUrl,jdbcType=VARCHAR},
+      productName = #{productName,jdbcType=VARCHAR},
+      genericName = #{genericName,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      producingArea = #{producingArea,jdbcType=VARCHAR},
+      produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      tradePrice = #{tradePrice,jdbcType=DECIMAL},
+      averagePrice = #{averagePrice,jdbcType=DECIMAL},
+      retailPrice = #{retailPrice,jdbcType=DECIMAL},
+      promotionPrice = #{promotionPrice,jdbcType=DECIMAL},
+      spromotionType = #{spromotionType,jdbcType=INTEGER},
+      sreachedCountOrAmount = #{sreachedCountOrAmount,jdbcType=DECIMAL},
+      sreachedCAToGiveCount = #{sreachedCAToGiveCount,jdbcType=DECIMAL},
+      sreachedCAToReduceMoney = #{sreachedCAToReduceMoney,jdbcType=DECIMAL},
+      sreachedCAToDiscount = #{sreachedCAToDiscount,jdbcType=DECIMAL},
+      sreachedCAToAddMoney = #{sreachedCAToAddMoney,jdbcType=DECIMAL},
+      spromotiomGiveType = #{spromotiomGiveType,jdbcType=INTEGER},
+      limitBuyCount = #{limitBuyCount,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where promotionProductId = #{promotionProductId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select promotionProductId, storeId, promotionStrategyId, supplierId, supplierName, 
+    productId, productCode, productUrl, productName, genericName, standard, unit, producingArea, 
+    produceFactory, tradePrice, averagePrice, retailPrice, promotionPrice, spromotionType, 
+    sreachedCountOrAmount, sreachedCAToGiveCount, sreachedCAToReduceMoney, sreachedCAToDiscount, 
+    sreachedCAToAddMoney, spromotiomGiveType, limitBuyCount, status, createDate, modifyDate, 
+    remark
+    from promotionProduct
+    where promotionProductId = #{promotionProductId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select promotionProductId, storeId, promotionStrategyId, supplierId, supplierName, 
+    productId, productCode, productUrl, productName, genericName, standard, unit, producingArea, 
+    produceFactory, tradePrice, averagePrice, retailPrice, promotionPrice, spromotionType, 
+    sreachedCountOrAmount, sreachedCAToGiveCount, sreachedCAToReduceMoney, sreachedCAToDiscount, 
+    sreachedCAToAddMoney, spromotiomGiveType, limitBuyCount, status, createDate, modifyDate, 
+    remark
+    from promotionProduct
+  </select>
+  <update id="updateById" parameterType="java.util.Map">
+     update  promotionProduct set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where promotionProductId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+     update  promotionProduct set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+     delete from  promotionProduct where promotionProductId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+     delete from   promotionProduct where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+     select * from  promotionProduct where promotionProductId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+     select * from  promotionProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+     select * from  promotionProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+     <if test="sort != null">
+        order by #{sort,jdbcType=VARCHAR} #{order,jdbcType=VARCHAR}
+     </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+     select * from  promotionProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <resultMap id="promotionProductsAndGiveProductsResultMap" type="com.sdzy.mall.promotion.model.PromotionProduct" >
+	<id column="promotionProductId" jdbcType="VARCHAR" property="promotionProductId" />
+	<result column="storeId" jdbcType="VARCHAR" property="storeId" />
+	<result column="promotionStrategyId" jdbcType="VARCHAR" property="promotionStrategyId" />
+	<result column="promotionStrategyName" jdbcType="VARCHAR" property="promotionStrategyName" />
+	<result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+	<result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+	<result column="productId" jdbcType="VARCHAR" property="productId" />
+	<result column="productCode" jdbcType="VARCHAR" property="productCode" />
+	<result column="productUrl" jdbcType="VARCHAR" property="productUrl" />
+	<result column="productName" jdbcType="VARCHAR" property="productName" />
+	<result column="genericName" jdbcType="VARCHAR" property="genericName" />
+	<result column="standard" jdbcType="VARCHAR" property="standard" />
+	<result column="unit" jdbcType="VARCHAR" property="unit" />
+	<result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+	<result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+	<result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+	<result column="averagePrice" jdbcType="DECIMAL" property="averagePrice" />
+	<result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+	<result column="promotionPrice" jdbcType="DECIMAL" property="promotionPrice" />
+	<result column="spromotionType" jdbcType="INTEGER" property="spromotionType" />
+	<result column="sreachedCountOrAmount" jdbcType="DECIMAL" property="sreachedCountOrAmount" />
+	<result column="sreachedCAToGiveCount" jdbcType="DECIMAL" property="sreachedCAToGiveCount" />
+	<result column="sreachedCAToReduceMoney" jdbcType="DECIMAL" property="sreachedCAToReduceMoney" />
+	<result column="sreachedCAToDiscount" jdbcType="DECIMAL" property="sreachedCAToDiscount" />
+	<result column="sreachedCAToAddMoney" jdbcType="DECIMAL" property="sreachedCAToAddMoney" />
+	<result column="spromotiomGiveType" jdbcType="INTEGER" property="spromotiomGiveType" />
+	<result column="limitBuyCount" jdbcType="DECIMAL" property="limitBuyCount" />
+	<result column="status" jdbcType="INTEGER" property="status" />
+	<result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+	<result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+	<result column="remark" jdbcType="VARCHAR" property="remark" />
+      
+    <association property="promotionStrategy" javaType="com.sdzy.mall.promotion.model.PromotionStrategy">
+        <result column="s_promotionName" jdbcType="VARCHAR" property="promotionName" />
+        <result column="s_customerRange" jdbcType="VARCHAR" property="customerRange" />
+        <result column="s_customerType" jdbcType="VARCHAR" property="customerType" />
+        <result column="s_promotiomGiveType" jdbcType="VARCHAR" property="promotiomGiveType" />
+        <result column="s_promotionRange" jdbcType="VARCHAR" property="promotionRange" />
+    </association>
+
+	<collection property="details" ofType="com.sdzy.mall.promotion.model.PromotionGiveProduct">
+	    <id column="pgp_giveProductId" jdbcType="VARCHAR" property="giveProductId" />
+	    <result column="pgp_storeId" jdbcType="VARCHAR" property="storeId" />
+	    <result column="pgp_strategyIdOrPid" jdbcType="VARCHAR" property="strategyIdOrPid" />
+	    <result column="pgp_giveProductType" jdbcType="INTEGER" property="giveProductType" />
+	    <result column="pgp_supplierId" jdbcType="VARCHAR" property="supplierId" />
+	    <result column="pgp_supplierName" jdbcType="VARCHAR" property="supplierName" />
+	    <result column="pgp_productId" jdbcType="VARCHAR" property="productId" />
+	    <result column="pgp_productCode" jdbcType="VARCHAR" property="productCode" />
+	    <result column="pgp_productName" jdbcType="VARCHAR" property="productName" />
+	    <result column="pgp_genericName" jdbcType="VARCHAR" property="genericName" />
+	    <result column="pgp_standard" jdbcType="VARCHAR" property="standard" />
+	    <result column="pgp_unit" jdbcType="VARCHAR" property="unit" />
+	    <result column="pgp_producingArea" jdbcType="VARCHAR" property="producingArea" />
+	    <result column="pgp_produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+	    <result column="pgp_tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+	    <result column="pgp_averagePrice" jdbcType="DECIMAL" property="averagePrice" />
+	    <result column="pgp_retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+	    <result column="pgp_givePrice" jdbcType="DECIMAL" property="givePrice" />
+	    <result column="pgp_status" jdbcType="INTEGER" property="status" />
+	    <result column="pgp_createDate" jdbcType="TIMESTAMP" property="createDate" />
+	    <result column="pgp_modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+	</collection>
+
+  </resultMap>
+
+  <select id="getPromotionProductsAndGiveProducts" resultMap="promotionProductsAndGiveProductsResultMap">
+        select pp.*,
+        pgp.giveProductId pgp_giveProductId,
+        pgp.storeId pgp_storeId,
+        pgp.strategyIdOrPid pgp_strategyIdOrPid,
+        pgp.giveProductType pgp_giveProductType,
+        pgp.supplierId pgp_supplierId,
+        pgp.supplierName pgp_supplierName,
+        pgp.productId pgp_productId,
+        pgp.productCode pgp_productCode,
+        pgp.productName pgp_productName,
+        pgp.genericName pgp_genericName,
+        pgp.standard pgp_standard,
+        pgp.unit pgp_unit,
+        pgp.producingArea pgp_producingArea,
+        pgp.produceFactory pgp_produceFactory,
+        pgp.tradePrice pgp_tradePrice,
+        pgp.averagePrice pgp_averagePrice,
+        pgp.retailPrice pgp_retailPrice,
+        pgp.givePrice pgp_givePrice,
+        pgp.status pgp_status,
+        pgp.createDate pgp_createDate,
+        pgp.modifyDate pgp_modifyDate
+        from promotionProduct pp left outer join promotionGiveProduct pgp on (pgp.strategyIdOrPid = pp.promotionProductId)
+        where pp.promotionStrategyId = #{modelId, jdbcType=VARCHAR}
+        and pp.storeId = #{storeId, jdbcType=VARCHAR} order by pp.productCode asc
+   </select>
+
+    <!--查询所有的促销单品-->
+    <select id="listPromotionProductsAndGiveProducts" resultMap="promotionProductsAndGiveProductsResultMap">
+        SELECT pp.*,
+        pgp.giveProductId pgp_giveProductId,
+        pgp.storeId pgp_storeId,
+        pgp.strategyIdOrPid pgp_strategyIdOrPid,
+        pgp.giveProductType pgp_giveProductType,
+        pgp.supplierId pgp_supplierId,
+        pgp.supplierName pgp_supplierName,
+        pgp.productId pgp_productId,
+        pgp.productCode pgp_productCode,
+        pgp.productName pgp_productName,
+        pgp.genericName pgp_genericName,
+        pgp.standard pgp_standard,
+        pgp.unit pgp_unit,
+        pgp.producingArea pgp_producingArea,
+        pgp.produceFactory pgp_produceFactory,
+        pgp.tradePrice pgp_tradePrice,
+        pgp.averagePrice pgp_averagePrice,
+        pgp.retailPrice pgp_retailPrice,
+        pgp.givePrice pgp_givePrice,
+        pgp.status pgp_status,
+        pgp.createDate pgp_createDate,
+        pgp.modifyDate pgp_modifyDate
+        FROM (SELECT a.*,
+                b.promotionName as s_promotionName,
+                b.customerRange as s_customerRange,
+                b.customerType as s_customerType,
+                b.promotiomGiveType as s_promotiomGiveType,
+                b.promotionRange  as s_promotionRange
+             FROM promotionProduct a,  promotionStrategy b
+             WHERE a.promotionStrategyId = b.promotionStrategyId AND b.promotionState = 1)  pp
+        LEFT OUTER JOIN
+          (SELECT a.* FROM promotionGiveProduct a,
+            (SELECT * FROM stockBatchInventory c GROUP BY c.productCode HAVING COUNT(c.stockCount) > 0 ) b
+          WHERE a.productCode = b.productCode) pgp
+        ON (pgp.strategyIdOrPid = pp.promotionProductId)
+        WHERE 1 = 1
+        <if test="storeId != null">
+            AND pp.storeId = #{storeId, jdbcType=VARCHAR}
+        </if>
+        AND pp.status = #{status} ORDER BY pp.productCode ASC
+    </select>
+  
+</mapper>

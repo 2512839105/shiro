@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.report.mapper.GspFridgeTemperatureRecordMapper">
+
+
+	<select id="selectBystoreId"  resultType="java.util.Map">
+		SELECT recordId,recordDate,temperatureAm,recorderAm,afterTakeStepTemperaturePm,recorderPm,remark FROM 
+		gspFridgeTemperatureRecord where  IFNULL(deleteFlag,0) != -1	 
+						  <if test="whereList != null"> 
+ 		  <foreach collection="whereList" item="item"> 
+ 			 <choose> 
+ 				 <when test="item.opStr == 'in' ">and ${item.key} in   	
+ 				 	<foreach collection="item.value" item="val" open="(" separator="," close=")"> 
+ 				 	 	#{val}  	
+ 				 	 </foreach>   
+ 				 </when>   
+ 					<when test="item.opStr == 'like'">
+ 						 and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')  
+ 					</when> 
+ 					  <otherwise>
+ 					    and ${item.key} ${item.opStr} #{item.value}
+ 					  </otherwise> 
+ 			 </choose> 
+ 		</foreach>
+ 		order by recordDate desc
+ 	 </if>		
+	</select>
+	
+
+</mapper>

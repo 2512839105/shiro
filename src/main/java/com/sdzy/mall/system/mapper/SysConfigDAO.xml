@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.system.mapper.SysConfigDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.system.model.SysConfig">
+    <id column="configId" jdbcType="INTEGER" property="configId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="storeCode" jdbcType="VARCHAR" property="storeCode" />
+    <result column="storeLicense" jdbcType="VARCHAR" property="storeLicense" />
+    <result column="storeAuthStatus" jdbcType="INTEGER" property="storeAuthStatus" />
+    <result column="storeSa" jdbcType="VARCHAR" property="storeSa" />
+    <result column="storeIP" jdbcType="VARCHAR" property="storeIP" />
+    <result column="storeMAC" jdbcType="VARCHAR" property="storeMAC" />
+    <result column="storeHost" jdbcType="VARCHAR" property="storeHost" />
+    <result column="socialPort" jdbcType="VARCHAR" property="socialPort" />
+    <result column="socialComm" jdbcType="VARCHAR" property="socialComm" />
+    <result column="storeAppkey" jdbcType="VARCHAR" property="storeAppkey" />
+    <result column="storeApisecret" jdbcType="VARCHAR" property="storeApisecret" />
+    <result column="storeApiId" jdbcType="VARCHAR" property="storeApiId" />
+    <result column="modifyDate" jdbcType="DATE" property="modifyDate" />
+    <result column="clickRunProductDownload" jdbcType="INTEGER" property="clickRunProductDownload" />
+    <result column="clickRunPurchaseDownload" jdbcType="INTEGER" property="clickRunPurchaseDownload" />
+    <result column="migrateMemberStatus" jdbcType="INTEGER" property="migrateMemberStatus" />
+    <result column="migrateStockStatus" jdbcType="INTEGER" property="migrateStockStatus" />
+    <result column="migratePurchaseStatus" jdbcType="INTEGER" property="migratePurchaseStatus" />
+    <result column="migrateSaleStatus" jdbcType="INTEGER" property="migrateSaleStatus" />
+    <result column="migratePriceStatus" jdbcType="INTEGER" property="migratePriceStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    configId, storeId, storeCode, storeLicense, storeAuthStatus, storeSa, storeIP, storeMAC,
+    storeHost, socialPort, socialComm, storeAppkey, storeApisecret, storeApiId, modifyDate,
+    clickRunProductDownload, clickRunPurchaseDownload, migrateMemberStatus, migrateStockStatus,
+    migratePurchaseStatus, migrateSaleStatus, migratePriceStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.mall.system.model.example.SysConfigExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sysConfig
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sysConfig
+    where configId = #{configId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sysConfig
+    where configId = #{configId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.mall.system.model.example.SysConfigExample">
+    delete from sysConfig
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.system.model.SysConfig">
+    insert into sysConfig (configId, storeId, storeCode,
+    storeLicense, storeAuthStatus, storeSa,
+    storeIP, storeMAC, storeHost,
+    socialPort, socialComm, storeAppkey,
+    storeApisecret, storeApiId, modifyDate,
+    clickRunProductDownload, clickRunPurchaseDownload,
+    migrateMemberStatus, migrateStockStatus,
+    migratePurchaseStatus, migrateSaleStatus,
+    migratePriceStatus)
+    values (#{configId,jdbcType=INTEGER}, #{storeId,jdbcType=VARCHAR}, #{storeCode,jdbcType=VARCHAR},
+    #{storeLicense,jdbcType=VARCHAR}, #{storeAuthStatus,jdbcType=INTEGER}, #{storeSa,jdbcType=VARCHAR},
+    #{storeIP,jdbcType=VARCHAR}, #{storeMAC,jdbcType=VARCHAR}, #{storeHost,jdbcType=VARCHAR},
+    #{socialPort,jdbcType=VARCHAR}, #{socialComm,jdbcType=VARCHAR}, #{storeAppkey,jdbcType=VARCHAR},
+    #{storeApisecret,jdbcType=VARCHAR}, #{storeApiId,jdbcType=VARCHAR}, #{modifyDate,jdbcType=DATE},
+    #{clickRunProductDownload,jdbcType=INTEGER}, #{clickRunPurchaseDownload,jdbcType=INTEGER},
+    #{migrateMemberStatus,jdbcType=INTEGER}, #{migrateStockStatus,jdbcType=INTEGER},
+    #{migratePurchaseStatus,jdbcType=INTEGER}, #{migrateSaleStatus,jdbcType=INTEGER},
+    #{migratePriceStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.mall.system.model.SysConfig">
+    insert into sysConfig
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        configId,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="storeCode != null">
+        storeCode,
+      </if>
+      <if test="storeLicense != null">
+        storeLicense,
+      </if>
+      <if test="storeAuthStatus != null">
+        storeAuthStatus,
+      </if>
+      <if test="storeSa != null">
+        storeSa,
+      </if>
+      <if test="storeIP != null">
+        storeIP,
+      </if>
+      <if test="storeMAC != null">
+        storeMAC,
+      </if>
+      <if test="storeHost != null">
+        storeHost,
+      </if>
+      <if test="socialPort != null">
+        socialPort,
+      </if>
+      <if test="socialComm != null">
+        socialComm,
+      </if>
+      <if test="storeAppkey != null">
+        storeAppkey,
+      </if>
+      <if test="storeApisecret != null">
+        storeApisecret,
+      </if>
+      <if test="storeApiId != null">
+        storeApiId,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="clickRunProductDownload != null">
+        clickRunProductDownload,
+      </if>
+      <if test="clickRunPurchaseDownload != null">
+        clickRunPurchaseDownload,
+      </if>
+      <if test="migrateMemberStatus != null">
+        migrateMemberStatus,
+      </if>
+      <if test="migrateStockStatus != null">
+        migrateStockStatus,
+      </if>
+      <if test="migratePurchaseStatus != null">
+        migratePurchaseStatus,
+      </if>
+      <if test="migrateSaleStatus != null">
+        migrateSaleStatus,
+      </if>
+      <if test="migratePriceStatus != null">
+        migratePriceStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="configId != null">
+        #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLicense != null">
+        #{storeLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAuthStatus != null">
+        #{storeAuthStatus,jdbcType=INTEGER},
+      </if>
+      <if test="storeSa != null">
+        #{storeSa,jdbcType=VARCHAR},
+      </if>
+      <if test="storeIP != null">
+        #{storeIP,jdbcType=VARCHAR},
+      </if>
+      <if test="storeMAC != null">
+        #{storeMAC,jdbcType=VARCHAR},
+      </if>
+      <if test="storeHost != null">
+        #{storeHost,jdbcType=VARCHAR},
+      </if>
+      <if test="socialPort != null">
+        #{socialPort,jdbcType=VARCHAR},
+      </if>
+      <if test="socialComm != null">
+        #{socialComm,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAppkey != null">
+        #{storeAppkey,jdbcType=VARCHAR},
+      </if>
+      <if test="storeApisecret != null">
+        #{storeApisecret,jdbcType=VARCHAR},
+      </if>
+      <if test="storeApiId != null">
+        #{storeApiId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=DATE},
+      </if>
+      <if test="clickRunProductDownload != null">
+        #{clickRunProductDownload,jdbcType=INTEGER},
+      </if>
+      <if test="clickRunPurchaseDownload != null">
+        #{clickRunPurchaseDownload,jdbcType=INTEGER},
+      </if>
+      <if test="migrateMemberStatus != null">
+        #{migrateMemberStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migrateStockStatus != null">
+        #{migrateStockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migratePurchaseStatus != null">
+        #{migratePurchaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migrateSaleStatus != null">
+        #{migrateSaleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migratePriceStatus != null">
+        #{migratePriceStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.mall.system.model.example.SysConfigExample" resultType="java.lang.Long">
+    select count(*) from sysConfig
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sysConfig
+    <set>
+      <if test="record.configId != null">
+        configId = #{record.configId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeCode != null">
+        storeCode = #{record.storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeLicense != null">
+        storeLicense = #{record.storeLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeAuthStatus != null">
+        storeAuthStatus = #{record.storeAuthStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeSa != null">
+        storeSa = #{record.storeSa,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeIP != null">
+        storeIP = #{record.storeIP,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeMAC != null">
+        storeMAC = #{record.storeMAC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeHost != null">
+        storeHost = #{record.storeHost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.socialPort != null">
+        socialPort = #{record.socialPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.socialComm != null">
+        socialComm = #{record.socialComm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeAppkey != null">
+        storeAppkey = #{record.storeAppkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeApisecret != null">
+        storeApisecret = #{record.storeApisecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeApiId != null">
+        storeApiId = #{record.storeApiId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=DATE},
+      </if>
+      <if test="record.clickRunProductDownload != null">
+        clickRunProductDownload = #{record.clickRunProductDownload,jdbcType=INTEGER},
+      </if>
+      <if test="record.clickRunPurchaseDownload != null">
+        clickRunPurchaseDownload = #{record.clickRunPurchaseDownload,jdbcType=INTEGER},
+      </if>
+      <if test="record.migrateMemberStatus != null">
+        migrateMemberStatus = #{record.migrateMemberStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.migrateStockStatus != null">
+        migrateStockStatus = #{record.migrateStockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.migratePurchaseStatus != null">
+        migratePurchaseStatus = #{record.migratePurchaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.migrateSaleStatus != null">
+        migrateSaleStatus = #{record.migrateSaleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.migratePriceStatus != null">
+        migratePriceStatus = #{record.migratePriceStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sysConfig
+    set configId = #{record.configId,jdbcType=INTEGER},
+    storeId = #{record.storeId,jdbcType=VARCHAR},
+    storeCode = #{record.storeCode,jdbcType=VARCHAR},
+    storeLicense = #{record.storeLicense,jdbcType=VARCHAR},
+    storeAuthStatus = #{record.storeAuthStatus,jdbcType=INTEGER},
+    storeSa = #{record.storeSa,jdbcType=VARCHAR},
+    storeIP = #{record.storeIP,jdbcType=VARCHAR},
+    storeMAC = #{record.storeMAC,jdbcType=VARCHAR},
+    storeHost = #{record.storeHost,jdbcType=VARCHAR},
+    socialPort = #{record.socialPort,jdbcType=VARCHAR},
+    socialComm = #{record.socialComm,jdbcType=VARCHAR},
+    storeAppkey = #{record.storeAppkey,jdbcType=VARCHAR},
+    storeApisecret = #{record.storeApisecret,jdbcType=VARCHAR},
+    storeApiId = #{record.storeApiId,jdbcType=VARCHAR},
+    modifyDate = #{record.modifyDate,jdbcType=DATE},
+    clickRunProductDownload = #{record.clickRunProductDownload,jdbcType=INTEGER},
+    clickRunPurchaseDownload = #{record.clickRunPurchaseDownload,jdbcType=INTEGER},
+    migrateMemberStatus = #{record.migrateMemberStatus,jdbcType=INTEGER},
+    migrateStockStatus = #{record.migrateStockStatus,jdbcType=INTEGER},
+    migratePurchaseStatus = #{record.migratePurchaseStatus,jdbcType=INTEGER},
+    migrateSaleStatus = #{record.migrateSaleStatus,jdbcType=INTEGER},
+    migratePriceStatus = #{record.migratePriceStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.system.model.SysConfig">
+    update sysConfig
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCode != null">
+        storeCode = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLicense != null">
+        storeLicense = #{storeLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAuthStatus != null">
+        storeAuthStatus = #{storeAuthStatus,jdbcType=INTEGER},
+      </if>
+      <if test="storeSa != null">
+        storeSa = #{storeSa,jdbcType=VARCHAR},
+      </if>
+      <if test="storeIP != null">
+        storeIP = #{storeIP,jdbcType=VARCHAR},
+      </if>
+      <if test="storeMAC != null">
+        storeMAC = #{storeMAC,jdbcType=VARCHAR},
+      </if>
+      <if test="storeHost != null">
+        storeHost = #{storeHost,jdbcType=VARCHAR},
+      </if>
+      <if test="socialPort != null">
+        socialPort = #{socialPort,jdbcType=VARCHAR},
+      </if>
+      <if test="socialComm != null">
+        socialComm = #{socialComm,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAppkey != null">
+        storeAppkey = #{storeAppkey,jdbcType=VARCHAR},
+      </if>
+      <if test="storeApisecret != null">
+        storeApisecret = #{storeApisecret,jdbcType=VARCHAR},
+      </if>
+      <if test="storeApiId != null">
+        storeApiId = #{storeApiId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=DATE},
+      </if>
+      <if test="clickRunProductDownload != null">
+        clickRunProductDownload = #{clickRunProductDownload,jdbcType=INTEGER},
+      </if>
+      <if test="clickRunPurchaseDownload != null">
+        clickRunPurchaseDownload = #{clickRunPurchaseDownload,jdbcType=INTEGER},
+      </if>
+      <if test="migrateMemberStatus != null">
+        migrateMemberStatus = #{migrateMemberStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migrateStockStatus != null">
+        migrateStockStatus = #{migrateStockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migratePurchaseStatus != null">
+        migratePurchaseStatus = #{migratePurchaseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migrateSaleStatus != null">
+        migrateSaleStatus = #{migrateSaleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="migratePriceStatus != null">
+        migratePriceStatus = #{migratePriceStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where configId = #{configId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.system.model.SysConfig">
+    update sysConfig
+    set storeId = #{storeId,jdbcType=VARCHAR},
+    storeCode = #{storeCode,jdbcType=VARCHAR},
+    storeLicense = #{storeLicense,jdbcType=VARCHAR},
+    storeAuthStatus = #{storeAuthStatus,jdbcType=INTEGER},
+    storeSa = #{storeSa,jdbcType=VARCHAR},
+    storeIP = #{storeIP,jdbcType=VARCHAR},
+    storeMAC = #{storeMAC,jdbcType=VARCHAR},
+    storeHost = #{storeHost,jdbcType=VARCHAR},
+    socialPort = #{socialPort,jdbcType=VARCHAR},
+    socialComm = #{socialComm,jdbcType=VARCHAR},
+    storeAppkey = #{storeAppkey,jdbcType=VARCHAR},
+    storeApisecret = #{storeApisecret,jdbcType=VARCHAR},
+    storeApiId = #{storeApiId,jdbcType=VARCHAR},
+    modifyDate = #{modifyDate,jdbcType=DATE},
+    clickRunProductDownload = #{clickRunProductDownload,jdbcType=INTEGER},
+    clickRunPurchaseDownload = #{clickRunPurchaseDownload,jdbcType=INTEGER},
+    migrateMemberStatus = #{migrateMemberStatus,jdbcType=INTEGER},
+    migrateStockStatus = #{migrateStockStatus,jdbcType=INTEGER},
+    migratePurchaseStatus = #{migratePurchaseStatus,jdbcType=INTEGER},
+    migrateSaleStatus = #{migrateSaleStatus,jdbcType=INTEGER},
+    migratePriceStatus = #{migratePriceStatus,jdbcType=INTEGER}
+    where configId = #{configId,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+    update  sysConfig set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where configId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+    update  sysConfig set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+    delete from  sysConfig where configId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+    delete from   sysConfig where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+    select * from  sysConfig where configId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+    select * from  sysConfig where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+    select * from  sysConfig where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+    select * from  sysConfig where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--根据门店id查询-->
+  <select id="findByStoreId" resultMap="BaseResultMap">
+    SELECT * FROM  sysConfig WHERE storeId = #{storeId}
+  </select>
+</mapper>

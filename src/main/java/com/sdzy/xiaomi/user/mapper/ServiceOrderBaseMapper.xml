@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.user.mapper.ServiceOrderBaseMapper">
+	<!--添加订单 信息-->
+	<insert id="insertOrderBase">	
+		insert into  serviceOrderBase(orderBaseId,orderNo,totalFee,payment,buyerId,buyerName,payType,isPayed,state,createTime)
+		values(#{orderBaseId},#{orderNo},#{totalFee},#{payment},#{buyerId},#{buyerName},#{payType},#{isPayed},#{state},#{createTime})
+	</insert>
+	<!-- 添加订单明细-->
+	<insert id="insertOrderDetail">
+		insert into serviceOrderDetail(orderDetailId,companyId,orderNo,productName,unit,price,buyCount,totalFee,payment,state,createTime)
+		values(#{orderDetailId},#{companyId},#{orderNo},#{productName},#{unit},#{price},#{buyCount},#{totalFee},#{payment},#{state},#{createTime})
+	</insert>
+	<!-- 根据订单号修改 支付状态 -->
+	<update id="updateBase">
+		update serviceOrderBase set payOrderNo=#{payOrderNo},payTime=#{payTime},modifyTime=#{modifyTime},state=#{state},isPayed=#{isPay}
+			where orderNo=#{orderNo}
+	</update>	
+	<!-- 根据订单号修改 明细表订单状态 -->
+	<update id="updateDetail">
+		update serviceOrderDetail set state=#{state}
+		where orderNo=#{orderNo}
+	</update>
+	<!-- 根据订单号查询数据 -->
+	<select id="selectByOrderNo" resultType="java.util.Map">
+		select de.* from (select sod.*,sob.buyerId from  serviceOrderDetail sod, serviceOrderBase sob
+		  where sob.orderNo=sod.orderNo )de where orderNo=#{orderNo} 
+	</select>
+	<!-- 更新短信数量 -->
+	<select id="updateStat" resultType="java.util.Map">
+		update   serviceProductStat set totalCount=#{count} where buyerId=#{buyerId}
+	</select>	
+	
+	
+	<!--  -->
+	<select id="selectBaseBybuyerId" resultType="java.util.Map">
+		SELECT
+		  orderBaseId,
+		  orderNo,
+		  totalFee,
+		  discountFee,
+		  payment,
+		  buyerType,
+		  buyerId,
+		  buyerName,
+		  buyerAccount,
+		  payType,
+		  isPayed,
+		  payOrderNo,
+		  DATE_FORMAT (payTime,'%Y-%m-%d')payTime,
+		  state,
+		  DATE_FORMAT (createTime,'%Y-%m-%d')createTime,
+		  DATE_FORMAT (modifyTime,'%Y-%m-%d')modifyTime,
+		  endTime,
+		  remark
+		 FROM serviceOrderBase where buyerId=#{buyerId} order by createTime desc		 		
+	</select>
+	
+	<select id="selectDetail" resultType="java.util.Map">		
+		SELECT 
+		  detail.* 
+		FROM
+		  (SELECT 
+		    sod.*,
+		    sob.orderBaseId,
+		    sob.buyerType,
+		    sob.buyerId,
+		    sob.buyerName,
+		    sob.buyerAccount,
+		    sob.payType,
+		    sob.isPayed,
+		    sob.payOrderNo,
+		    sob.payTime,
+		    sob.endTime
+		  FROM
+		     serviceOrderBase sob,
+		     serviceOrderDetail sod WHERE sob.orderNo = sod.orderNo ) detail where orderNo=#{orderNo}		     	
+	</select>
+</mapper>

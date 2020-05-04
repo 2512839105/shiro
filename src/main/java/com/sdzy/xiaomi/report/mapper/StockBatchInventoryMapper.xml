@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.report.mapper.StockBatchInventoryMapper">
+	  <resultMap id="BaseResultMap" type="com.sdzy.xiaomi.report.model.StockBatchInventory">
+    <id column="inventoryId" jdbcType="VARCHAR" property="inventoryId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="produceDate" jdbcType="VARCHAR" property="produceDate" />
+    <result column="expiryDate" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="batchNo" jdbcType="VARCHAR" property="batchNo" />
+    <result column="lotNo" jdbcType="VARCHAR" property="lotNo" />
+    <result column="stockCount" jdbcType="DECIMAL" property="stockCount" />
+    <result column="purchaseCount" jdbcType="DECIMAL" property="purchaseCount" />
+    <result column="purchasePrice" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="purchaseFee" jdbcType="DECIMAL" property="purchaseFee" />
+    <result column="operatorId" jdbcType="VARCHAR" property="operatorId" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="inspectionOrderNo" jdbcType="VARCHAR" property="inspectionOrderNo" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="mnemonicName" jdbcType="VARCHAR" property="mnemonicName" />
+    <result column="barCode" jdbcType="VARCHAR" property="barCode" />
+    <result column="isYiBao" jdbcType="INTEGER" property="isYiBao" />
+
+  </resultMap>
+ 
+	<!-- 12.效期品种， 查寻库存表 -->
+	<select id="stockBatchInventory" resultType="java.util.Map">
+			SELECT storeId,productName,supplierName,standard,expiryDate,(TO_DAYS(expirydate)-TO_DAYS(produceDate))term ,DATE_FORMAT(IFNULL(createDate,NOW()),'%Y-%m-%d')createDate,
+            COUNT(productName)number FROM stockBatchInventory WHERE 
+		NULL(deleteFlag,0) != -1  and storeId = #{storeId}  GROUP BY DATE_FORMAT(IFNULL(produceDate, NOW()), '%Y-%m-%d'),productName, storeId
+			
+	</select>
+	
+	<!--查询库存数量 降序排列  -->
+	 <select id="listStockCount" resultType="java.util.Map">		 
+         SELECT productId,productName,productCode,SUM(stockCount)stockCount
+         FROM stockBatchInventory WHERE  IFNULL(deleteFlag,0) != -1   and storeId=#{storeId}                       
+        GROUP BY productName   order by  SUM(stockCount)      
+    <if test=" sor!=null and sor==1">desc</if> <if test=" sor!=null and sor==0">asc</if>
+    </select> 
+    <select id="listStockCountByCodeOrName" resultType="java.util.Map">
+        SELECT productId,productName,productCode,SUM(stockCount)stockCount
+         FROM stockBatchInventory WHERE  IFNULL(deleteFlag,0) != -1  and storeId=#{storeId}
+         <if test="codeOrName!=null and codeOrName!=''" >and productCode like  CONCAT('%',#{codeOrName}, '%') or productName like  CONCAT('%',#{codeOrName}, '%') </if>                        
+         <!-- 
+      <if test="whereList != null"> 
+ 		 <foreach collection="whereList" item="item"> 
+ 			<choose> 
+ 				 <when test="item.opStr == 'in' ">and ${item.key} in   	
+ 				 	<foreach collection="item.value" item="val" open="(" separator="," close=")"> 
+ 				 	 	#{val}  	
+ 				 	 </foreach>   
+ 				 </when>   
+ 					<when test="item.opStr == 'like'">
+ 						 and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')  
+ 					</when> 
+ 					  <otherwise>
+ 					    and ${item.key} ${item.opStr} #{item.value}  
+ 					  </otherwise> 
+ 			 </choose> 
+ 		</foreach>
+ 	 </if>   -->
+ 	 GROUP BY productName   order by  SUM(stockCount)      
+    <if test=" sor!=null and sor==1">desc</if> <if test=" sor!=null and sor==0">asc</if>
+    </select>
+    
+			 
+     <!--  查效期品种，指在三个月内的，或过期的 -->
+     <!-- 一个月 -->
+	<select id="listExpiriedProductByMonth" resultType="java.util.Map">
+		 SELECT productId,productCode,productName,batchNo,
+		 DATE_FORMAT(IFNULL(expiryDate, NOW()), '%Y-%m-%d')expiryDate,
+	   (TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)))term,
+	   SUM(stockCount)stockCount,
+	   purchasePrice
+	   FROM stockBatchInventory WHERE  TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate))&lt;30 	   
+		AND TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate))&gt;0 
+		and storeId=#{storeId}
+	   AND stockCount &gt;0
+	   AND IFNULL(deleteFlag,0) != -1 
+	   GROUP BY DATE_FORMAT(IFNULL(produceDate, NOW()), '%Y-%m-%d'),productName,storeId Order by expiryDate  <if test="sor!=null and sor==1">desc </if> <if test="sor!=null and sor==0">asc</if>
+   
+    </select>
+     <!--  1-3个月  -->
+    <select id="listExpiriedProductByWeek" resultType="java.util.Map">
+		 	 SELECT productId,productCode,productName,batchNo,
+		 DATE_FORMAT(IFNULL(expiryDate, NOW()), '%Y-%m-%d')expiryDate,
+	   (TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)))term,
+	   SUM(stockCount)stockCount,
+	   purchasePrice
+	   FROM stockBatchInventory WHERE  TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate))&lt;90 	   
+		AND TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate))&gt;30 
+	   AND IFNULL(deleteFlag,0) != -1 
+	   and storeId=#{storeId}
+	   AND stockCount &gt;0
+	   GROUP BY DATE_FORMAT(IFNULL(produceDate, NOW()), '%Y-%m-%d'),productName,storeId Order by expiryDate  <if test="sor!=null and sor==1">desc </if> <if test="sor!=null and sor==0">asc</if>
+	   
+       </select>
+    <!-- 3-6个月-->
+    <select id="listExpiriedProductByDay" resultType="java.util.Map">
+	  	SELECT productId,productCode,productName,batchNo,
+		 DATE_FORMAT(IFNULL(expiryDate, NOW()), '%Y-%m-%d')expiryDate,
+	   (TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)))term,
+	   SUM(stockCount),
+	   purchasePrice
+	   FROM stockBatchInventory  where  TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)) &lt; 180	   
+		AND TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)) &gt;90
+	   AND IFNULL(deleteFlag,0) != -1 	  
+	   AND storeId=#{storeId}
+	   AND stockCount &gt;0
+ 	   GROUP BY DATE_FORMAT(IFNULL(produceDate, NOW()), '%Y-%m-%d'),productName,storeId  Order by expiryDate  <if test="sor!=null and sor==1">desc </if> <if test="sor!=null and sor==0">asc</if>
+	   
+        </select>
+    <!--过期 -->
+   <select id="listExpiriedProductByBeoverdue" resultType="java.util.Map">  
+      	SELECT productId,productCode,productName,batchNo,     	
+		 DATE_FORMAT(IFNULL(expiryDate, NOW()), '%Y-%m-%d')expiryDate,
+	   (TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate)))term,
+	   SUM(stockCount)stockCount,
+	   purchasePrice
+	   FROM stockBatchInventory WHERE  TO_DAYS(expiryDate)-TO_DAYS(produceDate)-(TO_DAYS(NOW())-TO_DAYS(produceDate))&lt;0 	   		
+	   AND IFNULL(deleteFlag,0) != -1 
+	   and storeId=#{storeId}
+	   AND stockCount &gt;0	  
+	   GROUP BY DATE_FORMAT(IFNULL(produceDate, NOW()), '%Y-%m-%d'),productName,storeId Order by expiryDate  <if test="sor!=null and sor==1">desc </if> <if test="sor!=null and sor==0">asc</if>
+    </select>
+       	
+	<!-- 缺货预警 -->
+	<select id="listLessStock" resultType="java.util.Map">
+			 			
+			SELECT productId,productCode,productName, SUM(totalStorage)totalStorage,SUM(sellAmount)sellAmount,
+			CASE storageFloor WHEN 0
+       			THEN 3
+       		 END AS storageFloor
+			FROM ( SELECT bd.*,sd. sellAmount FROM baseProduct bd ,saleOrderDetail sd WHERE bd.productCode=sd.productCode)baseProduct
+			WHERE  IFNULL(deleteFlag,0) != -1 And storeId=#{storeId}	     					
+			GROUP BY productName HAVING 0 &lt;=SUM(totalStorage)&lt;=storageFloor order by SUM(totalStorage)				
+			<if test="sor!=null and sor==1">desc </if> <if test="sor!=null and sor==0">asc</if>
+	</select>
+	
+	<!--通过产品名字查询商品  -->
+	<select id="commodityInquiryByproductName" resultType="java.util.Map">
+		SELECT  DISTINCT sby.productCode,sby.standard ,sby.productId,sby.productName
+          FROM stockBatchInventory sby,baseProduct bp
+         
+           WHERE sby.productId=bp.productId and    sby.storeId=#{storeId} and  sby.stockCount&gt;0   AND IFNULL(sby.deleteFlag,0) != -1 and
+          	(sby.productName LIKE concat('%',#{productName},'%') or sby.productCode LIKE concat('%',#{productName},'%') or bp.barCode LIKE concat('%',#{productName},'%') or bp.mnemonicName LIKE concat('%',#{productName},'%'))  
+          group by sby.productCode
+          	     
+	</select>
+	
+	<!--盘点  -->
+<!-- 	//and sb.storeId =#{storeId}
+ -->	<select id="findInventorys" resultType="java.util.Map">
+		 select sb.* from stockBatchInventory sb,baseProduct b where 
+    			 sb.productId = b.productId  and barCode=#{keyword} or b.productCode=#{keyword} group by batchNo;		
+	</select>
+	
+	<select id="listByParam" resultMap="BaseResultMap">
+  <!--  修改1=1 author:YH,date:20180803 -->
+<!--     select * from  stockBatchInventory where 1=1  AND IFNULL(deleteFlag,'') &lt;> -1<if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if> -->
+    SELECT * FROM  stockBatchInventory
+    WHERE IFNULL(deleteFlag,'') != -1
+    <if test="storeId != null">
+        AND storeId=#{storeId}
+    </if>
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+    ORDER BY expiryDate ASC
+  </select>
+  
+  <select id="findByParam" resultMap="BaseResultMap">
+  <!--  1=1 author:YH,date:20180803 -->
+<!--     SELECT * FROM  stockBatchInventory WHERE 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if> -->
+    SELECT * FROM  stockBatchInventory
+    WHERE IFNULL(deleteFlag,'') != -1
+    <if test="storeId != null">
+      AND storeId=#{storeId}
+    </if>
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+    ORDER BY expiryDate ASC
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.asdzy.purpleredgourd.stock.model.StockBatchInventory">
+    update stockBatchInventory
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplierId = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplierName = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        genericName = #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        producingArea = #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        produceDate = #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        expiryDate = #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batchNo = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        lotNo = #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCount != null">
+        stockCount = #{stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseCount != null">
+        purchaseCount = #{purchaseCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null">
+        purchasePrice = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseFee != null">
+        purchaseFee = #{purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null">
+        operatorId = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionOrderNo != null">
+        inspectionOrderNo = #{inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where inventoryId = #{inventoryId,jdbcType=VARCHAR}
+  </update>
+	
+</mapper>

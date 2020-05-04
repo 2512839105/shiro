@@ -1,0 +1,1162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.sale.mapper.MallSaleOrderDetailDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.sale.model.MallSaleOrderDetail">
+    <id column="saleOrderDetailId" jdbcType="VARCHAR" property="saleOrderDetailId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="saleOrderNo" jdbcType="VARCHAR" property="saleOrderNo" />
+    <result column="inspectionOrderNo" jdbcType="VARCHAR" property="inspectionOrderNo" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="expiryDate" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="produceDate" jdbcType="VARCHAR" property="produceDate" />
+    <result column="batchNo" jdbcType="VARCHAR" property="batchNo" />
+    <result column="lotNo" jdbcType="VARCHAR" property="lotNo" />
+    <result column="isRxDrug" jdbcType="INTEGER" property="isRxDrug" />
+    <result column="isEphedrine" jdbcType="INTEGER" property="isEphedrine" />
+    <result column="isGMP" jdbcType="INTEGER" property="isGMP" />
+    <result column="isSplitDrug" jdbcType="INTEGER" property="isSplitDrug" />
+    <result column="isYiBao" jdbcType="INTEGER" property="isYiBao" />
+    <result column="stockCount" jdbcType="DECIMAL" property="stockCount" />
+    <result column="saleCount" jdbcType="DECIMAL" property="saleCount" />
+    <result column="costPrice" jdbcType="DECIMAL" property="costPrice" />
+    <result column="costAmount" jdbcType="DECIMAL" property="costAmount" />
+    <result column="originalPrice" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="originalAmount" jdbcType="DECIMAL" property="originalAmount" />
+    <result column="sellPrice" jdbcType="DECIMAL" property="sellPrice" />
+    <result column="sellAmount" jdbcType="DECIMAL" property="sellAmount" />
+    <result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="retailAmount" jdbcType="DECIMAL" property="retailAmount" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+    <result column="tradeAmount" jdbcType="DECIMAL" property="tradeAmount" />
+    <result column="memberPrice" jdbcType="DECIMAL" property="memberPrice" />
+    <result column="memberAmount" jdbcType="DECIMAL" property="memberAmount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="discountFee" jdbcType="DECIMAL" property="discountFee" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="saleOrderId" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="lineNum" jdbcType="INTEGER" property="lineNum" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="detailType" jdbcType="INTEGER" property="detailType" />
+    <result column="hasPromotion" jdbcType="INTEGER" property="hasPromotion" />
+    <result column="promotionGiveCount" jdbcType="DECIMAL" property="promotionGiveCount" />
+    <result column="promotionReduceAmount" jdbcType="DECIMAL" property="promotionReduceAmount" />
+    <result column="promotionProductId" jdbcType="VARCHAR" property="promotionProductId" />
+    <result column="promotionName" jdbcType="VARCHAR" property="promotionName" />
+    <result column="promotionGiveProductNames" jdbcType="VARCHAR" property="promotionGiveProductNames" />
+    <result column="promotionGiveProductIds" jdbcType="VARCHAR" property="promotionGiveProductIds" />
+    <result column="promotionGiveAmount" jdbcType="DECIMAL" property="promotionGiveAmount" />
+    <result column="categoryId" jdbcType="VARCHAR" property="categoryId" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="localRetailPrice" jdbcType="DECIMAL" property="localRetailPrice" />
+    <!--不在数据库中字段-->
+    <result column="firstSplitDate" jdbcType="TIMESTAMP" property="firstSplitDate" />
+    <result column="memberNo" jdbcType="VARCHAR" property="memberNo" />
+    <result column="memberName" jdbcType="VARCHAR" property="memberName" />
+    <result column="operater" jdbcType="VARCHAR" property="operater" />
+    <result column="splitUser" jdbcType="VARCHAR" property="splitUser" />
+    <result column="saleOrderType" jdbcType="INTEGER" property="saleOrderType" />
+    <result column="detailType" jdbcType="INTEGER" property="detailType" />
+    <result column="saleDate" jdbcType="TIMESTAMP" property="saleDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    saleOrderDetailId, storeId, saleOrderNo, inspectionOrderNo, productId, productCode,
+    productName, genericName, producingArea, standard, unit, approvalNumber, produceFactory,
+    dosageForm, expiryDate, produceDate, batchNo, lotNo, isRxDrug, isEphedrine, isGMP,
+    isSplitDrug, isYiBao, stockCount, saleCount, costPrice, costAmount, originalPrice,
+    originalAmount, sellPrice, sellAmount, retailPrice, retailAmount, tradePrice, tradeAmount,
+    memberPrice, memberAmount, discount, discountFee, createDate, modifyDate, remark,
+    saleOrderId, lineNum, deleteFlag, detailType, hasPromotion, promotionGiveCount, promotionReduceAmount,
+    promotionProductId, promotionName, promotionGiveProductNames, promotionGiveProductIds,
+    promotionGiveAmount, categoryId, seller, localRetailPrice
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSaleOrderDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from saleOrderDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from saleOrderDetail
+    where saleOrderDetailId = #{saleOrderDetailId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from saleOrderDetail
+    where saleOrderDetailId = #{saleOrderDetailId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSaleOrderDetailExample">
+    delete from saleOrderDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.sale.model.MallSaleOrderDetail">
+    insert into saleOrderDetail (saleOrderDetailId, storeId, saleOrderNo,
+    inspectionOrderNo, productId, productCode,
+    productName, genericName, producingArea,
+    standard, unit, approvalNumber,
+    produceFactory, dosageForm, expiryDate,
+    produceDate, batchNo, lotNo,
+    isRxDrug, isEphedrine, isGMP,
+    isSplitDrug, isYiBao, stockCount,
+    saleCount, costPrice, costAmount,
+    originalPrice, originalAmount, sellPrice,
+    sellAmount, retailPrice, retailAmount,
+    tradePrice, tradeAmount, memberPrice,
+    memberAmount, discount, discountFee,
+    createDate, modifyDate, remark,
+    saleOrderId, lineNum, deleteFlag,
+    detailType, hasPromotion, promotionGiveCount,
+    promotionReduceAmount, promotionProductId,
+    promotionName, promotionGiveProductNames,
+    promotionGiveProductIds, promotionGiveAmount,
+    categoryId, seller, localRetailPrice)
+    values (#{saleOrderDetailId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{saleOrderNo,jdbcType=VARCHAR},
+    #{inspectionOrderNo,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR},
+    #{productName,jdbcType=VARCHAR}, #{genericName,jdbcType=VARCHAR}, #{producingArea,jdbcType=VARCHAR},
+    #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{approvalNumber,jdbcType=VARCHAR},
+    #{produceFactory,jdbcType=VARCHAR}, #{dosageForm,jdbcType=VARCHAR}, #{expiryDate,jdbcType=VARCHAR},
+    #{produceDate,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{lotNo,jdbcType=VARCHAR},
+    #{isRxDrug,jdbcType=INTEGER}, #{isEphedrine,jdbcType=INTEGER}, #{isGMP,jdbcType=INTEGER},
+    #{isSplitDrug,jdbcType=INTEGER}, #{isYiBao,jdbcType=INTEGER}, #{stockCount,jdbcType=DECIMAL},
+    #{saleCount,jdbcType=DECIMAL}, #{costPrice,jdbcType=DECIMAL}, #{costAmount,jdbcType=DECIMAL},
+    #{originalPrice,jdbcType=DECIMAL}, #{originalAmount,jdbcType=DECIMAL}, #{sellPrice,jdbcType=DECIMAL},
+    #{sellAmount,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, #{retailAmount,jdbcType=DECIMAL},
+    #{tradePrice,jdbcType=DECIMAL}, #{tradeAmount,jdbcType=DECIMAL}, #{memberPrice,jdbcType=DECIMAL},
+    #{memberAmount,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{discountFee,jdbcType=DECIMAL},
+    #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},
+    #{saleOrderId,jdbcType=VARCHAR}, #{lineNum,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER},
+    #{detailType,jdbcType=INTEGER}, #{hasPromotion,jdbcType=INTEGER}, #{promotionGiveCount,jdbcType=DECIMAL},
+    #{promotionReduceAmount,jdbcType=DECIMAL}, #{promotionProductId,jdbcType=VARCHAR},
+    #{promotionName,jdbcType=VARCHAR}, #{promotionGiveProductNames,jdbcType=VARCHAR},
+    #{promotionGiveProductIds,jdbcType=VARCHAR}, #{promotionGiveAmount,jdbcType=DECIMAL},
+    #{categoryId,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR}, #{localRetailPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.mall.sale.model.MallSaleOrderDetail">
+    insert into saleOrderDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saleOrderDetailId != null">
+        saleOrderDetailId,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="saleOrderNo != null">
+        saleOrderNo,
+      </if>
+      <if test="inspectionOrderNo != null">
+        inspectionOrderNo,
+      </if>
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="productCode != null">
+        productCode,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="genericName != null">
+        genericName,
+      </if>
+      <if test="producingArea != null">
+        producingArea,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber,
+      </if>
+      <if test="produceFactory != null">
+        produceFactory,
+      </if>
+      <if test="dosageForm != null">
+        dosageForm,
+      </if>
+      <if test="expiryDate != null">
+        expiryDate,
+      </if>
+      <if test="produceDate != null">
+        produceDate,
+      </if>
+      <if test="batchNo != null">
+        batchNo,
+      </if>
+      <if test="lotNo != null">
+        lotNo,
+      </if>
+      <if test="isRxDrug != null">
+        isRxDrug,
+      </if>
+      <if test="isEphedrine != null">
+        isEphedrine,
+      </if>
+      <if test="isGMP != null">
+        isGMP,
+      </if>
+      <if test="isSplitDrug != null">
+        isSplitDrug,
+      </if>
+      <if test="isYiBao != null">
+        isYiBao,
+      </if>
+      <if test="stockCount != null">
+        stockCount,
+      </if>
+      <if test="saleCount != null">
+        saleCount,
+      </if>
+      <if test="costPrice != null">
+        costPrice,
+      </if>
+      <if test="costAmount != null">
+        costAmount,
+      </if>
+      <if test="originalPrice != null">
+        originalPrice,
+      </if>
+      <if test="originalAmount != null">
+        originalAmount,
+      </if>
+      <if test="sellPrice != null">
+        sellPrice,
+      </if>
+      <if test="sellAmount != null">
+        sellAmount,
+      </if>
+      <if test="retailPrice != null">
+        retailPrice,
+      </if>
+      <if test="retailAmount != null">
+        retailAmount,
+      </if>
+      <if test="tradePrice != null">
+        tradePrice,
+      </if>
+      <if test="tradeAmount != null">
+        tradeAmount,
+      </if>
+      <if test="memberPrice != null">
+        memberPrice,
+      </if>
+      <if test="memberAmount != null">
+        memberAmount,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="discountFee != null">
+        discountFee,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="saleOrderId != null">
+        saleOrderId,
+      </if>
+      <if test="lineNum != null">
+        lineNum,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="detailType != null">
+        detailType,
+      </if>
+      <if test="hasPromotion != null">
+        hasPromotion,
+      </if>
+      <if test="promotionGiveCount != null">
+        promotionGiveCount,
+      </if>
+      <if test="promotionReduceAmount != null">
+        promotionReduceAmount,
+      </if>
+      <if test="promotionProductId != null">
+        promotionProductId,
+      </if>
+      <if test="promotionName != null">
+        promotionName,
+      </if>
+      <if test="promotionGiveProductNames != null">
+        promotionGiveProductNames,
+      </if>
+      <if test="promotionGiveProductIds != null">
+        promotionGiveProductIds,
+      </if>
+      <if test="promotionGiveAmount != null">
+        promotionGiveAmount,
+      </if>
+      <if test="categoryId != null">
+        categoryId,
+      </if>
+      <if test="seller != null">
+        seller,
+      </if>
+      <if test="localRetailPrice != null">
+        localRetailPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saleOrderDetailId != null">
+        #{saleOrderDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderNo != null">
+        #{saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionOrderNo != null">
+        #{inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRxDrug != null">
+        #{isRxDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isEphedrine != null">
+        #{isEphedrine,jdbcType=INTEGER},
+      </if>
+      <if test="isGMP != null">
+        #{isGMP,jdbcType=INTEGER},
+      </if>
+      <if test="isSplitDrug != null">
+        #{isSplitDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isYiBao != null">
+        #{isYiBao,jdbcType=INTEGER},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleCount != null">
+        #{saleCount,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costAmount != null">
+        #{costAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null">
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="originalAmount != null">
+        #{originalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sellPrice != null">
+        #{sellPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellAmount != null">
+        #{sellAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null">
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailAmount != null">
+        #{retailAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradePrice != null">
+        #{tradePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="memberPrice != null">
+        #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memberAmount != null">
+        #{memberAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountFee != null">
+        #{discountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNum != null">
+        #{lineNum,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="detailType != null">
+        #{detailType,jdbcType=INTEGER},
+      </if>
+      <if test="hasPromotion != null">
+        #{hasPromotion,jdbcType=INTEGER},
+      </if>
+      <if test="promotionGiveCount != null">
+        #{promotionGiveCount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionReduceAmount != null">
+        #{promotionReduceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionProductId != null">
+        #{promotionProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionName != null">
+        #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveProductNames != null">
+        #{promotionGiveProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveProductIds != null">
+        #{promotionGiveProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveAmount != null">
+        #{promotionGiveAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="localRetailPrice != null">
+        #{localRetailPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSaleOrderDetailExample" resultType="java.lang.Long">
+    select count(*) from saleOrderDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update saleOrderDetail
+    <set>
+      <if test="record.saleOrderDetailId != null">
+        saleOrderDetailId = #{record.saleOrderDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderNo != null">
+        saleOrderNo = #{record.saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectionOrderNo != null">
+        inspectionOrderNo = #{record.inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        productId = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null">
+        productCode = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genericName != null">
+        genericName = #{record.genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producingArea != null">
+        producingArea = #{record.producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null">
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalNumber != null">
+        approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceFactory != null">
+        produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dosageForm != null">
+        dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expiryDate != null">
+        expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceDate != null">
+        produceDate = #{record.produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        batchNo = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotNo != null">
+        lotNo = #{record.lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRxDrug != null">
+        isRxDrug = #{record.isRxDrug,jdbcType=INTEGER},
+      </if>
+      <if test="record.isEphedrine != null">
+        isEphedrine = #{record.isEphedrine,jdbcType=INTEGER},
+      </if>
+      <if test="record.isGMP != null">
+        isGMP = #{record.isGMP,jdbcType=INTEGER},
+      </if>
+      <if test="record.isSplitDrug != null">
+        isSplitDrug = #{record.isSplitDrug,jdbcType=INTEGER},
+      </if>
+      <if test="record.isYiBao != null">
+        isYiBao = #{record.isYiBao,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCount != null">
+        stockCount = #{record.stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.saleCount != null">
+        saleCount = #{record.saleCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.costPrice != null">
+        costPrice = #{record.costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.costAmount != null">
+        costAmount = #{record.costAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.originalPrice != null">
+        originalPrice = #{record.originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.originalAmount != null">
+        originalAmount = #{record.originalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sellPrice != null">
+        sellPrice = #{record.sellPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sellAmount != null">
+        sellAmount = #{record.sellAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.retailPrice != null">
+        retailPrice = #{record.retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.retailAmount != null">
+        retailAmount = #{record.retailAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradePrice != null">
+        tradePrice = #{record.tradePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeAmount != null">
+        tradeAmount = #{record.tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberPrice != null">
+        memberPrice = #{record.memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberAmount != null">
+        memberAmount = #{record.memberAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null">
+        discount = #{record.discount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discountFee != null">
+        discountFee = #{record.discountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createDate != null">
+        createDate = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderId != null">
+        saleOrderId = #{record.saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineNum != null">
+        lineNum = #{record.lineNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleteFlag != null">
+        deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.detailType != null">
+        detailType = #{record.detailType,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasPromotion != null">
+        hasPromotion = #{record.hasPromotion,jdbcType=INTEGER},
+      </if>
+      <if test="record.promotionGiveCount != null">
+        promotionGiveCount = #{record.promotionGiveCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promotionReduceAmount != null">
+        promotionReduceAmount = #{record.promotionReduceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promotionProductId != null">
+        promotionProductId = #{record.promotionProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionName != null">
+        promotionName = #{record.promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionGiveProductNames != null">
+        promotionGiveProductNames = #{record.promotionGiveProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionGiveProductIds != null">
+        promotionGiveProductIds = #{record.promotionGiveProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionGiveAmount != null">
+        promotionGiveAmount = #{record.promotionGiveAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId != null">
+        categoryId = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seller != null">
+        seller = #{record.seller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localRetailPrice != null">
+        localRetailPrice = #{record.localRetailPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update saleOrderDetail
+    set saleOrderDetailId = #{record.saleOrderDetailId,jdbcType=VARCHAR},
+    storeId = #{record.storeId,jdbcType=VARCHAR},
+    saleOrderNo = #{record.saleOrderNo,jdbcType=VARCHAR},
+    inspectionOrderNo = #{record.inspectionOrderNo,jdbcType=VARCHAR},
+    productId = #{record.productId,jdbcType=VARCHAR},
+    productCode = #{record.productCode,jdbcType=VARCHAR},
+    productName = #{record.productName,jdbcType=VARCHAR},
+    genericName = #{record.genericName,jdbcType=VARCHAR},
+    producingArea = #{record.producingArea,jdbcType=VARCHAR},
+    standard = #{record.standard,jdbcType=VARCHAR},
+    unit = #{record.unit,jdbcType=VARCHAR},
+    approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+    produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+    dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+    expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+    produceDate = #{record.produceDate,jdbcType=VARCHAR},
+    batchNo = #{record.batchNo,jdbcType=VARCHAR},
+    lotNo = #{record.lotNo,jdbcType=VARCHAR},
+    isRxDrug = #{record.isRxDrug,jdbcType=INTEGER},
+    isEphedrine = #{record.isEphedrine,jdbcType=INTEGER},
+    isGMP = #{record.isGMP,jdbcType=INTEGER},
+    isSplitDrug = #{record.isSplitDrug,jdbcType=INTEGER},
+    isYiBao = #{record.isYiBao,jdbcType=INTEGER},
+    stockCount = #{record.stockCount,jdbcType=DECIMAL},
+    saleCount = #{record.saleCount,jdbcType=DECIMAL},
+    costPrice = #{record.costPrice,jdbcType=DECIMAL},
+    costAmount = #{record.costAmount,jdbcType=DECIMAL},
+    originalPrice = #{record.originalPrice,jdbcType=DECIMAL},
+    originalAmount = #{record.originalAmount,jdbcType=DECIMAL},
+    sellPrice = #{record.sellPrice,jdbcType=DECIMAL},
+    sellAmount = #{record.sellAmount,jdbcType=DECIMAL},
+    retailPrice = #{record.retailPrice,jdbcType=DECIMAL},
+    retailAmount = #{record.retailAmount,jdbcType=DECIMAL},
+    tradePrice = #{record.tradePrice,jdbcType=DECIMAL},
+    tradeAmount = #{record.tradeAmount,jdbcType=DECIMAL},
+    memberPrice = #{record.memberPrice,jdbcType=DECIMAL},
+    memberAmount = #{record.memberAmount,jdbcType=DECIMAL},
+    discount = #{record.discount,jdbcType=DECIMAL},
+    discountFee = #{record.discountFee,jdbcType=DECIMAL},
+    createDate = #{record.createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    saleOrderId = #{record.saleOrderId,jdbcType=VARCHAR},
+    lineNum = #{record.lineNum,jdbcType=INTEGER},
+    deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+    detailType = #{record.detailType,jdbcType=INTEGER},
+    hasPromotion = #{record.hasPromotion,jdbcType=INTEGER},
+    promotionGiveCount = #{record.promotionGiveCount,jdbcType=DECIMAL},
+    promotionReduceAmount = #{record.promotionReduceAmount,jdbcType=DECIMAL},
+    promotionProductId = #{record.promotionProductId,jdbcType=VARCHAR},
+    promotionName = #{record.promotionName,jdbcType=VARCHAR},
+    promotionGiveProductNames = #{record.promotionGiveProductNames,jdbcType=VARCHAR},
+    promotionGiveProductIds = #{record.promotionGiveProductIds,jdbcType=VARCHAR},
+    promotionGiveAmount = #{record.promotionGiveAmount,jdbcType=DECIMAL},
+    categoryId = #{record.categoryId,jdbcType=VARCHAR},
+    seller = #{record.seller,jdbcType=VARCHAR},
+    localRetailPrice = #{record.localRetailPrice,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.sale.model.MallSaleOrderDetail">
+    update saleOrderDetail
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderNo != null">
+        saleOrderNo = #{saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionOrderNo != null">
+        inspectionOrderNo = #{inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        genericName = #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        producingArea = #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        expiryDate = #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        produceDate = #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batchNo = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        lotNo = #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRxDrug != null">
+        isRxDrug = #{isRxDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isEphedrine != null">
+        isEphedrine = #{isEphedrine,jdbcType=INTEGER},
+      </if>
+      <if test="isGMP != null">
+        isGMP = #{isGMP,jdbcType=INTEGER},
+      </if>
+      <if test="isSplitDrug != null">
+        isSplitDrug = #{isSplitDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isYiBao != null">
+        isYiBao = #{isYiBao,jdbcType=INTEGER},
+      </if>
+      <if test="stockCount != null">
+        stockCount = #{stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="saleCount != null">
+        saleCount = #{saleCount,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null">
+        costPrice = #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costAmount != null">
+        costAmount = #{costAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null">
+        originalPrice = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="originalAmount != null">
+        originalAmount = #{originalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="sellPrice != null">
+        sellPrice = #{sellPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellAmount != null">
+        sellAmount = #{sellAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null">
+        retailPrice = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailAmount != null">
+        retailAmount = #{retailAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradePrice != null">
+        tradePrice = #{tradePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeAmount != null">
+        tradeAmount = #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="memberPrice != null">
+        memberPrice = #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memberAmount != null">
+        memberAmount = #{memberAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountFee != null">
+        discountFee = #{discountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        saleOrderId = #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNum != null">
+        lineNum = #{lineNum,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="detailType != null">
+        detailType = #{detailType,jdbcType=INTEGER},
+      </if>
+      <if test="hasPromotion != null">
+        hasPromotion = #{hasPromotion,jdbcType=INTEGER},
+      </if>
+      <if test="promotionGiveCount != null">
+        promotionGiveCount = #{promotionGiveCount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionReduceAmount != null">
+        promotionReduceAmount = #{promotionReduceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionProductId != null">
+        promotionProductId = #{promotionProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionName != null">
+        promotionName = #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveProductNames != null">
+        promotionGiveProductNames = #{promotionGiveProductNames,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveProductIds != null">
+        promotionGiveProductIds = #{promotionGiveProductIds,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionGiveAmount != null">
+        promotionGiveAmount = #{promotionGiveAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId != null">
+        categoryId = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="localRetailPrice != null">
+        localRetailPrice = #{localRetailPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where saleOrderDetailId = #{saleOrderDetailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.sale.model.MallSaleOrderDetail">
+    update saleOrderDetail
+    set storeId = #{storeId,jdbcType=VARCHAR},
+    saleOrderNo = #{saleOrderNo,jdbcType=VARCHAR},
+    inspectionOrderNo = #{inspectionOrderNo,jdbcType=VARCHAR},
+    productId = #{productId,jdbcType=VARCHAR},
+    productCode = #{productCode,jdbcType=VARCHAR},
+    productName = #{productName,jdbcType=VARCHAR},
+    genericName = #{genericName,jdbcType=VARCHAR},
+    producingArea = #{producingArea,jdbcType=VARCHAR},
+    standard = #{standard,jdbcType=VARCHAR},
+    unit = #{unit,jdbcType=VARCHAR},
+    approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+    produceFactory = #{produceFactory,jdbcType=VARCHAR},
+    dosageForm = #{dosageForm,jdbcType=VARCHAR},
+    expiryDate = #{expiryDate,jdbcType=VARCHAR},
+    produceDate = #{produceDate,jdbcType=VARCHAR},
+    batchNo = #{batchNo,jdbcType=VARCHAR},
+    lotNo = #{lotNo,jdbcType=VARCHAR},
+    isRxDrug = #{isRxDrug,jdbcType=INTEGER},
+    isEphedrine = #{isEphedrine,jdbcType=INTEGER},
+    isGMP = #{isGMP,jdbcType=INTEGER},
+    isSplitDrug = #{isSplitDrug,jdbcType=INTEGER},
+    isYiBao = #{isYiBao,jdbcType=INTEGER},
+    stockCount = #{stockCount,jdbcType=DECIMAL},
+    saleCount = #{saleCount,jdbcType=DECIMAL},
+    costPrice = #{costPrice,jdbcType=DECIMAL},
+    costAmount = #{costAmount,jdbcType=DECIMAL},
+    originalPrice = #{originalPrice,jdbcType=DECIMAL},
+    originalAmount = #{originalAmount,jdbcType=DECIMAL},
+    sellPrice = #{sellPrice,jdbcType=DECIMAL},
+    sellAmount = #{sellAmount,jdbcType=DECIMAL},
+    retailPrice = #{retailPrice,jdbcType=DECIMAL},
+    retailAmount = #{retailAmount,jdbcType=DECIMAL},
+    tradePrice = #{tradePrice,jdbcType=DECIMAL},
+    tradeAmount = #{tradeAmount,jdbcType=DECIMAL},
+    memberPrice = #{memberPrice,jdbcType=DECIMAL},
+    memberAmount = #{memberAmount,jdbcType=DECIMAL},
+    discount = #{discount,jdbcType=DECIMAL},
+    discountFee = #{discountFee,jdbcType=DECIMAL},
+    createDate = #{createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+    remark = #{remark,jdbcType=VARCHAR},
+    saleOrderId = #{saleOrderId,jdbcType=VARCHAR},
+    lineNum = #{lineNum,jdbcType=INTEGER},
+    deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+    detailType = #{detailType,jdbcType=INTEGER},
+    hasPromotion = #{hasPromotion,jdbcType=INTEGER},
+    promotionGiveCount = #{promotionGiveCount,jdbcType=DECIMAL},
+    promotionReduceAmount = #{promotionReduceAmount,jdbcType=DECIMAL},
+    promotionProductId = #{promotionProductId,jdbcType=VARCHAR},
+    promotionName = #{promotionName,jdbcType=VARCHAR},
+    promotionGiveProductNames = #{promotionGiveProductNames,jdbcType=VARCHAR},
+    promotionGiveProductIds = #{promotionGiveProductIds,jdbcType=VARCHAR},
+    promotionGiveAmount = #{promotionGiveAmount,jdbcType=DECIMAL},
+    categoryId = #{categoryId,jdbcType=VARCHAR},
+    seller = #{seller,jdbcType=VARCHAR},
+    localRetailPrice = #{localRetailPrice,jdbcType=DECIMAL
+    where saleOrderDetailId = #{saleOrderDetailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+    update  saleOrderDetail set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where saleOrderDetailId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+    update  saleOrderDetail set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+    delete from  saleOrderDetail where saleOrderDetailId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+    delete from   saleOrderDetail where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+    select * from  saleOrderDetail where saleOrderDetailId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+    select * from  saleOrderDetail where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+    select * from  saleOrderDetail where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+    select * from  saleOrderDetail where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--销售报表-->
+  <select id="listReportListByPage" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT d.*,(SELECT bp.mnemonicName FROM baseProduct bp WHERE d.productId =  bp.productId) mnemonicName,
+    (SELECT bp.barCode FROM baseProduct bp WHERE d.productId =  bp.productId) barCode,
+    (SELECT b.memberName FROM baseMember b WHERE o.memberNo = b.memberNo) memberName, o.saleOrderType, o.saleDate , o.operater
+    FROM saleOrderDetail d , saleOrder o
+    WHERE d.saleOrderNo = o.saleOrderNo AND o.isPay = 1) report WHERE 1=1
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--查询审核后的处方单销售报表-->
+  <select id="listIsRxDrugReportListByPage" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT d.*,(SELECT bp.mnemonicName FROM baseProduct bp WHERE d.productId =  bp.productId) mnemonicName,
+    (SELECT bp.barCode FROM baseProduct bp WHERE d.productId =  bp.productId) barCode,
+    (SELECT b.memberName FROM baseMember b WHERE o.memberNo = b.memberNo) memberName, o.saleOrderType, o.saleDate , o.operater
+    FROM saleOrderDetail d , saleOrder o, salePrescriptionOrder spo
+    WHERE d.saleOrderNo = o.saleOrderNo AND o.isPay = 1 AND d.saleOrderNo = spo.prescriptionOrderNo AND spo.auditState = 2) report  WHERE 1=1
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--查询拆零单销售报表-->
+  <select id="listSplitReportListByPage" resultMap="BaseResultMap">
+--     SELECT * FROM (SELECT d.*,(SELECT bp.mnemonicName FROM baseProduct bp WHERE d.productId =  bp.productId) mnemonicName,
+--     (SELECT bp.barCode FROM baseProduct bp WHERE d.productId =  bp.productId) barCode,
+--     (SELECT b.memberName FROM baseMember b WHERE o.memberNo = b.memberNo) memberName, o.saleOrderType, o.saleDate , o.operater
+--     FROM saleOrderDetail d , saleOrder o
+--     WHERE d.saleOrderNo = o.saleOrderNo AND o.isPay = 1) report WHERE 1=1
+--     AND productCode LIKE '9%'
+      SELECT * FROM
+       (SELECT d.*,(SELECT bp.mnemonicName FROM baseProduct bp WHERE d.productId =  bp.productId) mnemonicName,
+         (SELECT bp.barCode FROM baseProduct bp WHERE d.productId =  bp.productId) barCode,
+         (SELECT b.memberName FROM baseMember b WHERE o.memberNo = b.memberNo) memberName,
+          o.saleOrderType, o.saleDate , o.operater, product.createDate as firstSplitDate
+        FROM saleOrderDetail d , saleOrder o, baseProduct product
+        WHERE d.saleOrderNo = o.saleOrderNo AND o.isPay = 1 AND d.productId = product.productId) report
+      WHERE productCode LIKE '9%'
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <select id="listByLastestDate"  resultMap="BaseResultMap">
+    	select * from  saleOrderDetail where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  
+  <select id="getMaxDate"  parameterType="String" resultType="java.util.Date">
+   	 select max(createDate) from saleOrderDetail where storeId = #{storeId}
+  </select>
+
+  <!--根据条形码查询销售明细-->
+  <select id="findSaleDetaisByBarCode" resultMap="BaseResultMap">
+    SELECT * FROM
+    (SELECT * FROM saleOrderDetail a
+        WHERE (a.productCode,a.saleOrderNo)
+        NOT IN
+       (SELECT productCode,saleOrderNo FROM saleOrderDetail GROUP BY productCode,saleOrderNo HAVING COUNT(*) > 1)
+    ) c
+    LEFT JOIN baseProduct b
+    ON c.productCode = b.productCode
+    WHERE c.storeId=#{storeId}
+    AND  (b.barCode = #{keyword} OR b.localBarCode = #{keyword})
+    <![CDATA[ AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(c.createDate)]]>
+    ORDER BY  c.createDate DESC
+  </select>
+
+  <select id="selectCount" resultType="String">
+	 SELECT sum(saleCount) from saleOrderDetail where productCode=#{0} and createDate BETWEEN #{1} and #{2}
+  </select>
+
+  <select id="selectFeeCount" resultType="BigDecimal">
+	 SELECT sum(memberPrice) from saleOrderDetail where productCode=#{0} and createDate BETWEEN #{1} and #{2}
+  </select>
+
+  <select id="selectMember" resultType="BigDecimal">
+	 SELECT sum(costAmount) from saleOrderDetail where productCode=#{0} and createDate BETWEEN #{1} and #{2}
+  </select>
+  
+  <select id="listInterfaceData" resultMap="BaseResultMap">
+  	SELECT
+		sd.*
+	FROM
+		saleOrderDetail sd,
+		baseProduct bp
+	WHERE
+	sd.storeId = bp.storeId
+	AND sd.productCode = bp.productCode
+	AND bp.categoryId NOT IN (6, 7, 8)
+	AND bp.isYiBao = 1
+	<if test = "storeId != null">
+	  AND sd.storeId = #{storeId}
+	</if>
+	<if	test="createDate != null ">
+   	  AND sd.createDate > #{createDate,jdbcType=TIMESTAMP}
+	</if>
+  </select>
+</mapper>

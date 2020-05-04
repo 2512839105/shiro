@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.base.mapper.SysRoleDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.xiaomi.base.entity.SysRole">
+    <id column="roleId" jdbcType="VARCHAR" property="roleId" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    <result column="roleSign" jdbcType="VARCHAR" property="roleSign" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="orderNum" jdbcType="INTEGER" property="orderNum" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    roleId, roleName, roleSign, storeId, orderNum, remark, createUserId, createDate,
+    modifyDate, status
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.xiaomi.base.entity.vo.SysRoleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sysRole
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sysRole
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sysRole
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.xiaomi.base.entity.vo.SysRoleExample">
+    delete from sysRole
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.xiaomi.base.entity.SysRole">
+    insert into sysRole (roleId, roleName, roleSign,
+    storeId, orderNum, remark,
+    createUserId, createDate, modifyDate,
+    status)
+    values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleSign,jdbcType=VARCHAR},
+    #{storeId,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+    #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP},
+    #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.xiaomi.base.entity.SysRole">
+    insert into sysRole
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        roleId,
+      </if>
+      <if test="roleName != null">
+        roleName,
+      </if>
+      <if test="roleSign != null">
+        roleSign,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="orderNum != null">
+        orderNum,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleSign != null">
+        #{roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.xiaomi.base.entity.vo.SysRoleExample" resultType="java.lang.Long">
+    select count(*) from sysRole
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sysRole
+    <set>
+      <if test="record.roleId != null">
+        roleId = #{record.roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleName != null">
+        roleName = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleSign != null">
+        roleSign = #{record.roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNum != null">
+        orderNum = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        createDate = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sysRole
+    set roleId = #{record.roleId,jdbcType=VARCHAR},
+    roleName = #{record.roleName,jdbcType=VARCHAR},
+    roleSign = #{record.roleSign,jdbcType=VARCHAR},
+    storeId = #{record.storeId,jdbcType=VARCHAR},
+    orderNum = #{record.orderNum,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    createUserId = #{record.createUserId,jdbcType=VARCHAR},
+    createDate = #{record.createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+    status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.xiaomi.base.entity.SysRole">
+    update sysRole
+    <set>
+      <if test="roleName != null">
+        roleName = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleSign != null">
+        roleSign = #{roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        orderNum = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.xiaomi.base.entity.SysRole">
+    update sysRole
+    set roleName = #{roleName,jdbcType=VARCHAR},
+    roleSign = #{roleSign,jdbcType=VARCHAR},
+    storeId = #{storeId,jdbcType=VARCHAR},
+    orderNum = #{orderNum,jdbcType=INTEGER},
+    remark = #{remark,jdbcType=VARCHAR},
+    createUserId = #{createUserId,jdbcType=VARCHAR},
+    createDate = #{createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+    status = #{status,jdbcType=INTEGER}
+    where roleId = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+    update  sysRole set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where roleId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+    update  sysRole set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+    delete from  sysRole where roleId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+    delete from   sysRole where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+    select * from  sysRole where roleId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+    select * from  sysRole where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+    select * from  sysRole where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+    select * from  sysRole where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--查询所有角色名称-->
+  <select id="listRolesByKeyword" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT a.*, b.storeName FROM  sysRole a left JOIN baseStoreInfo b on a.storeId = b.storeId ) sysRole WHERE IFNULL(status,'') != "-1"
+    <if test="createUserId != null and createUserId.trim() != ''">
+      and createUserId = #{createUserId}
+    </if>
+    <if test="storeId != null and storeId.trim() != ''">
+      and storeId = #{storeId}
+    </if>
+    <if test="keyword != null and keyword.trim() != ''">
+      AND (roleName LIKE concat('%',#{keyword},'%') or roleSign LIKE concat('%',#{keyword},'%'))
+    </if>
+    ORDER BY  orderNum  ASC
+  </select>
+
+  <!--查询用户所有角色名称-->
+  <select id="listUserRoles" parameterType="string" resultType="string">
+    SELECT DISTINCT
+    r.roleSign
+    FROM
+    sysUserRole ur
+    LEFT JOIN sysRole r ON ur.roleId = r.roleId
+    LEFT JOIN sysUser u ON ur.userId = u.userId
+    WHERE
+    IFNULL(u.status,'') != 0 AND u.userId = #{role} AND IFNULL(ur.deleteFlag,'') != -1
+    ORDER BY  orderNum  ASC
+  </select>
+  
+  <!--查询用户所有角色-->
+  <select id="listUserRoleNames" parameterType="string" resultType="com.sdzy.xiaomi.base.entity.SysRole">
+    SELECT 
+    r.*
+    FROM
+    sysUserRole ur
+    LEFT JOIN sysRole r ON ur.roleId = r.roleId
+    LEFT JOIN sysUser u ON ur.userId = u.userId
+    WHERE
+    IFNULL(u.status,'') != 0 AND u.userId = #{value} AND IFNULL(ur.deleteFlag,'') != -1
+    ORDER BY  orderNum  ASC
+  </select>
+
+ <!--  <select id="listIdAndName" resultType="com.sdzy.xiaomi.base.entity.SysRole">
+    SELECT    roleId,   roleName    FROM   sysRole  WHERE IFNULL(status,'') != "-1"
+    <if test="storeId != null">
+      and storeId = #{storeId}
+    </if>
+    ORDER BY  orderNum  ASC
+  </select> -->
+  
+  <select id="listIdAndName" resultType="com.sdzy.xiaomi.base.entity.SysRole">
+    SELECT    roleId,   roleName, roleSign, status, storeId   FROM   sysRole 
+    <if test="storeId != null">
+     WHERE storeId = #{storeId}
+    </if>
+    ORDER BY  orderNum  ASC
+  </select>
+  
+  
+  <select id="getRoleNames" resultType="String" parameterType="String">
+  SELECT roleName FROM sysRole  WHERE roleId IN(SELECT roleId FROM sysUserRole WHERE userId=#{userId}) 
+  </select>
+  
+  
+
+</mapper>

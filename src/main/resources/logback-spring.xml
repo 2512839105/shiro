@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{HH:mm:ss} %-5level %logger{36} -%msg%n</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${catalina.base}/logs/dianzhang.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss} %-5level %logger{36} -%msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender> 
+	<logger name="com.sdzy" level="DEBUG" />
+		
+	<root>
+		<level value="INFO" />
+	    <appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration> 

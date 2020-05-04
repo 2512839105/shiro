@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.stock.mapper.MallStockBatchInventoryDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.stock.model.MallStockBatchInventory">
+    <id column="inventoryId" jdbcType="VARCHAR" property="inventoryId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="produceDate" jdbcType="VARCHAR" property="produceDate" />
+    <result column="expiryDate" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="batchNo" jdbcType="VARCHAR" property="batchNo" />
+    <result column="lotNo" jdbcType="VARCHAR" property="lotNo" />
+    <result column="stockCount" jdbcType="DECIMAL" property="stockCount" />
+    <result column="purchaseCount" jdbcType="DECIMAL" property="purchaseCount" />
+    <result column="purchasePrice" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="purchaseFee" jdbcType="DECIMAL" property="purchaseFee" />
+    <result column="operatorId" jdbcType="VARCHAR" property="operatorId" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="inspectionOrderNo" jdbcType="VARCHAR" property="inspectionOrderNo" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+
+    <result column="mnemonicName" jdbcType="VARCHAR" property="mnemonicName" />
+    <result column="barCode" jdbcType="VARCHAR" property="barCode" />
+    <result column="isYiBao" jdbcType="INTEGER" property="isYiBao" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    inventoryId, storeId, supplierId, supplierName, productId, productCode, productName,
+    genericName, standard, unit, producingArea, produceFactory, approvalNumber, dosageForm,
+    produceDate, expiryDate, batchNo, lotNo, stockCount, purchaseCount, purchasePrice,
+    purchaseFee, operatorId, operator, inspectionOrderNo, createDate, modifyDate, remark,
+    deleteFlag
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.mall.stock.model.vo.MallStockBatchInventoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stockBatchInventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stockBatchInventory
+    where inventoryId = #{inventoryId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from stockBatchInventory
+    where inventoryId = #{inventoryId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.mall.stock.model.vo.MallStockBatchInventoryExample">
+    delete from stockBatchInventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.stock.model.MallStockBatchInventory">
+    insert into stockBatchInventory (inventoryId, storeId, supplierId,
+    supplierName, productId, productCode,
+    productName, genericName, standard,
+    unit, producingArea, produceFactory,
+    approvalNumber, dosageForm, produceDate,
+    expiryDate, batchNo, lotNo,
+    stockCount, purchaseCount, purchasePrice,
+    purchaseFee, operatorId, operator,
+    inspectionOrderNo, createDate, modifyDate,
+    remark, deleteFlag)
+    values (#{inventoryId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{supplierId,jdbcType=VARCHAR},
+    #{supplierName,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR},
+    #{productName,jdbcType=VARCHAR}, #{genericName,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR},
+    #{unit,jdbcType=VARCHAR}, #{producingArea,jdbcType=VARCHAR}, #{produceFactory,jdbcType=VARCHAR},
+    #{approvalNumber,jdbcType=VARCHAR}, #{dosageForm,jdbcType=VARCHAR}, #{produceDate,jdbcType=VARCHAR},
+    #{expiryDate,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{lotNo,jdbcType=VARCHAR},
+    #{stockCount,jdbcType=DECIMAL}, #{purchaseCount,jdbcType=DECIMAL}, #{purchasePrice,jdbcType=DECIMAL},
+    #{purchaseFee,jdbcType=DECIMAL}, #{operatorId,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR},
+    #{inspectionOrderNo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP},
+    #{remark,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.mall.stock.model.MallStockBatchInventory">
+    insert into stockBatchInventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inventoryId != null">
+        inventoryId,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="supplierId != null">
+        supplierId,
+      </if>
+      <if test="supplierName != null">
+        supplierName,
+      </if>
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="productCode != null">
+        productCode,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="genericName != null">
+        genericName,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="producingArea != null">
+        producingArea,
+      </if>
+      <if test="produceFactory != null">
+        produceFactory,
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber,
+      </if>
+      <if test="dosageForm != null">
+        dosageForm,
+      </if>
+      <if test="produceDate != null">
+        produceDate,
+      </if>
+      <if test="expiryDate != null">
+        expiryDate,
+      </if>
+      <if test="batchNo != null">
+        batchNo,
+      </if>
+      <if test="lotNo != null">
+        lotNo,
+      </if>
+      <if test="stockCount != null">
+        stockCount,
+      </if>
+      <if test="purchaseCount != null">
+        purchaseCount,
+      </if>
+      <if test="purchasePrice != null">
+        purchasePrice,
+      </if>
+      <if test="purchaseFee != null">
+        purchaseFee,
+      </if>
+      <if test="operatorId != null">
+        operatorId,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="inspectionOrderNo != null">
+        inspectionOrderNo,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inventoryId != null">
+        #{inventoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCount != null">
+        #{stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseCount != null">
+        #{purchaseCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseFee != null">
+        #{purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionOrderNo != null">
+        #{inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.mall.stock.model.vo.MallStockBatchInventoryExample" resultType="java.lang.Long">
+    select count(*) from stockBatchInventory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update stockBatchInventory
+    <set>
+      <if test="record.inventoryId != null">
+        inventoryId = #{record.inventoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierId != null">
+        supplierId = #{record.supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierName != null">
+        supplierName = #{record.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        productId = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null">
+        productCode = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genericName != null">
+        genericName = #{record.genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null">
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producingArea != null">
+        producingArea = #{record.producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceFactory != null">
+        produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalNumber != null">
+        approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dosageForm != null">
+        dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceDate != null">
+        produceDate = #{record.produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expiryDate != null">
+        expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        batchNo = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotNo != null">
+        lotNo = #{record.lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockCount != null">
+        stockCount = #{record.stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseCount != null">
+        purchaseCount = #{record.purchaseCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchasePrice != null">
+        purchasePrice = #{record.purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseFee != null">
+        purchaseFee = #{record.purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatorId != null">
+        operatorId = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectionOrderNo != null">
+        inspectionOrderNo = #{record.inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        createDate = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null">
+        deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update stockBatchInventory
+    set inventoryId = #{record.inventoryId,jdbcType=VARCHAR},
+    storeId = #{record.storeId,jdbcType=VARCHAR},
+    supplierId = #{record.supplierId,jdbcType=VARCHAR},
+    supplierName = #{record.supplierName,jdbcType=VARCHAR},
+    productId = #{record.productId,jdbcType=VARCHAR},
+    productCode = #{record.productCode,jdbcType=VARCHAR},
+    productName = #{record.productName,jdbcType=VARCHAR},
+    genericName = #{record.genericName,jdbcType=VARCHAR},
+    standard = #{record.standard,jdbcType=VARCHAR},
+    unit = #{record.unit,jdbcType=VARCHAR},
+    producingArea = #{record.producingArea,jdbcType=VARCHAR},
+    produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+    approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+    dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+    produceDate = #{record.produceDate,jdbcType=VARCHAR},
+    expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+    batchNo = #{record.batchNo,jdbcType=VARCHAR},
+    lotNo = #{record.lotNo,jdbcType=VARCHAR},
+    stockCount = #{record.stockCount,jdbcType=DECIMAL},
+    purchaseCount = #{record.purchaseCount,jdbcType=DECIMAL},
+    purchasePrice = #{record.purchasePrice,jdbcType=DECIMAL},
+    purchaseFee = #{record.purchaseFee,jdbcType=DECIMAL},
+    operatorId = #{record.operatorId,jdbcType=VARCHAR},
+    operator = #{record.operator,jdbcType=VARCHAR},
+    inspectionOrderNo = #{record.inspectionOrderNo,jdbcType=VARCHAR},
+    createDate = #{record.createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    deleteFlag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.stock.model.MallStockBatchInventory">
+    update stockBatchInventory
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplierId = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplierName = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        genericName = #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        producingArea = #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        produceDate = #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        expiryDate = #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batchNo = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        lotNo = #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCount != null">
+        stockCount = #{stockCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseCount != null">
+        purchaseCount = #{purchaseCount,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null">
+        purchasePrice = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseFee != null">
+        purchaseFee = #{purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorId != null">
+        operatorId = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionOrderNo != null">
+        inspectionOrderNo = #{inspectionOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where inventoryId = #{inventoryId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.stock.model.MallStockBatchInventory">
+    update stockBatchInventory
+    set storeId = #{storeId,jdbcType=VARCHAR},
+    supplierId = #{supplierId,jdbcType=VARCHAR},
+    supplierName = #{supplierName,jdbcType=VARCHAR},
+    productId = #{productId,jdbcType=VARCHAR},
+    productCode = #{productCode,jdbcType=VARCHAR},
+    productName = #{productName,jdbcType=VARCHAR},
+    genericName = #{genericName,jdbcType=VARCHAR},
+    standard = #{standard,jdbcType=VARCHAR},
+    unit = #{unit,jdbcType=VARCHAR},
+    producingArea = #{producingArea,jdbcType=VARCHAR},
+    produceFactory = #{produceFactory,jdbcType=VARCHAR},
+    approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+    dosageForm = #{dosageForm,jdbcType=VARCHAR},
+    produceDate = #{produceDate,jdbcType=VARCHAR},
+    expiryDate = #{expiryDate,jdbcType=VARCHAR},
+    batchNo = #{batchNo,jdbcType=VARCHAR},
+    lotNo = #{lotNo,jdbcType=VARCHAR},
+    stockCount = #{stockCount,jdbcType=DECIMAL},
+    purchaseCount = #{purchaseCount,jdbcType=DECIMAL},
+    purchasePrice = #{purchasePrice,jdbcType=DECIMAL},
+    purchaseFee = #{purchaseFee,jdbcType=DECIMAL},
+    operatorId = #{operatorId,jdbcType=VARCHAR},
+    operator = #{operator,jdbcType=VARCHAR},
+    inspectionOrderNo = #{inspectionOrderNo,jdbcType=VARCHAR},
+    createDate = #{createDate,jdbcType=TIMESTAMP},
+    modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+    remark = #{remark,jdbcType=VARCHAR},
+    deleteFlag = #{deleteFlag,jdbcType=INTEGER}
+    where inventoryId = #{inventoryId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+    update  stockBatchInventory set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where inventoryId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+    update  stockBatchInventory set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+    delete from  stockBatchInventory where inventoryId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+    delete from   stockBatchInventory where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+    select * from  stockBatchInventory where inventoryId = #{modelId}
+  </select>
+  <!--<select id="listByPage" resultMap="BaseResultMap">-->
+    <!--select * from  stockBatchInventory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>-->
+  <!--</select>-->
+  <select id="listByParam" resultMap="BaseResultMap">
+    select * from  stockBatchInventory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <!--<select id="findByParam" resultMap="BaseResultMap">-->
+    <!--select * from  stockBatchInventory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>-->
+  <!--</select>-->
+
+
+  <select id="listByPage" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT s.*,bp.barCode,bp.mnemonicName,bp.memberPrice,bp.localRetailPrice, bp.isYiBao FROM baseProduct bp,stockBatchInventory s WHERE s.productId =  bp.productId) stockBatchInventory  WHERE 1=1
+    <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <select id="findStockBatchByPage" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT s.*,bp.barCode,bp.mnemonicName,bp.memberPrice,bp.localRetailPrice, bp.isYiBao FROM baseProduct bp,stockBatchInventory s WHERE s.productId =  bp.productId) stockBatchInventory  WHERE 1=1
+    <if test="whereList != null">
+      <foreach collection="whereList" item="item">
+        <choose>
+          <when test="item.opStr == 'in' "> AND ${item.key} IN
+            <foreach collection="item.value" item="val" open="(" separator="," close=")">#{val}  	</foreach>
+          </when>
+          <when test="item.opStr == 'like'">
+            <if test="item.key == 'keyword'">
+              AND (
+              productCode ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR productName ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR genericName ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR producingArea ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR supplierName ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR batchNo ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR standard ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR unit ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR mnemonicName ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR barCode ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR produceFactory ${item.opStr} CONCAT('%',#{item.value},'%')
+              OR approvalNumber ${item.opStr} CONCAT('%',#{item.value},'%')
+              )
+            </if>
+            <if test="item.key != 'keyword'">
+              OR ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')
+            </if>
+          </when>
+          <otherwise>and ${item.key} ${item.opStr} #{item.value} </otherwise>
+        </choose>
+      </foreach>
+    </if>
+  </select>
+
+  <!--按近效期查询-->
+  <select id="findByParam" resultMap="BaseResultMap">
+    select * from  stockBatchInventory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+    ORDER BY expiryDate ASC
+  </select>
+
+  <!--引入分页列表-->
+  <select id="introduceByPage" resultMap="BaseResultMap">
+    select b.* from  stockBatchInventory b,baseProduct p where b.productId = p.productId AND b.batchNo IS NOT NULL
+    <if test="storeId != null">
+     and b.storeId=#{storeId}
+    </if>
+    <if test="keyword != null">
+      and (b.productCode like #{keyword} or b.productName like #{keyword} or b.genericName like #{keyword} )
+    </if>
+    <if test="produceFactory != null">
+      and p.produceFactory like #{produceFactory}
+    </if>
+    <if test="exhibitionArea != null">
+    	and p.exhibitionArea = #{exhibitionArea}
+    </if>
+    <if test="categoryId != null">
+    	and p.categoryId = #{categoryId}
+    </if>
+    <if test="stockCount != null">
+        <if test="stockCount == 0">
+            and stockCount = 0
+        </if>
+        <if test="stockCount == 1">
+            and stockCount > 0
+        </if>
+    </if>
+    <if test="isStock != null">
+    	and b.productCode not like '9%'
+    </if>
+  </select>
+<!--获取引入列表-->
+  <select id="introduceByParam" resultMap="BaseResultMap">
+    select b.* from  stockBatchInventory b,baseProduct p where b.productId = p.productId AND b.batchNo IS NOT NULL
+    <if test="storeId != null">
+     and b.storeId=#{storeId}
+    </if>
+    <if test="keyword != null">
+      and (b.productCode like CONCAT('%',#{keyword},'%') or b.productName like #{keyword} or b.genericName like #{keyword} )
+    </if>
+    <if test="produceFactory != null">
+      and p.produceFactory like CONCAT('%',#{produceFactory},'%')
+    </if>
+    <if test="exhibitionArea != null">
+        and p.exhibitionArea = #{exhibitionArea}
+    </if>
+    <if test="categoryId != null">
+        and p.categoryId = #{categoryId}
+    </if>
+    <if test="stockCount != null">
+        <if test="stockCount == 0">
+            and stockCount = 0
+        </if>
+        <if test="stockCount == 1">
+            and stockCount > 0
+        </if>
+    </if>
+    <if test="isStock != null">
+        and b.productCode not like '9%'
+    </if>
+  </select>
+  <!--选择列表-->
+  <select id="getList" resultMap="BaseResultMap">
+    select SBI.*, BP.averagePrice, BP.retailPrice, BP.memberPrice, BP.tradePrice, BP.totalStorage, BP.mnemonicName, BP.isMainConserve, BP.isDrugPiece,BP.scatteredCoefficient,BP.afterScatteredUnit from  stockBatchInventory SBI
+    LEFT JOIN baseProduct BP ON SBI.productId=BP.productId
+    where 1=1
+    <if test="storeId != null">
+    and  SBI.storeId=#{storeId}
+    </if>  
+    and (SBI.productCode like CONCAT('%',#{keyword},'%')
+    or SBI.productName like CONCAT('%',#{keyword},'%')
+    or SBI.genericName like CONCAT('%',#{keyword},'%')
+    or SBI.produceFactory like CONCAT('%',#{keyword},'%'))
+    order by SBI.productCode
+  </select>
+  
+  <select id="findByKeywords" resultMap="BaseResultMap">
+    select SBI.* from  stockBatchInventory SBI, baseProduct BP where 1=1 and SBI.productId = BP.productId
+    and SBI.storeId=#{storeId}
+    and (BP.barCode like CONCAT('%',#{keyword},'%')
+    or BP.productCode like CONCAT('%',#{keyword},'%')
+    or BP.genericName like CONCAT('%',#{keyword},'%')
+    or BP.mnemonicName like CONCAT('%',#{keyword},'%'))
+    order by BP.productCode
+  </select>
+  
+  <!-- 获取未养护的库存商品 -->
+  <!-- <select id="findNotMaintainProductList" resultMap="BaseResultMap">
+    select SBI.* from stockBatchInventory SBI LEFT JOIN gspProductMaintain GPM ON (SBI.productId=GPM.productId AND SBI.lotNo = GPM.lotNo)
+    where SBI.storeId=#{storeId} and GPM.productID is NULL and GPM.lotNo is NULL
+    and (SBI.productCode like CONCAT('%',#{keyword},'%')
+    or SBI.productName like CONCAT('%',#{keyword},'%')
+    or SBI.genericName like CONCAT('%',#{keyword},'%')
+    or SBI.produceFactory like CONCAT('%',#{keyword},'%'))
+    order by SBI.productCode
+  </select> -->
+  <!-- 获取未养护的库存商品 yh修改 -->
+  <select id="findNotMaintainProductList" resultMap="BaseResultMap">
+    select SBI.* from stockBatchInventory SBI LEFT JOIN gspProductMaintain GPM ON (SBI.productId=GPM.productId AND SBI.lotNo = GPM.lotNo)
+    inner join baseProduct BP on BP.productId = SBI.productId
+    <where>
+	    <if test="storeId != null">
+	    	and SBI.storeId=#{storeId} 
+	    </if>
+	    and GPM.productID is NULL and GPM.lotNo is NULL
+	    and (SBI.productCode like CONCAT('%',#{keyword},'%')
+	    or SBI.productName like CONCAT('%',#{keyword},'%')
+	    or SBI.genericName like CONCAT('%',#{keyword},'%')
+	    or SBI.produceFactory like CONCAT('%',#{keyword},'%'))
+	    and (
+	    (BP.isMainConserve = 1 and BP.categoryId != 5 and (DATEDIFF(NOW(),SBI.createDate)>=30 or DATEDIFF(NOW(),GPM.createDate)>=30)) 
+	    or(
+	    ((BP.isMainConserve = 0 and BP.categoryId != 5) or BP.categoryId = 5) and (DATEDIFF(NOW(),SBI.createDate)>=90 or DATEDIFF(NOW(),GPM.createDate)>=90))
+	    or (180 >= DATEDIFF(SBI.expiryDate,NOW()) and SBI.stockCount > 0)
+	    )
+    </where>
+    order by SBI.productCode
+  </select>
+  
+  <select id="selectStorage" resultType="String">
+  	select sum(stockCount) from stockBatchInventory where productCode=#{0}  and  createDate between #{1} and #{2}
+  </select>
+  <select id="selectStorageFee" resultType="BigDecimal">
+  	select sum(stockCount) from stockBatchInventory where productCode=#{0}  and  createDate between #{1} and #{2}
+  </select>
+  
+  <!--可拆零列表-->
+  <select id="getDetachableList" resultMap="BaseResultMap">
+    SELECT SBI.*, BP.averagePrice, BP.retailPrice,BP.localRetailPrice, BP.memberPrice, BP.tradePrice, BP.totalStorage, BP.mnemonicName, BP.isMainConserve, BP.isDrugPiece,BP.scatteredCoefficient,BP.afterScatteredUnit FROM  stockBatchInventory SBI
+    LEFT JOIN baseProduct BP ON SBI.productId=BP.productId
+    WHERE 1=1
+    <if test="storeId != null">
+    AND  SBI.storeId=#{storeId}
+    </if>  
+    <!-- 禁用的商品一样可用 -->
+    <!-- AND IFNULL(status,'') != 0 -->
+    AND BP.afterScatteredUnit != ''
+    AND BP.scatteredCoefficient != ''
+    AND SBI.productCode not like '9%'
+    AND (SBI.productCode like CONCAT('%',#{keyword},'%')
+    or SBI.productName like CONCAT('%',#{keyword},'%')
+    or SBI.genericName like CONCAT('%',#{keyword},'%')
+    or SBI.produceFactory like CONCAT('%',#{keyword},'%'))
+    ORDER BY SBI.productCode
+  </select>
+
+  <select id="getCountByStoreId" resultType="Integer">
+    select count(0) from stockBatchInventory where storeId=#{value}  order by productCode
+  </select>
+  
+</mapper>

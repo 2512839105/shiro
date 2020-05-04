@@ -1,0 +1,30 @@
+.dataReport,.contrain{height:auto!important;background:#f9f9f9!important;padding:0!important;}
+.boxBg{padding:8px!important;background:#ffffff;margin-bottom:8px;}
+.conditionSearch{border-bottom:1px solid #ddd;width:100%;}
+.conditionSearch .eName>a{height:30px;line-height:30px;}
+.dataShow>.list-inline>li{padding-bottom:0px!important;}
+.dataShow>.list-inline>li>.mian>.msg{bottom:-70px;}
+.dataBox>.palBox{display:none;}
+.dataBox>.active{display:block!important;}
+.dataShow .list-inline>li{padding-bottom:0px;}
+.dataShow .list-inline>li>.mian>.msg{bottom:0px;}
+
+.eName>a{height:30px;line-height:30px;}
+
+.storeCol6{position:relative;}
+.storeCol6 .selectOl{position:absolute;top:-6px;right:77px;}
+
+.curStaffInfo{}
+.curStaffInfo>.media{width:300px;display:inline-block;}
+.curStaffInfo>.media>.media-left{}
+.curStaffInfo>.media>.media-left>img{width:80px;height:80px;border-radius:50%;overflow:hidden;display:inline-block;}
+.curStaffInfo>.media>.media-body{}
+.curStaffInfo>.media>.media-body>.media-heading{font-size:15px;font-weight:600;}
+.curStaffInfo>.media>.media-body>.media-heading>span{margin-left:5px;display:inline-block;background:#ddd;border-radius:3px;
+	font-size:12px;padding:2px 8px;vertical-align:top;
+}
+.curStaffInfo>.media>.media-body>.media-rank{font-weight:600;}
+.curStaffInfo>.media>.media-body>.media-msg{margin-top:8px;color:#999;}
+
+.dataReport>.contrain>.row{padding-left:25%;}
+.dataReport>.contrain>.row>.row-left{position:fixed;left:0px;height:100%;overflow-y:auto;}

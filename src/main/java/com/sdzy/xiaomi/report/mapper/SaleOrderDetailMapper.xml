@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.report.mapper.SaleOrderDetailMapper">
+<resultMap id="BaseResultMap" type="com.sdzy.xiaomi.report.model.SaleOrderDetail">
+    <id column="saleOrderDetailId" jdbcType="VARCHAR" property="saleOrderDetailId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="saleOrderNo" jdbcType="VARCHAR" property="saleOrderNo" />
+    <result column="inspectionOrderNo" jdbcType="VARCHAR" property="inspectionOrderNo" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="expiryDate" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="produceDate" jdbcType="VARCHAR" property="produceDate" />
+    <result column="batchNo" jdbcType="VARCHAR" property="batchNo" />
+    <result column="lotNo" jdbcType="VARCHAR" property="lotNo" />
+    <result column="isRxDrug" jdbcType="INTEGER" property="isRxDrug" />
+    <result column="isEphedrine" jdbcType="INTEGER" property="isEphedrine" />
+    <result column="isGMP" jdbcType="INTEGER" property="isGMP" />
+    <result column="isSplitDrug" jdbcType="INTEGER" property="isSplitDrug" />
+    <result column="isYiBao" jdbcType="INTEGER" property="isYiBao" />
+    <result column="stockCount" jdbcType="DECIMAL" property="stockCount" />
+    <result column="saleCount" jdbcType="DECIMAL" property="saleCount" />
+    <result column="costPrice" jdbcType="DECIMAL" property="costPrice" />
+    <result column="costAmount" jdbcType="DECIMAL" property="costAmount" />
+    <result column="originalPrice" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="originalAmount" jdbcType="DECIMAL" property="originalAmount" />
+    <result column="sellPrice" jdbcType="DECIMAL" property="sellPrice" />
+    <result column="sellAmount" jdbcType="DECIMAL" property="sellAmount" />
+    <result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="retailAmount" jdbcType="DECIMAL" property="retailAmount" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+    <result column="tradeAmount" jdbcType="DECIMAL" property="tradeAmount" />
+    <result column="memberPrice" jdbcType="DECIMAL" property="memberPrice" />
+    <result column="memberAmount" jdbcType="DECIMAL" property="memberAmount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="discountFee" jdbcType="DECIMAL" property="discountFee" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="saleOrderId" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="payMethod" jdbcType="INTEGER" property="payMethod" />
+    <result column="lineNum" jdbcType="INTEGER" property="lineNum" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="detailType" jdbcType="INTEGER" property="detailType" />
+    <result column="hasPromotion" jdbcType="INTEGER" property="hasPromotion" />
+    <result column="promotionGiveCount" jdbcType="DECIMAL" property="promotionGiveCount" />
+    <result column="promotionReduceAmount" jdbcType="DECIMAL" property="promotionReduceAmount" />
+    <result column="promotionProductId" jdbcType="VARCHAR" property="promotionProductId" />
+    <result column="promotionName" jdbcType="VARCHAR" property="promotionName" />
+    <result column="promotionGiveProductNames" jdbcType="VARCHAR" property="promotionGiveProductNames" />
+    <result column="promotionGiveProductIds" jdbcType="VARCHAR" property="promotionGiveProductIds" />
+    <result column="promotionGiveAmount" jdbcType="DECIMAL" property="promotionGiveAmount" />
+    <result column="categoryId" jdbcType="VARCHAR" property="categoryId" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="localRetailPrice" jdbcType="DECIMAL" property="localRetailPrice" />
+    <result column="isGiveProduct" jdbcType="INTEGER" property="isGiveProduct" />
+    <result column="giveProdcutParentCode" jdbcType="VARCHAR" property="giveProdcutParentCode" />
+    <result column="isCommission" jdbcType="INTEGER" property="isCommission" />
+    <result column="commissionRadio" jdbcType="DECIMAL" property="commissionRadio" />
+    <result column="commissionAmount" jdbcType="DECIMAL" property="commissionAmount" />
+
+    <!--不在数据库中字段-->
+    <result column="firstSplitDate" jdbcType="TIMESTAMP" property="firstSplitDate" />
+    <result column="memberNo" jdbcType="VARCHAR" property="memberNo" />
+    <result column="memberName" jdbcType="VARCHAR" property="memberName" />
+    <result column="operater" jdbcType="VARCHAR" property="operater" />
+    <result column="splitUser" jdbcType="VARCHAR" property="splitUser" />
+    <result column="saleOrderType" jdbcType="INTEGER" property="saleOrderType" />
+    <result column="detailType" jdbcType="INTEGER" property="detailType" />
+    <result column="saleDate" jdbcType="TIMESTAMP" property="saleDate" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+
+    <result column="standardCode" jdbcType="VARCHAR" property="standardCode" />
+
+    <result column="payMethod" jdbcType="INTEGER" property="payMethod" />
+  </resultMap>
+	<!--按销售额 按日周月年  -->
+	<!--实时查询  -->
+		<select id="selectSaleOrderDetailByRealTime" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(sellAmount)sellAmount 
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> createDate &gt;DATE_SUB(CURDATE(), INTERVAL 1 day) and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')		
+	</select>
+ 
+	<!-- 日-->
+	<select id="selectSaleOrderDetailByDay" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(sellAmount)sellAmount 
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> createDate &gt;DATE_SUB(CURDATE(), INTERVAL 6 day) and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')		
+	</select>
+	<!-- 周 -->
+	<select id="selectSaleOrderDetailByWeek" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u') createDate,SUM(sellAmount)sellAmount 
+			FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''"> storeId=#{storeId} AND </if> YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) &lt;= 2 and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u')			
+	</select>
+	<!-- 月 -->
+	<select id="selectSaleOrderDetailByMoth" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate,SUM(sellAmount)sellAmount 			  
+			FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> PERIOD_DIFF( DATE_FORMAT( NOW( ) , '%Y%m' ) , DATE_FORMAT( createDate, '%Y%m' ) ) &lt;=2 and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m')		
+	</select>
+	<select id="selectSaleOrderDetailBySexMoth" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate,SUM(sellAmount)sellAmount 			  
+			FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> PERIOD_DIFF( DATE_FORMAT( NOW( ) , '%Y%m' ) , DATE_FORMAT( createDate, '%Y%m' ) ) &lt;=5 and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m')					
+	</select>
+	
+	<!-- 年 -->
+	<select id="selectSaleOrderDetailByYear" resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y') createDate,  SUM(sellAmount)sellAmount 
+		 FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId}  AND </if> YEAR(NOW())- YEAR(createDate) &lt;=2 and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y')		
+	</select>
+	<!--日期  -->
+	<select id="seleSaleOrderDetailByDate"  resultType="java.util.Map">
+			SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,
+			SUM(sellAmount)sellAmount 
+			 FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+			 WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId}  AND </if> <if test="dateType !=null and storeId!=''">DATE(createDate)=#{dateType}  AND </if>  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')		
+	</select>	
+	<!--按毛利 日周月年  -->
+	<!-- 按日 -->
+	<select id="selectlistGrossProfitByDay" resultType="java.util.Map">
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, 
+		  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		  WHERE createDate &gt;=DATE_SUB(CURDATE(), INTERVAL 6 day) and <if test="storeId !=null and storeId!=''"> storeId=#{storeId} and </if> IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+	  </select>
+	  
+	  <!-- 按周 -->
+	 <select id="selectlistGrossProfitByWeek" resultType="java.util.Map">
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u') createDate, 
+		  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		  WHERE <if test="storeId !=null and storeId!=''"> storeId=#{storeId} and </if> YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createdate,'%Y-%m-%d')) &lt;=2 and   IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u')
+	 </select>
+	 
+	  <!-- 按月 -->
+	 <select id="selectlistGrossProfitByMoth" resultType="java.util.Map">
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate, 
+		  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		  WHERE <if test="storeId !=null and storeId!=''">storeId=#{storeId} and</if> PERIOD_DIFF( DATE_FORMAT( NOW( ) , '%Y%m' ) , DATE_FORMAT( createDate, '%Y%m' ) ) &lt;=2 and  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m')
+	 </select>
+	  <!-- 按年 -->
+	 <select id="selectlistGrossProfitByYear" resultType="java.util.Map">
+		SELECT storeId,DATE_FORMAT(IFNULL(createDate, NOW()), '%Y') createDate, 
+		  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		  WHERE <if test="storeId !=null and storeId!=''"> storeId=#{storeId} and</if> YEAR(NOW())- YEAR(createDate) &lt;=2 AND IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y')
+	 
+	 </select>
+	 <!--实时查询  -->
+	 <select id="selectlistGrossProfitByRealTime" resultType="java.util.Map">
+	 		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, 
+	 SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+	 SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+	 FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+	 WHERE  <if test="storeId !=null and storeId!=''">storeId=#{storeId} and</if> createDate &gt;DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+	 </select>
+	 
+	 <!-- 按日期查 -->
+	<select id="selectlistByDate" resultType="java.util.Map">	 
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, 
+		  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail 
+		  WHERE <if test="storeId !=null and storeId!=''"> storeId=#{storeId} and</if> <if test="dateType !=null and storeId!=''">DATE(createDate)=#{dateType}  AND </if> IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+	
+	</select>	 
+
+	<select id="listMeber" resultType="java.util.Map">
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, 
+  	    SUM(sellPrice) sellPrice FROM (SELECT so.*,sd.sellPrice FROM  saleOrder so, saleOrderDetail  sd WHERE so.saleOrderId=sd.saleOrderId)saleOrder WHERE memberNo IS NOT NULL AND memberNo !='' AND  
+  		IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND storeId=#{storeId} and createDate &gt;DATE_SUB(CURDATE(), INTERVAL 1 DAY)  GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId
+	</select>
+	
+	<select id="listMeberByMonth" resultType="java.util.Map">
+		SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate, 
+  	    SUM(sellPrice) sellPrice FROM (SELECT so.*,sd.sellPrice FROM  saleOrder so, saleOrderDetail  sd WHERE so.storeId=sd.storeId)saleOrder WHERE memberNo IS NOT NULL AND memberNo !='' AND  
+  		IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') =DATE_FORMAT(NOW(),'%Y-%m-%d')   GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m'), storeId
+	</select>
+	
+	<!-- 排名-->	
+	<select id="rankings" resultType="java.util.Map">
+			SELECT SUM(discountFee)sellAmount,storeName ,storeCode,storeId FROM 
+		      (SELECT c.* ,storeName storeName ,storeCode  FROM
+		        (SELECT a.* FROM    
+		          (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(IFNULL(sellAmount,0)) discountFee        
+		          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+		          INNER JOIN  
+		          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+				FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+		          ON a.createDate = b.createDate AND a.storeId = b.storeId 	   
+			   ) c  INNER JOIN baseStoreInfo bsf
+			   ON c.storeId=bsf.storeId and bsf.status=1 )f           
+		       WHERE  1=1   <if test="dateType!=null and dateType==1">
+				and TO_DAYS(createDate) = TO_DAYS(NOW())    
+		      </if>
+		      <if test="dateType!=null and dateType!='' and dateType==5">and TO_DAYS(NOW()) - TO_DAYS(createDate)= 1</if>
+			  <if test="dateType!=null and dateType!='' and dateType==2">and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(createDate)      </if>
+			  <if test="dateType!=null and dateType!='' and dateType==3">and DATE_FORMAT( createDate,'%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )    </if>
+			  <if test="dateType!=null and dateType!='' and dateType==4">and DATE_FORMAT( createDate,'%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y')     </if>
+			  
+		GROUP BY storeId ORDER BY SUM(discountFee)  desc  
+	</select>
+	
+	 <select id="rankingsByStoreId" resultType="java.util.Map"> <!--sellAmount:销售金额  unitPrice：客单价 -->		 
+		 SELECT SUM(discountFee)sellAmount,storeName ,SUM(grossProfits)grossProfit,SUM(flow)flow, (SELECT  SUM(sellPrice) sellPrice FROM(SELECT so.*, sd.sellPrice FROM saleOrder so, saleOrderDetail sd WHERE so.saleOrderId = sd.saleOrderId) saleOrder WHERE storeId = #{storeId} AND YEAR(createDate)=YEAR(NOW())          
+    AND memberNo IS NOT NULL AND memberNo != ''  AND IFNULL(deleteFlag, 0) != - 1 AND isPay = 1) memberSellPrice,SUM(discountFee)/SUM(flow)unitPrice FROM     
+      (SELECT c.* ,d.flow ,storeName   FROM
+        (SELECT a.* FROM    
+          (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,
+            SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfits, SUM(IFNULL(sellAmount,0)) discountFee       
+          FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) a
+          INNER JOIN  
+          (SELECT storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+		FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d'), storeId) b
+          ON a.createDate = b.createDate AND a.storeId = b.storeId 	   
+	  ) c 
+	  LEFT OUTER JOIN
+	  /*-- 客流量*/
+	  (SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'), storeId) d
+	  ON c.createDate = d.createDate AND c.storeId = d.storeId
+	   LEFT OUTER JOIN baseStoreInfo bsf
+	   ON d.storeId=bsf.storeId         
+          ) f    
+    WHERE   
+       YEAR(createDate)=YEAR(NOW())
+     AND storeId=#{storeId}
+ 	</select>		
+	<!--员工业绩  -->
+		<!--本月  -->
+		<select id="employeePerformanceThisMonth" resultType="java.util.Map">
+	
+	  SELECT SUM(flow)flow,sellerId, storeId,seller ,SUM(sellAmount)sellAmount,SUM(grossProfit)grossProfit,SUM(tradeAmount)tradeAmount,DATE_FORMAT(createDate,'%Y-%m')createDate FROM
+      (SELECT c.*,d.flow FROM(SELECT a.* FROM  (SELECT sellerId, seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,
+			SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) sellAmount,
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit 
+			FROM (SELECT sod.*,so.sellerId,so.saleOrderNo saleOrderNos FROM saleOrderDetail sod , saleOrder so  WHERE
+			 sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 AND 
+			  PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'),DATE_FORMAT(createDate, '%Y%m')) &lt;= 1 
+			  GROUP BY seller,storeId,  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')  ) a  
+			  INNER JOIN	  
+			  (SELECT seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate              
+              FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d')) b
+             ON a.seller = b.seller AND a.storeId = b.storeId AND a.createDate = b.createDate ) c
+             LEFT JOIN
+		 (SELECT seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,  COUNT(saleOrderNo) flow FROM saleOrder WHERE IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND  PERIOD_DIFF(DATE_FORMAT(NOW(), '%Y%m'),DATE_FORMAT(createDate, '%Y%m'))&lt;= 1 GROUP BY seller,storeId,  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') ) d
+			ON c.seller = d.seller AND c.storeId = d.storeId AND c.createDate=d.createDate)f							 
+							WHERE  seller=#{seller} AND  storeId =#{storeId}  GROUP BY DATE_FORMAT(IFNULL(createDate,NOW()),'%Y-%m')
+ 
+		</select>		
+		<!-- 昨天 -->
+		<select id="employeePerformanceYesterday" resultType="java.util.Map">			
+ 
+		SELECT f.* from  (SELECT c.*,d.flow FROM(SELECT a.* FROM  (SELECT sellerId, seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,
+			SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) sellAmount,
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit 
+			FROM (SELECT sod.*,so.sellerId,so.saleOrderNo saleOrderNos FROM saleOrderDetail sod , saleOrder so  WHERE
+			 sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 AND 
+			  IFNULL(deleteFlag,0) != -1 AND TO_DAYS(NOW()) - TO_DAYS(createDate)=1
+			  GROUP BY seller,storeId,  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')  ) a  
+			  INNER JOIN	  
+			  (SELECT seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate              
+              FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d')) b
+             ON a.seller = b.seller AND a.storeId = b.storeId AND a.createDate = b.createDate ) c
+             LEFT JOIN
+		 (SELECT seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate,  COUNT(saleOrderNo) flow FROM saleOrder WHERE IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND  IFNULL(deleteFlag,0) != -1 AND TO_DAYS(NOW()) - TO_DAYS(createDate)=1 GROUP BY seller,storeId,  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') ) d
+			ON c.seller = d.seller AND c.storeId = d.storeId AND c.createDate=d.createDate)f						
+							WHERE  seller=#{seller} AND  storeId =#{storeId} 
+		</select>
+		
+		
+		<select id="getStoreId" resultType="String">
+			select storeName from baseStoreInfo where IFNULL(deleteFlag,0) != -1 and storeId=#{storeId}
+		</select>
+			
+			<!--员工业绩个人销售额  -->
+		 <select id="personalSalesDay" resultType="java.util.Map">																																														
+		 		SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(sellAmount)sellAmount 																												   
+			  FROM (SELECT sod.*,su.userId FROM saleOrderDetail sod , saleOrder so ,sysUser su WHERE sod.saleOrderId = so.saleOrderId AND su.storeId=sod.storeId and su.userName=sod.seller and so.isPay = 1 and IFNULL(sod.deleteFlag,0) != -1 ) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> <if test="userId!=null and userId!=''">userId=#{userId} AND</if> createDate &gt;DATE_SUB(CURDATE(), INTERVAL 6 day) and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')				 		
+		 </select>
+		 <!--员工业绩个人销售额  6个月以内的  -->
+		 <select id="personalSalesMonth" resultType="java.util.Map">
+		 		SELECT  DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate,SUM(sellAmount)sellAmount 			  
+			FROM (SELECT sod.* ,su.userId FROM saleOrderDetail sod , saleOrder so,sysUser su  WHERE sod.saleOrderId = so.saleOrderId AND su.storeId=sod.storeId and su.userName=sod.seller and so.isPay = 1 and IFNULL(sod.deleteFlag,0) != -1) saleOrderDetail WHERE <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> <if test="userId!=null and userId!=''">userId=#{userId} AND</if>   PERIOD_DIFF( DATE_FORMAT( NOW( ) , '%Y%m' ) , DATE_FORMAT( createDate, '%Y%m' ) ) &lt;=5 and IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m')					 
+		 
+		 </select>
+		 <!--业绩排行  -->
+		 <select id="personalRankings" resultType="java.util.Map">
+		<!--  	 SELECT a.* FROM(SELECT SUM(sellAmount)sell, sod.storeId,sod.seller,sod.createDate,sy.storeName,su.userId,su.userAccount FROM 
+			saleOrder so,saleOrderDetail sod,baseStoreInfo sy ,sysUser su
+			WHERE sod.storeId=#{storeId} 
+			   AND  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(sod.createDate)
+			  AND so.saleOrderId=sod.saleOrderId AND sy.storeId=sod.storeId 
+			  AND su.storeId=sod.storeId AND su.userName=sod.seller
+			  AND IFNULL(so.deleteFlag,0) != -1 AND IFNULL(sod.deleteFlag,0) != -1
+			  AND IFNULL(su.deleteFlag,0) != -1 AND IFNULL(sy.deleteFlag,0) != -1
+			  and isPay=1
+			  GROUP BY seller ORDER BY sell desc )a			  
+			 WHERE
+			     1=1 -->
+		SELECT * FROM (SELECT c.*,su.userId,su.userAccount  FROM
+			(SELECT a.*  FROM
+			(SELECT seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(IFNULL(sellAmount,0)) sell
+			FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE IFNULL(deleteFlag,0) != -1 AND storeId=#{storeId} and  AND  DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(sod.createDate)   GROUP BY seller, storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')) a 
+			INNER JOIN
+			(SELECT seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d') createDate
+			   FROM salePayOrder WHERE IFNULL(deleteFlag,0) != -1 GROUP BY seller, storeId, DATE_FORMAT(IFNULL(payDate, NOW()), '%Y-%m-%d')) b
+			ON a.seller = b.seller AND a.storeId = b.storeId AND a.createDate = b.createDate ) c  
+			INNER JOIN sysUser su
+			ON  su.storeId=c.storeId AND su.userName=c.seller)bb
+			where 1=1 			    <if test="userId!=null and userId!=''">and userId=#{userId}</if>			 
+			GROUP BY seller
+			ORDER BY seller DESC
+			 
+		 </select>
+		 	 		 
+		 <!--查询所有的门店信息  -->
+		<select id="selectAllStare" resultType="java.util.Map">			
+		 SELECT storeName,storeId ,
+		    COUNT(memberNo) memberCount,   
+		    COUNT(saleOrderNo) flow ,
+		    SUM(promotionGiveAmount)promotionGiveAmount,
+		    SUM(saleCount)saleCount, 
+		    SUM(sellAmount)sellAmount,
+		    SUM(originalPrice)orginalPrice,
+		    SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+		    SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+			FROM (SELECT sod.*,so.memberNo,bf.storeName FROM saleOrderDetail sod , saleOrder so,baseStoreInfo bf  WHERE
+			sod.saleOrderId = so.saleOrderId AND sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail 		
+			WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d'))  &lt;=  2 AND IFNULL(deleteFlag,0) != -1 
+			GROUP BY storeName ORDER BY sellAmount 	DESC				
+		</select>
+		
+		<!--根据门店名或门店编号查询门店  -->
+		<select id="selectStareByNameOrCode" resultType="java.util.Map">
+		 SELECT storeName,storeId ,storeCode		   			
+		    FROM baseStoreInfo where  storeName like concat('%',#{storeNameOrCode},'%') or storeCode like concat('%',#{storeNameOrCode},'%') 
+		    		   
+		</select>	
+			
+		<!--查询畅销商品  -->	
+			
+		<select id="listBestSaleProductYesterday" resultType="java.util.Map">
+			SELECT storeId,productId,productCode,genericName, SUM(saleCount) saleCount,SUM(sellPrice)sellPrice,
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit,
+			  standard
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so										 
+		 		 WHERE sod.saleOrderId = so.saleOrderId  AND so.isPay = 1) saleOrderDetail   
+		  WHERE IFNULL(deleteFlag,0) != -1 AND storeId=#{storeId} AND TO_DAYS(NOW()) - TO_DAYS(createDate) = 1 GROUP BY  genericName  ORDER BY SUM(saleCount)  <if test="sor !=null and sor==1">DESC</if> <if test="sor !=null and sor==0">ASC</if>	LIMIT 10	       		   
+		</select>
+		
+		<!-- 7天 -->
+		  <select id="listBestSaleProductBySeven" resultType="java.util.Map">
+			SELECT storeId,productId,productCode,genericName, SUM(saleCount) saleCount,SUM(sellPrice)sellPrice,  
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit,
+			  standard
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so 
+		 		 WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail   
+		  WHERE IFNULL(deleteFlag,0) != -1 AND storeId=#{storeId} AND  createDate &gt;DATE_SUB(CURDATE(), INTERVAL 6 DAY) GROUP BY  genericName ORDER BY SUM(saleCount)   <if test="sor !=null and sor==1">DESC</if> <if test="sor !=null and sor==0">ASC</if> LIMIT 10	       
+		</select>
+	   <!-- 30天 -->
+		<select id="listBestSaleProductByThirty" resultType="java.util.Map">
+			SELECT storeId,productId,productCode,genericName, SUM(saleCount) saleCount,SUM(sellPrice)sellPrice,  
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit,
+			  standard
+		  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so 
+		 		 WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail   
+		  WHERE IFNULL(deleteFlag,0) != -1 AND storeId=#{storeId} AND  createDate &gt;DATE_SUB(CURDATE(), INTERVAL 29 DAY) GROUP BY  genericName ORDER BY SUM(saleCount) <if test="sor !=null and sor==1">DESC</if> <if test="sor !=null and sor==0">ASC</if> LIMIT 10	       
+		</select>
+	
+	<select id="selectProductdetailsById" resultType="java.util.Map">
+ 
+ 	SELECT sy.*,sod.stockCount,sod.sellAmount,sod.saleCount  FROM
+		(SELECT productId,storeId,productName,purchasePrice,genericName,productCode,standard,unit,produceFactory,dosageForm
+		,approvalNumber	 FROM stockBatchInventory  WHERE productId=#{productId}  GROUP BY productName )sy
+	  LEFT JOIN 
+	  (SELECT productId,stockCount,sellPrice,SUM(sellAmount)sellAmount,SUM(saleCount)saleCount  FROM saleOrderDetail WHERE
+	  createDate >DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND IFNULL(deleteFlag,0) != -1 GROUP BY productName,storeId)sod
+	  ON  sy.productId =sod.productId
+	
+	
+ 	</select>
+	
+	<!--详细报表监控端  -->
+	 <select id="listDetailedMonitorByYear" resultType="java.util.Map">
+	 	SELECT
+            storeName,storeId,SUM(stockCount)stockCount,SUM(saleCount)saleCount,
+			SUM(sellAmount)sellAmount , 
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,			
+			COUNT(saleOrderNo)flow,
+			(SUM(sellAmount)/COUNT(saleOrderNo))unitPrice			
+		FROM (SELECT sod.*,bf.storeName FROM saleOrderDetail sod , saleOrder so ,baseStoreInfo bf  WHERE sod.saleOrderId = so.saleOrderId AND  sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail
+		 WHERE
+		        IFNULL(deleteFlag,0) != -1 
+		 		<if test="createDate!=null">
+	    		 and DATE_FORMAT( createDate, '%Y' ) =#{createDate} 
+	    	    </if>
+	    	    <if test="storeId!=null and storeId!=''">
+		          and storeId=#{storeId}	
+		        </if>
+		       <if test="createDate==null">	    	   
+			     and	DATE_FORMAT( createDate, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' )
+			  </if>
+			   
+	 		  GROUP BY storeId ORDER BY sellAmount DESC
+	 </select>
+	 
+	 <select id="listDetailedMonitorByMonth" resultType="java.util.Map">
+	 	 SELECT
+             storeName,storeId,SUM(stockCount)stockCount,SUM(saleCount)saleCount,
+			SUM(sellAmount)sellAmount , 
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,			
+			COUNT(saleOrderNo)flow,
+			(SUM(sellAmount)/COUNT(saleOrderNo))unitPrice			
+		FROM (SELECT sod.*,bf.storeName FROM saleOrderDetail sod , saleOrder so ,baseStoreInfo bf  WHERE sod.saleOrderId = so.saleOrderId AND  sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail
+	    WHERE
+	    	 IFNULL(deleteFlag,0) != -1 
+	    	<if test="createDate!=null">
+	    		AND DATE_FORMAT( createDate, '%Y-%m' ) =#{createDate} 
+	    	</if>
+	    	 <if test="storeId!=null and storeId!=''">
+		         and storeId=#{storeId}	
+		     </if>
+	       <if test="createDate!=null">
+	        	and  DATE_FORMAT( createDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )		
+	       </if>
+					 
+	     GROUP BY storeId	 ORDER BY sellAmount DESC														 		
+	 </select>
+	 	 <select id="listDetailedMonitorByWeek" resultType="java.util.Map">
+	 	 SELECT 
+             storeName,storeId,SUM(stockCount)stockCount,SUM(saleCount)saleCount,
+			SUM(sellAmount)sellAmount , 
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,			
+			COUNT(saleOrderNo)flow,
+			(SUM(sellAmount)/COUNT(saleOrderNo))unitPrice			
+		FROM (SELECT sod.*,bf.storeName FROM saleOrderDetail sod , saleOrder so ,baseStoreInfo bf  WHERE sod.saleOrderId = so.saleOrderId AND  sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail
+	    WHERE
+	       IFNULL(deleteFlag,0) != -1 
+	     <if test="createDate!=null">
+	     	 AND DATE_FORMAT( createDate, '%u' ) =#{createDate} 
+	     </if>
+	     <if test="storeId!=null and storeId!=''">
+	     	and storeId=#{storeId}	
+	     </if>
+	     <if test="createDate==null">
+			 and  DATE_FORMAT( createDate, '%Y%u' ) = DATE_FORMAT( CURDATE( ) , '%Y%u' )						
+		</if>	
+			 
+	     GROUP BY storeId ORDER BY sellAmount DESC														 		
+	 </select>
+	
+	
+	 <select id="listDetailedMonitorByDay" resultType="java.util.Map">
+	 	 SELECT 
+             storeName,storeId,SUM(stockCount)stockCount,SUM(saleCount)saleCount,
+			SUM(sellAmount)sellAmount , 
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,			
+			COUNT(saleOrderNo)flow,
+			(SUM(sellAmount)/COUNT(saleOrderNo))unitPrice			
+		FROM (SELECT sod.*,bf.storeName FROM saleOrderDetail sod , saleOrder so ,baseStoreInfo bf  WHERE sod.saleOrderId = so.saleOrderId AND  sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail
+	    WHERE
+	       IFNULL(deleteFlag,0) != -1 
+	     <if test="createDate!=null">
+	     	 AND DATE_FORMAT( createDate, '%Y-%m-%d' ) =#{createDate} 
+	     </if>
+	     <if test="storeId!=null and storeId!=''">
+	     	and storeId=#{storeId}	
+	     </if>
+	     <if test="createDate==null">
+			 and  TO_DAYS(createDate) = TO_DAYS(NOW())				
+		</if>	
+			 
+	     GROUP BY storeId ORDER BY sellAmount DESC														 		
+	 </select>
+	 	 	 	 
+	 <select id="listDetailedMonitorByIdByYear"  resultType="java.util.Map">
+	 		SELECT
+            storeName,storeId,SUM(stockCount)stockCount,SUM(saleCount)saleCount,
+			SUM(sellAmount)sellAmount , 
+			SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,			
+			COUNT(saleOrderNo)flow,
+			(SUM(sellAmount)/COUNT(saleOrderNo))unitPrice			
+		FROM (SELECT sod.*,bf.storeName FROM saleOrderDetail sod , saleOrder so ,baseStoreInfo bf  WHERE sod.saleOrderId = so.saleOrderId AND  sod.storeId=bf.storeId AND so.isPay = 1) saleOrderDetail
+		 WHERE
+			 storeId=#{storeId} and DATE_FORMAT( createDate, '%Y' ) =#{createDate}
+	 	GROUP BY storeId ORDER BY sellAmount DESC
+	 	 
+	 </select>
+	 
+	  
+	  <select id="listByOrderNo" resultMap="BaseResultMap">
+	    SELECT * FROM  saleOrderDetail WHERE IFNULL(deleteFlag,'') != -1  AND storeId = #{storeId}  AND saleOrderNo = #{saleOrderNo}
+	  </select>
+	  
+	  <insert id="insertDetail" parameterType="com.sdzy.xiaomi.report.model.SaleOrderDetail">
+    insert into saleOrderDetail (saleOrderDetailId, storeId, saleOrderNo, 
+      inspectionOrderNo, productId, productCode, 
+      productName, genericName, producingArea, 
+      standard, unit, approvalNumber, 
+      produceFactory, dosageForm, expiryDate, 
+      produceDate, batchNo, lotNo, 
+      isRxDrug, isEphedrine, isGMP, 
+      isSplitDrug, isYiBao, stockCount, 
+      saleCount, costPrice, costAmount, 
+      originalPrice, originalAmount, sellPrice, 
+      sellAmount, retailPrice, retailAmount, 
+      tradePrice, tradeAmount, memberPrice, 
+      memberAmount, discount, discountFee, 
+      createDate, modifyDate, remark, 
+      saleOrderId, payMethod, lineNum, 
+      deleteFlag, detailType, hasPromotion, 
+      promotionGiveCount, promotionReduceAmount, 
+      promotionProductId, promotionName, promotionGiveProductNames, 
+      promotionGiveProductIds, promotionGiveAmount, 
+      categoryId, seller, localRetailPrice, 
+      isGiveProduct, giveProdcutParentCode, isCommission, 
+      commissionRadio, commissionAmount)
+    values (#{saleOrderDetailId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{saleOrderNo,jdbcType=VARCHAR}, 
+      #{inspectionOrderNo,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{genericName,jdbcType=VARCHAR}, #{producingArea,jdbcType=VARCHAR}, 
+      #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{approvalNumber,jdbcType=VARCHAR}, 
+      #{produceFactory,jdbcType=VARCHAR}, #{dosageForm,jdbcType=VARCHAR}, #{expiryDate,jdbcType=VARCHAR}, 
+      #{produceDate,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR}, #{lotNo,jdbcType=VARCHAR}, 
+      #{isRxDrug,jdbcType=INTEGER}, #{isEphedrine,jdbcType=INTEGER}, #{isGMP,jdbcType=INTEGER}, 
+      #{isSplitDrug,jdbcType=INTEGER}, #{isYiBao,jdbcType=INTEGER}, #{stockCount,jdbcType=DECIMAL}, 
+      #{saleCount,jdbcType=DECIMAL}, #{costPrice,jdbcType=DECIMAL}, #{costAmount,jdbcType=DECIMAL}, 
+      #{originalPrice,jdbcType=DECIMAL}, #{originalAmount,jdbcType=DECIMAL}, #{sellPrice,jdbcType=DECIMAL}, 
+      #{sellAmount,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, #{retailAmount,jdbcType=DECIMAL}, 
+      #{tradePrice,jdbcType=DECIMAL}, #{tradeAmount,jdbcType=DECIMAL}, #{memberPrice,jdbcType=DECIMAL}, 
+      #{memberAmount,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{discountFee,jdbcType=DECIMAL}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{payMethod,jdbcType=INTEGER}, #{lineNum,jdbcType=INTEGER}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{detailType,jdbcType=INTEGER}, #{hasPromotion,jdbcType=INTEGER}, 
+      #{promotionGiveCount,jdbcType=DECIMAL}, #{promotionReduceAmount,jdbcType=DECIMAL}, 
+      #{promotionProductId,jdbcType=VARCHAR}, #{promotionName,jdbcType=VARCHAR}, #{promotionGiveProductNames,jdbcType=VARCHAR}, 
+      #{promotionGiveProductIds,jdbcType=VARCHAR}, #{promotionGiveAmount,jdbcType=DECIMAL}, 
+      #{categoryId,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR}, #{localRetailPrice,jdbcType=DECIMAL}, 
+      #{isGiveProduct,jdbcType=INTEGER}, #{giveProdcutParentCode,jdbcType=VARCHAR}, #{isCommission,jdbcType=INTEGER}, 
+      #{commissionRadio,jdbcType=DECIMAL}, #{commissionAmount,jdbcType=DECIMAL})
+  </insert>
+	 
+	 
+	 
+	 
+		
+</mapper>

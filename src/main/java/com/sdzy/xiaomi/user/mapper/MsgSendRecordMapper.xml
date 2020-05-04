@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.user.mapper.MsgSendRecordMapper">
+
+
+ 
+	
+	<insert id="addMessage">
+	  insert into msgSendRecord(recordId,state,sendUserType,sendUserId,templateId,sendTitle,sendContent,sendDate,receiveUsers,sendCount) 
+	  value(#{recordId},#{state},#{userType},#{sendUserId},#{templateId},#{sendTitle},#{sendContent},#{sendDate},#{receiveUsers},#{sendCount})
+	</insert>
+	
+	<select id="selectBySendUserId" resultType="com.sdzy.xiaomi.user.model.MsgSendRecord">	
+		select*from  msgSendRecord where sendUserId=#{sendUserId} and state!=-1
+	</select>
+	
+</mapper>

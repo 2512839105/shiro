@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.report.mapper.SaleOrderMapper">
+		<resultMap id="BaseResultMap" type="com.sdzy.xiaomi.report.model.SaleOrder">
+    <id column="saleOrderId" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="saleOrderType" jdbcType="INTEGER" property="saleOrderType" />
+    <result column="saleOrderNo" jdbcType="VARCHAR" property="saleOrderNo" />
+    <result column="saleDate" jdbcType="TIMESTAMP" property="saleDate" />
+    <result column="member" jdbcType="VARCHAR" property="member" />
+    <result column="memberNo" jdbcType="VARCHAR" property="memberNo" />
+    <result column="isPending" jdbcType="INTEGER" property="isPending" />
+    <result column="pendingRemark" jdbcType="VARCHAR" property="pendingRemark" />
+    <result column="totalCount" jdbcType="DECIMAL" property="totalCount" />
+    <result column="totalRetailAmount" jdbcType="DECIMAL" property="totalRetailAmount" />
+    <result column="totalMemberAmount" jdbcType="DECIMAL" property="totalMemberAmount" />
+    <result column="totalDiscountFee" jdbcType="DECIMAL" property="totalDiscountFee" />
+    <result column="toalOtherFee" jdbcType="DECIMAL" property="toalOtherFee" />
+    <result column="paymentMoney" jdbcType="DECIMAL" property="paymentMoney" />
+    <result column="receiveMoney" jdbcType="DECIMAL" property="receiveMoney" />
+    <result column="changeMoney" jdbcType="DECIMAL" property="changeMoney" />
+    <result column="totalSaleNum" jdbcType="DECIMAL" property="totalSaleNum" />
+    <result column="totalReduceAmount" jdbcType="DECIMAL" property="totalReduceAmount" />
+    <result column="totalGiveNum" jdbcType="DECIMAL" property="totalGiveNum" />
+    <result column="isPay" jdbcType="INTEGER" property="isPay" />
+    <result column="payType" jdbcType="VARCHAR" property="payType" />
+    <result column="isRxDrug" jdbcType="INTEGER" property="isRxDrug" />
+    <result column="isEphedrine" jdbcType="INTEGER" property="isEphedrine" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="sellerId" jdbcType="VARCHAR" property="sellerId" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="operaterId" jdbcType="VARCHAR" property="operaterId" />
+    <result column="operater" jdbcType="VARCHAR" property="operater" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="buyerName" jdbcType="VARCHAR" property="buyerName" />
+    <result column="buyerCardNo" jdbcType="VARCHAR" property="buyerCardNo" />
+    <result column="buyerPhone" jdbcType="VARCHAR" property="buyerPhone" />
+    <result column="buyerFaceId" jdbcType="VARCHAR" property="buyerFaceId" />
+    <result column="returnStatus" jdbcType="INTEGER" property="returnStatus" />
+    <result column="payMethod" jdbcType="INTEGER" property="payMethod" />
+    <result column="paying" jdbcType="INTEGER" property="paying" />
+    <result column="payedMoney" jdbcType="DECIMAL" property="payedMoney" />
+  </resultMap>
+		<!-- 按客流量  日周月年-->
+		<!--实时查询  -->
+			  <select id="listFlowNumByRealTime" resultType="java.util.Map">
+			  	 SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if>createDate &gt;DATE_SUB(CURDATE(), INTERVAL 1 day)  GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+			 </select>		
+		<!--日  -->
+			<select id="listFlowNumByDay" resultType="java.util.Map">
+				SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> createDate &gt;DATE_SUB(CURDATE(), INTERVAL 6 day)  GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+			</select>
+		
+		<!--周  -->
+			<select id="listFlowNumByWeek" resultType="java.util.Map">
+				SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) &lt;= 2 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u')
+			</select>
+		<!--月 -->
+			<select id="listFlowNumByMoth" resultType="java.util.Map">
+			 	SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> PERIOD_DIFF( DATE_FORMAT( NOW( ) , '%Y%m' ) , DATE_FORMAT( createDate, '%Y%m' ) ) &lt;=2 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m')
+			</select>
+		<!--年 -->
+		<select id="listFlowNumByYear" resultType="java.util.Map">
+		     SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> YEAR(NOW())- YEAR(createDate) &lt;=2 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y')
+		</select>
+		<!-- 日期 -->
+		<select id="listFlowNumByDate" resultType="java.util.Map">
+			 SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND <if test="storeId !=null and storeId!=''">  storeId=#{storeId} AND </if> <if test="dateType !=null and dateType!=''">  DATE(createDate)=#{dateType}   </if> GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d')
+		</select>
+		
+		
+	   <!-- 销售报表按年月日 -->
+	   <!--按年  -->
+		<select id="listReportByYear" resultType="java.util.Map">
+		   SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y') createDate, SUM(saleCount) saleCount, SUM(IFNULL(originalAmount,0)) originalAmount, SUM(IFNULL(promotionGiveAmount,0)) promotionGiveAmount,
+			  SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) discountFee,
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE storeId=#{storeId} AND  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y'),storeId
+				
+		</select>
+		<!--按月  -->
+		<select id="listReportByMoth" resultType="java.util.Map">
+		   SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m') createDate, SUM(saleCount) saleCount, SUM(IFNULL(originalAmount,0)) originalAmount, SUM(IFNULL(promotionGiveAmount,0)) promotionGiveAmount,
+			  SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) discountFee,
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE storeId=#{storeId} AND  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m'),storeId
+				
+		</select>
+		<!--按周  -->
+		<select id="listReportByWeek" resultType="java.util.Map">
+		   SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u') createDate, SUM(saleCount) saleCount, SUM(IFNULL(originalAmount,0)) originalAmount, SUM(IFNULL(promotionGiveAmount,0)) promotionGiveAmount,
+			  SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) discountFee,
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE storeId=#{storeId} AND  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u'),storeId
+				
+		</select>
+		<!--按日  -->
+		<select id="listReportByDay" resultType="java.util.Map">
+		   SELECT storeId, DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d') createDate, SUM(saleCount) saleCount, SUM(IFNULL(originalAmount,0)) originalAmount, SUM(IFNULL(promotionGiveAmount,0)) promotionGiveAmount,
+			  SUM(IFNULL(tradeAmount,0)) tradeAmount, SUM(IFNULL(sellAmount,0)) discountFee,
+			  SUM(IFNULL(sellAmount,0) - IFNULL(tradeAmount,0) - IFNULL(promotionGiveAmount,0)) grossProfit,
+			  SUM(IFNULL(originalAmount,0) - IFNULL(sellAmount,0)) lessProfit
+			  FROM (SELECT sod.* FROM saleOrderDetail sod , saleOrder so  WHERE sod.saleOrderId = so.saleOrderId AND so.isPay = 1) saleOrderDetail WHERE storeId=#{storeId} AND  IFNULL(deleteFlag,0) != -1 GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'),storeId
+				
+		</select>
+		
+		
+		<!--统计客单号 年月日  -->
+		<!--日  -->
+		 <select id="listSaleOrderByDay" resultType="java.util.Map">
+		 SELECT storeId,COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND storeId=#{storeId} GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m-%d'),storeId
+		</select>
+		
+		<!--周  -->
+		<select id="listSaleOrderByWeek" resultType="java.util.Map">
+		SELECT storeId,COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND storeId=#{storeId} GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%u'),storeId
+		</select>
+		<!--月 -->
+		<select id="listSaleOrderByMoth" resultType="java.util.Map">
+		 SELECT storeId,COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND storeId=#{storeId} GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y-%m'),storeId
+		</select>
+		<!--年 -->
+		<select id="listSaleOrderByYear" resultType="java.util.Map">
+		 SELECT storeId, COUNT(saleOrderNo) flow FROM saleOrder WHERE  IFNULL(deleteFlag,0) != -1 AND isPay = 1 AND storeId=#{storeId} GROUP BY DATE_FORMAT(IFNULL(createDate, NOW()), '%Y'),storeId
+		</select>
+		
+		<!--药店排名 -->
+		<select id="selectModelsByPage" resultType="java.util.Map">
+			
+		</select>
+		
+		<select id="listByOrderNo" resultMap="BaseResultMap">
+   		 SELECT * FROM  saleOrder WHERE IFNULL(deleteFlag,'') != -1  AND storeId = #{storeId}  AND saleOrderNo = #{saleOrderNo}
+  	  </select>
+  	  
+  	    <select id="findById" resultMap="BaseResultMap">
+	    select * from  saleOrder where saleOrderId = #{modelId} AND  IFNULL(deleteFlag,'') != -1
+	  </select>
+	  
+	  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.xiaomi.report.model.SaleOrder">
+    update saleOrder
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderType != null">
+        saleOrderType = #{saleOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="saleOrderNo != null">
+        saleOrderNo = #{saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleDate != null">
+        saleDate = #{saleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="member != null">
+        member = #{member,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNo != null">
+        memberNo = #{memberNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isPending != null">
+        isPending = #{isPending,jdbcType=INTEGER},
+      </if>
+      <if test="pendingRemark != null">
+        pendingRemark = #{pendingRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCount != null">
+        totalCount = #{totalCount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalRetailAmount != null">
+        totalRetailAmount = #{totalRetailAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalMemberAmount != null">
+        totalMemberAmount = #{totalMemberAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDiscountFee != null">
+        totalDiscountFee = #{totalDiscountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="toalOtherFee != null">
+        toalOtherFee = #{toalOtherFee,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentMoney != null">
+        paymentMoney = #{paymentMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveMoney != null">
+        receiveMoney = #{receiveMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeMoney != null">
+        changeMoney = #{changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSaleNum != null">
+        totalSaleNum = #{totalSaleNum,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReduceAmount != null">
+        totalReduceAmount = #{totalReduceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalGiveNum != null">
+        totalGiveNum = #{totalGiveNum,jdbcType=DECIMAL},
+      </if>
+      <if test="isPay != null">
+        isPay = #{isPay,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null">
+        payType = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="isRxDrug != null">
+        isRxDrug = #{isRxDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isEphedrine != null">
+        isEphedrine = #{isEphedrine,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerId != null">
+        sellerId = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="operaterId != null">
+        operaterId = #{operaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="operater != null">
+        operater = #{operater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="buyerName != null">
+        buyerName = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerCardNo != null">
+        buyerCardNo = #{buyerCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerPhone != null">
+        buyerPhone = #{buyerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerFaceId != null">
+        buyerFaceId = #{buyerFaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="returnStatus != null">
+        returnStatus = #{returnStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where saleOrderId = #{saleOrderId,jdbcType=VARCHAR}
+  </update>
+  
+  <insert id="insertSaleOrder" parameterType="com.sdzy.xiaomi.report.model.SaleOrder">
+    insert into saleOrder (saleOrderId, storeId, saleOrderType,
+    saleOrderNo, saleDate, member,
+    memberNo, isPending, pendingRemark,
+    totalCount, totalRetailAmount, totalMemberAmount,
+    totalDiscountFee, toalOtherFee, paymentMoney,
+    receiveMoney, changeMoney, totalSaleNum,
+    totalReduceAmount, totalGiveNum, isPay,
+    payType, isRxDrug, isEphedrine,
+    createDate, modifyDate, sellerId,
+    seller, operaterId, operater,
+    remark, deleteFlag, buyerName,
+    buyerCardNo, buyerPhone, buyerFaceId,
+    returnStatus,payMethod)
+    values (#{saleOrderId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{saleOrderType,jdbcType=INTEGER},
+    #{saleOrderNo,jdbcType=VARCHAR}, #{saleDate,jdbcType=TIMESTAMP}, #{member,jdbcType=VARCHAR},
+    #{memberNo,jdbcType=VARCHAR}, #{isPending,jdbcType=INTEGER}, #{pendingRemark,jdbcType=VARCHAR},
+    #{totalCount,jdbcType=DECIMAL}, #{totalRetailAmount,jdbcType=DECIMAL}, #{totalMemberAmount,jdbcType=DECIMAL},
+    #{totalDiscountFee,jdbcType=DECIMAL}, #{toalOtherFee,jdbcType=DECIMAL}, #{paymentMoney,jdbcType=DECIMAL},
+    #{receiveMoney,jdbcType=DECIMAL}, #{changeMoney,jdbcType=DECIMAL}, #{totalSaleNum,jdbcType=DECIMAL},
+    #{totalReduceAmount,jdbcType=DECIMAL}, #{totalGiveNum,jdbcType=DECIMAL}, #{isPay,jdbcType=INTEGER},
+    #{payType,jdbcType=VARCHAR}, #{isRxDrug,jdbcType=INTEGER}, #{isEphedrine,jdbcType=INTEGER},
+    #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, #{sellerId,jdbcType=VARCHAR},
+    #{seller,jdbcType=VARCHAR}, #{operaterId,jdbcType=VARCHAR}, #{operater,jdbcType=VARCHAR},
+    #{remark,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{buyerName,jdbcType=VARCHAR},
+    #{buyerCardNo,jdbcType=VARCHAR}, #{buyerPhone,jdbcType=VARCHAR}, #{buyerFaceId,jdbcType=VARCHAR},
+    #{returnStatus,jdbcType=INTEGER},#{payMethod,jdbcType=INTEGER})
+  </insert>
+	
+		
+</mapper>

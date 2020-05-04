@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.sale.mapper.MallSalePayOrderDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.sale.model.MallSalePayOrder">
+    <id column="payOrderId" jdbcType="VARCHAR" property="payOrderId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="payType" jdbcType="INTEGER" property="payType" />
+    <result column="orderType" jdbcType="INTEGER" property="orderType" />
+    <result column="saleOrderNo" jdbcType="VARCHAR" property="saleOrderNo" />
+    <result column="payOrderNo" jdbcType="VARCHAR" property="payOrderNo" />
+    <result column="payDate" jdbcType="TIMESTAMP" property="payDate" />
+    <result column="payMoney" jdbcType="DECIMAL" property="payMoney" />
+    <result column="otherMoney" jdbcType="DECIMAL" property="otherMoney" />
+    <result column="socialMoney" jdbcType="DECIMAL" property="socialMoney" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="authCode" jdbcType="VARCHAR" property="authCode" />
+    <result column="tradeNo" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="receiptAmount" jdbcType="DECIMAL" property="receiptAmount" />
+    <result column="invoiceAmount" jdbcType="DECIMAL" property="invoiceAmount" />
+    <result column="buyerPayAmount" jdbcType="DECIMAL" property="buyerPayAmount" />
+    <result column="realMoney" jdbcType="DECIMAL" property="realMoney" />
+    <result column="changeMoney" jdbcType="DECIMAL" property="changeMoney" />
+    <result column="seller" jdbcType="VARCHAR" property="seller" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    payOrderId, storeId, payType, orderType, saleOrderNo, payOrderNo, payDate, payMoney,
+    otherMoney, socialMoney, deleteFlag, authCode, tradeNo, receiptAmount, invoiceAmount,
+    buyerPayAmount, realMoney, changeMoney, seller, modifyDate
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSalePayOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from salePayOrder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from salePayOrder
+    where payOrderId = #{payOrderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from salePayOrder
+    where payOrderId = #{payOrderId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSalePayOrderExample">
+    delete from salePayOrder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.sale.model.MallSalePayOrder">
+    insert into salePayOrder (payOrderId, storeId, payType,
+    orderType, saleOrderNo, payOrderNo,
+    payDate, payMoney, otherMoney,
+    socialMoney, deleteFlag, authCode,
+    tradeNo, receiptAmount, invoiceAmount,
+    buyerPayAmount, realMoney, changeMoney,
+    seller, modifyDate)
+    values (#{payOrderId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER},
+    #{orderType,jdbcType=INTEGER}, #{saleOrderNo,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR},
+    #{payDate,jdbcType=TIMESTAMP}, #{payMoney,jdbcType=DECIMAL}, #{otherMoney,jdbcType=DECIMAL},
+    #{socialMoney,jdbcType=DECIMAL}, #{deleteFlag,jdbcType=INTEGER}, #{authCode,jdbcType=VARCHAR},
+    #{tradeNo,jdbcType=VARCHAR}, #{receiptAmount,jdbcType=DECIMAL}, #{invoiceAmount,jdbcType=DECIMAL},
+    #{buyerPayAmount,jdbcType=DECIMAL}, #{realMoney,jdbcType=DECIMAL}, #{changeMoney,jdbcType=DECIMAL},
+    #{seller,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.mall.sale.model.MallSalePayOrder">
+    insert into salePayOrder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payOrderId != null">
+        payOrderId,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="payType != null">
+        payType,
+      </if>
+      <if test="orderType != null">
+        orderType,
+      </if>
+      <if test="saleOrderNo != null">
+        saleOrderNo,
+      </if>
+      <if test="payOrderNo != null">
+        payOrderNo,
+      </if>
+      <if test="payDate != null">
+        payDate,
+      </if>
+      <if test="payMoney != null">
+        payMoney,
+      </if>
+      <if test="otherMoney != null">
+        otherMoney,
+      </if>
+      <if test="socialMoney != null">
+        socialMoney,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+      <if test="authCode != null">
+        authCode,
+      </if>
+      <if test="tradeNo != null">
+        tradeNo,
+      </if>
+      <if test="receiptAmount != null">
+        receiptAmount,
+      </if>
+      <if test="invoiceAmount != null">
+        invoiceAmount,
+      </if>
+      <if test="buyerPayAmount != null">
+        buyerPayAmount,
+      </if>
+      <if test="realMoney != null">
+        realMoney,
+      </if>
+      <if test="changeMoney != null">
+        changeMoney,
+      </if>
+      <if test="seller != null">
+        seller,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payOrderId != null">
+        #{payOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="saleOrderNo != null">
+        #{saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMoney != null">
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="otherMoney != null">
+        #{otherMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="socialMoney != null">
+        #{socialMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="authCode != null">
+        #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptAmount != null">
+        #{receiptAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null">
+        #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerPayAmount != null">
+        #{buyerPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realMoney != null">
+        #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeMoney != null">
+        #{changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="seller != null">
+        #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.mall.sale.model.sample.MallSalePayOrderExample" resultType="java.lang.Long">
+    select count(*) from salePayOrder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update salePayOrder
+    <set>
+      <if test="record.payOrderId != null">
+        payOrderId = #{record.payOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null">
+        payType = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderType != null">
+        orderType = #{record.orderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.saleOrderNo != null">
+        saleOrderNo = #{record.saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payOrderNo != null">
+        payOrderNo = #{record.payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payDate != null">
+        payDate = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payMoney != null">
+        payMoney = #{record.payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.otherMoney != null">
+        otherMoney = #{record.otherMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.socialMoney != null">
+        socialMoney = #{record.socialMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deleteFlag != null">
+        deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.authCode != null">
+        authCode = #{record.authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeNo != null">
+        tradeNo = #{record.tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiptAmount != null">
+        receiptAmount = #{record.receiptAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.invoiceAmount != null">
+        invoiceAmount = #{record.invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.buyerPayAmount != null">
+        buyerPayAmount = #{record.buyerPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realMoney != null">
+        realMoney = #{record.realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changeMoney != null">
+        changeMoney = #{record.changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.seller != null">
+        seller = #{record.seller,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update salePayOrder
+    set payOrderId = #{record.payOrderId,jdbcType=VARCHAR},
+    storeId = #{record.storeId,jdbcType=VARCHAR},
+    payType = #{record.payType,jdbcType=INTEGER},
+    orderType = #{record.orderType,jdbcType=INTEGER},
+    saleOrderNo = #{record.saleOrderNo,jdbcType=VARCHAR},
+    payOrderNo = #{record.payOrderNo,jdbcType=VARCHAR},
+    payDate = #{record.payDate,jdbcType=TIMESTAMP},
+    payMoney = #{record.payMoney,jdbcType=DECIMAL},
+    otherMoney = #{record.otherMoney,jdbcType=DECIMAL},
+    socialMoney = #{record.socialMoney,jdbcType=DECIMAL},
+    deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+    authCode = #{record.authCode,jdbcType=VARCHAR},
+    tradeNo = #{record.tradeNo,jdbcType=VARCHAR},
+    receiptAmount = #{record.receiptAmount,jdbcType=DECIMAL},
+    invoiceAmount = #{record.invoiceAmount,jdbcType=DECIMAL},
+    buyerPayAmount = #{record.buyerPayAmount,jdbcType=DECIMAL},
+    realMoney = #{record.realMoney,jdbcType=DECIMAL},
+    changeMoney = #{record.changeMoney,jdbcType=DECIMAL},
+    seller = #{record.seller,jdbcType=VARCHAR},
+    modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.sale.model.MallSalePayOrder">
+    update salePayOrder
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        payType = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null">
+        orderType = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="saleOrderNo != null">
+        saleOrderNo = #{saleOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        payOrderNo = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payDate != null">
+        payDate = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMoney != null">
+        payMoney = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="otherMoney != null">
+        otherMoney = #{otherMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="socialMoney != null">
+        socialMoney = #{socialMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="authCode != null">
+        authCode = #{authCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        tradeNo = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptAmount != null">
+        receiptAmount = #{receiptAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null">
+        invoiceAmount = #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerPayAmount != null">
+        buyerPayAmount = #{buyerPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realMoney != null">
+        realMoney = #{realMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeMoney != null">
+        changeMoney = #{changeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="seller != null">
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where payOrderId = #{payOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.sale.model.MallSalePayOrder">
+    update salePayOrder
+    set storeId = #{storeId,jdbcType=VARCHAR},
+    payType = #{payType,jdbcType=INTEGER},
+    orderType = #{orderType,jdbcType=INTEGER},
+    saleOrderNo = #{saleOrderNo,jdbcType=VARCHAR},
+    payOrderNo = #{payOrderNo,jdbcType=VARCHAR},
+    payDate = #{payDate,jdbcType=TIMESTAMP},
+    payMoney = #{payMoney,jdbcType=DECIMAL},
+    otherMoney = #{otherMoney,jdbcType=DECIMAL},
+    socialMoney = #{socialMoney,jdbcType=DECIMAL},
+    deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+    authCode = #{authCode,jdbcType=VARCHAR},
+    tradeNo = #{tradeNo,jdbcType=VARCHAR},
+    receiptAmount = #{receiptAmount,jdbcType=DECIMAL},
+    invoiceAmount = #{invoiceAmount,jdbcType=DECIMAL},
+    buyerPayAmount = #{buyerPayAmount,jdbcType=DECIMAL},
+    realMoney = #{realMoney,jdbcType=DECIMAL},
+    changeMoney = #{changeMoney,jdbcType=DECIMAL},
+    seller = #{seller,jdbcType=VARCHAR},
+    modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    where payOrderId = #{payOrderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+    update  salePayOrder set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where payOrderId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+    update  salePayOrder set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+    delete from  salePayOrder where payOrderId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+    delete from   salePayOrder where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+    select * from  salePayOrder where payOrderId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+    select * from  salePayOrder where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+    select * from  salePayOrder where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+    select * from  salePayOrder where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+
+  <!--查询支付订单-->
+  <select id="findSalePayOrder" resultMap="BaseResultMap">
+    SELECT * FROM  salePayOrder WHERE saleOrderNo = #{saleOrderNo}
+  </select>
+</mapper>

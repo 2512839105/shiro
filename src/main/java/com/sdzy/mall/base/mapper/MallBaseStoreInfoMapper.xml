@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.base.mapper.MallBaseStoreInfoMapper">
+    <resultMap id="BaseResultMap" type="com.sdzy.mall.base.model.MallBaseStoreInfo">
+    <id column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="storeAccount" jdbcType="VARCHAR" property="storeAccount" />
+    <result column="companyId" jdbcType="VARCHAR" property="companyId" />
+    <result column="storeType" jdbcType="INTEGER" property="storeType" />
+    <result column="storeName" jdbcType="VARCHAR" property="storeName" />
+    <result column="storeFullName" jdbcType="VARCHAR" property="storeFullName" />
+    <result column="contactor" jdbcType="VARCHAR" property="contactor" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="storeAddress" jdbcType="VARCHAR" property="storeAddress" />
+    <result column="priceScheme" jdbcType="VARCHAR" property="priceScheme" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="payMethod" jdbcType="INTEGER" property="payMethod" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="storePic" jdbcType="VARCHAR" property="storePic" />
+    <result column="storeVideo" jdbcType="VARCHAR" property="storeVideo" />
+    <result column="shopTime" jdbcType="VARCHAR" property="shopTime" />
+    <result column="idNumber" jdbcType="VARCHAR" property="idNumber" />
+    <result column="idPic" jdbcType="VARCHAR" property="idPic" />
+    <result column="storeDescription" jdbcType="VARCHAR" property="storeDescription" />
+    <result column="alipayAppId" jdbcType="VARCHAR" property="alipayAppId" />
+    <result column="wxAppId" jdbcType="VARCHAR" property="wxAppId" />
+    <result column="wxMachId" jdbcType="VARCHAR" property="wxMachId" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="storeCode" jdbcType="VARCHAR" property="storeCode" />
+    <result column="proviceCode" jdbcType="VARCHAR" property="proviceCode" />
+    <result column="proviceName" jdbcType="VARCHAR" property="proviceName" />
+    <result column="cityCode" jdbcType="VARCHAR" property="cityCode" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityName" />
+    <result column="zoneCode" jdbcType="VARCHAR" property="zoneCode" />
+    <result column="zoneName" jdbcType="VARCHAR" property="zoneName" />
+    <result column="companyNo" jdbcType="VARCHAR" property="companyNo" /> 
+    <result column="companyFullName" jdbcType="VARCHAR" property="companyFullName" />   
+    <result column="dataUploadAccount" jdbcType="VARCHAR" property="dataUploadAccount" />   
+    <result column="dataUploadPassword" jdbcType="VARCHAR" property="dataUploadPassword" />
+    <result column="uploadCode" jdbcType="VARCHAR" property="uploadCode" />    
+    <result column="storeLogo" jdbcType="VARCHAR" property="storeLogo"/>
+    
+    <!-- <result column="totalCount" jdbcType="BIGDICIMAL" property="totalCount"/> -->
+  </resultMap>
+  
+  <select id="selectStoreOrderSale" resultType="java.util.Map">
+    
+    select  b.*,sum(s.totalCount) as totalCount from saleOrder s,baseStoreInfo b where
+    <![CDATA[ 
+    DATE_SUB(CURDATE(), INTERVAL 1 MONTH) <= date(s.createDate) and s.storeId = b.storeId GROUP BY  b.storeId order by totalCount desc
+    ]]>  
+   </select>
+   
+    <select id="selectProductAndStore" resultMap="BaseResultMap">
+        select bs.* from baseProduct bp,baseStoreInfo bs where bp.storeId = bs.storeId  
+         and (bp.productName like '%${keyValue}%' or bs.storeName like '%${keyValue}%')
+    </select>
+    
+    <select id="selectById" resultMap="BaseResultMap">
+    select  b.*,sum(s.totalCount) as totalCount from saleOrder s,baseStoreInfo b where
+     s.storeId = b.storeId and b.storeId=#{storeId}  GROUP BY  b.storeId order by totalCount desc
+    </select>
+</mapper>

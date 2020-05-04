@@ -1,0 +1,72 @@
+html{/*background: url(../images/bg.jpg) center center no-repeat rgb(44, 198, 255);*/height: 100%;/*background-size: 100% auto;*/}
+body{background: none;font-family: 'microsoft yahei';height: 100%;}
+.radius8{-moz-border-radius:8px; -webkit-border-radius:8px; border-radius:8px;}
+
+@media screen and (max-width: 768px) {
+  html{background-size: 100% 100%;}
+  #main{width: 100%;}
+  #main {width: 100%!important;}
+  #main .leftbg{display: none;}
+  #main .login-form{position: relative;margin: 0 auto;top: 24%;}
+  #main .login-form{width: 90%;max-width: 350px;}
+}
+
+@media screen and (min-width: 768px) {
+  /*html{background-size: 100% 100%;}*/
+  #main{width: 100%;}
+  #main .login-form{position: absolute;top:24%;right:80px;}
+  #main .login-form{width: 350px;}
+}
+
+@media screen and (min-width: 1200px){
+  #main{width: 1200px;}
+}
+
+
+
+#wrap{height: 100%; position: relative; width:100%;background: url(../images/login-bg.png) center center no-repeat;background-size:1706px 100%;background-color:#206ec9}
+
+#main{margin:0 auto;height: 100%;position: relative;}
+#main .leftbg{width:calc( 100% - 420px);background: url("../statics/images/leftBg.png") no-repeat center center; background-size: 100% auto;height: 100%;}
+#main .login-form{background: #fff;padding: 14px;text-align:center;}
+#main .login-form .cxlogo{height: 75px;text-align: center;}
+#main .login-form .cxlogo img{max-height: 75px;} 
+#main .login-form form p a.text-link:link{ color: #399b7f;}
+#main .login-form form p a.text-link:visited{ color: #399b7f;}
+#main .login-form form p a.text-link:hover{ color: #0b7f5e;text-decoration: none;}
+#main .login-form form p a.text-link:active{ color: #399b7f;}
+#main .login-form form p.button{padding: 0;height: 45px;line-height: 45px;margin-top: 35px;}
+#main .login-form form p.button a{height: 100%;}
+#main .login-form form p.button a:link{background:#399b7f;color: #fff;}
+#main .login-form form p.button a:visited{background:#399b7f;color: #fff;}
+#main .login-form form p.button a:hover{background:#0b7f5e;color: #fff;text-decoration: none;}
+#main .login-form form p.button a:active{background:#0b7f5e;color: #fff;}
+#main .login-form form .input-group-addon{background: #def7f0;}
+#main .login-form form div.input-group{margin-bottom: 15px;}
+#main .login-form form div.input-group input{border-color: #e4e4e4;text-indent: 15px;height: 45px;line-height: 45px;outline: none;}
+.login-form .submitButton{width:100%;background:#399b7f;border:none;}
+.login-title {padding:0 10px;font-weight:bold;font-size:24px;letter-spacing:4px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.login-main {height: 286px;width: 100%;margin-top: 10px;}
+
+.form-control{padding:0px;}
+#wMessage{color:#ff0000;}
+#main .login-video{width:486px;height:486px;position:absolute;top: 48px;left: 76px;padding:0;overflow: hidden;border-radius:50%;}
+#main .login-video #video{position: absolute;left: 40px;top: 38px;border-radius: 50%;}
+#main .login-video #canvas,#main .login-video #canvas1{position:absolute;top:0;display:none;}
+#main .login-video #canvas1{display:none;}
+#main .login-video .video-arc .arc1{width: 436px;height: 436px;background: url("../images/login-arc1.png") no-repeat;background-size: 436px 436px;position: absolute;top: 13px;left: 13px;z-index:10;}
+#main .login-video .video-arc .arc2{width: 430px;height: 430px;background: url("../images/login-arc2.png") no-repeat;background-size: 430px 430px;position: absolute;top: 15px;left: 15px;}
+.arc1Animate{animation: rotation1 3s linear infinite;-moz-animation: rotation1 3s linear infinite;-webkit-animation: rotation1 3s linear infinite;-o-animation: rotation1 3s linear infinite;}
+@-webkit-keyframes rotation1{
+	from {-webkit-transform: rotate(0deg);}
+	to {-webkit-transform: rotate(360deg);}
+}
+
+.arc2Animate{animation: rotation2 3s linear infinite;-moz-animation: rotation2 3s linear infinite;-webkit-animation: rotation2 3s linear infinite;-o-animation: rotation2 3s linear infinite;}
+@-webkit-keyframes rotation2{
+	from {-webkit-transform: rotate(360deg);}
+	to {-webkit-transform: rotate(0deg);}
+}
+#main .login-video .video-mian-img{width:380px;height:380px;background: url("../images/login-face.png") no-repeat;background-size:380px 380px;position:absolute;top:40px;left:40px;opacity: 1;}
+
+.login-logo {position:absolute;width:334px;height:140px;background: url("../images/logo-login.png") no-repeat;background-size: 40%;left: 20px;top: 20px;}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.promotion.mapper.PromotionGiveProductDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.promotion.model.PromotionGiveProduct">
+    <id column="giveProductId" jdbcType="VARCHAR" property="giveProductId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="strategyIdOrPid" jdbcType="VARCHAR" property="strategyIdOrPid" />
+    <result column="giveProductType" jdbcType="INTEGER" property="giveProductType" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+    <result column="averagePrice" jdbcType="DECIMAL" property="averagePrice" />
+    <result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="givePrice" jdbcType="DECIMAL" property="givePrice" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from promotionGiveProduct
+    where giveProductId = #{giveProductId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.promotion.model.PromotionGiveProduct">
+    insert into promotionGiveProduct (giveProductId, storeId, strategyIdOrPid, 
+      giveProductType, supplierId, supplierName, 
+      productId, productCode, productName, 
+      genericName, standard, unit, 
+      producingArea, produceFactory, tradePrice, 
+      averagePrice, retailPrice, givePrice, 
+      status, createDate, modifyDate
+      )
+    values (#{giveProductId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{strategyIdOrPid,jdbcType=VARCHAR}, 
+      #{giveProductType,jdbcType=INTEGER}, #{supplierId,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, 
+      #{productId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{genericName,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{producingArea,jdbcType=VARCHAR}, #{produceFactory,jdbcType=VARCHAR}, #{tradePrice,jdbcType=DECIMAL}, 
+      #{averagePrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, #{givePrice,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.promotion.model.PromotionGiveProduct">
+    update promotionGiveProduct
+    set storeId = #{storeId,jdbcType=VARCHAR},
+      strategyIdOrPid = #{strategyIdOrPid,jdbcType=VARCHAR},
+      giveProductType = #{giveProductType,jdbcType=INTEGER},
+      supplierId = #{supplierId,jdbcType=VARCHAR},
+      supplierName = #{supplierName,jdbcType=VARCHAR},
+      productId = #{productId,jdbcType=VARCHAR},
+      productCode = #{productCode,jdbcType=VARCHAR},
+      productName = #{productName,jdbcType=VARCHAR},
+      genericName = #{genericName,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      producingArea = #{producingArea,jdbcType=VARCHAR},
+      produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      tradePrice = #{tradePrice,jdbcType=DECIMAL},
+      averagePrice = #{averagePrice,jdbcType=DECIMAL},
+      retailPrice = #{retailPrice,jdbcType=DECIMAL},
+      givePrice = #{givePrice,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
+    where giveProductId = #{giveProductId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select giveProductId, storeId, strategyIdOrPid, giveProductType, supplierId, supplierName, 
+    productId, productCode, productName, genericName, standard, unit, producingArea, 
+    produceFactory, tradePrice, averagePrice, retailPrice, givePrice, status, createDate, 
+    modifyDate
+    from promotionGiveProduct
+    where giveProductId = #{giveProductId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select giveProductId, storeId, strategyIdOrPid, giveProductType, supplierId, supplierName, 
+    productId, productCode, productName, genericName, standard, unit, producingArea, 
+    produceFactory, tradePrice, averagePrice, retailPrice, givePrice, status, createDate, 
+    modifyDate
+    from promotionGiveProduct
+  </select>
+  <update id="updateById" parameterType="java.util.Map">
+     update  promotionGiveProduct set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where giveProductId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+     update  promotionGiveProduct set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+     delete from  promotionGiveProduct where giveProductId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+     delete from   promotionGiveProduct where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+     select * from  promotionGiveProduct where giveProductId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+     select * from  promotionGiveProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+     select * from  promotionGiveProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+     select * from  promotionGiveProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+</mapper>

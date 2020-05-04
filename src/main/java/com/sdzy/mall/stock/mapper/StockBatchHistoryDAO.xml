@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.stock.mapper.StockBatchHistoryDAO">
+  <resultMap id="BaseResultMap" type="com.sdzy.mall.stock.model.StockBatchHistory">
+    <id column="historyId" jdbcType="VARCHAR" property="historyId" />
+    <result column="operateType" jdbcType="INTEGER" property="operateType" />
+    <result column="inventoryId" jdbcType="VARCHAR" property="inventoryId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="produceDate" jdbcType="VARCHAR" property="produceDate" />
+    <result column="expiryDate" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="batchNo" jdbcType="VARCHAR" property="batchNo" />
+    <result column="lotNo" jdbcType="VARCHAR" property="lotNo" />
+    <result column="count" jdbcType="DOUBLE" property="count" />
+    <result column="purchasePrice" jdbcType="DOUBLE" property="purchasePrice" />
+    <result column="purchaseFee" jdbcType="DOUBLE" property="purchaseFee" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    historyId, operateType, inventoryId, storeId, supplierId, supplierName, productId, 
+    productCode, productName, genericName, standard, unit, producingArea, produceFactory, 
+    approvalNumber, dosageForm, produceDate, expiryDate, batchNo, lotNo, count, purchasePrice, 
+    purchaseFee, createUserName, createUserId, createDate, modifyDate, remark, deleteFlag
+  </sql>
+  <select id="selectByExample" parameterType="com.sdzy.mall.stock.model.vo.StockBatchHistoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from stockBatchHistory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stockBatchHistory
+    where historyId = #{historyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from stockBatchHistory
+    where historyId = #{historyId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdzy.mall.stock.model.vo.StockBatchHistoryExample">
+    delete from stockBatchHistory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdzy.mall.stock.model.StockBatchHistory">
+    insert into stockBatchHistory (historyId, operateType, inventoryId, 
+      storeId, supplierId, supplierName, 
+      productId, productCode, productName, 
+      genericName, standard, unit, 
+      producingArea, produceFactory, approvalNumber, 
+      dosageForm, produceDate, expiryDate, 
+      batchNo, lotNo, count, 
+      purchasePrice, purchaseFee, createUserName, 
+      createUserId, createDate, modifyDate, 
+      remark, deleteFlag)
+    values (#{historyId,jdbcType=VARCHAR}, #{operateType,jdbcType=INTEGER}, #{inventoryId,jdbcType=VARCHAR}, 
+      #{storeId,jdbcType=VARCHAR}, #{supplierId,jdbcType=VARCHAR}, #{supplierName,jdbcType=VARCHAR}, 
+      #{productId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{genericName,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{producingArea,jdbcType=VARCHAR}, #{produceFactory,jdbcType=VARCHAR}, #{approvalNumber,jdbcType=VARCHAR}, 
+      #{dosageForm,jdbcType=VARCHAR}, #{produceDate,jdbcType=VARCHAR}, #{expiryDate,jdbcType=VARCHAR}, 
+      #{batchNo,jdbcType=VARCHAR}, #{lotNo,jdbcType=VARCHAR}, #{count,jdbcType=DECIMAL},
+      #{purchasePrice,jdbcType=DECIMAL}, #{purchaseFee,jdbcType=DECIMAL}, #{createUserName,jdbcType=VARCHAR},
+      #{createUserId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdzy.mall.stock.model.StockBatchHistory">
+    insert into stockBatchHistory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        historyId,
+      </if>
+      <if test="operateType != null">
+        operateType,
+      </if>
+      <if test="inventoryId != null">
+        inventoryId,
+      </if>
+      <if test="storeId != null">
+        storeId,
+      </if>
+      <if test="supplierId != null">
+        supplierId,
+      </if>
+      <if test="supplierName != null">
+        supplierName,
+      </if>
+      <if test="productId != null">
+        productId,
+      </if>
+      <if test="productCode != null">
+        productCode,
+      </if>
+      <if test="productName != null">
+        productName,
+      </if>
+      <if test="genericName != null">
+        genericName,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="producingArea != null">
+        producingArea,
+      </if>
+      <if test="produceFactory != null">
+        produceFactory,
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber,
+      </if>
+      <if test="dosageForm != null">
+        dosageForm,
+      </if>
+      <if test="produceDate != null">
+        produceDate,
+      </if>
+      <if test="expiryDate != null">
+        expiryDate,
+      </if>
+      <if test="batchNo != null">
+        batchNo,
+      </if>
+      <if test="lotNo != null">
+        lotNo,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="purchasePrice != null">
+        purchasePrice,
+      </if>
+      <if test="purchaseFee != null">
+        purchaseFee,
+      </if>
+      <if test="createUserName != null">
+        createUserName,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="modifyDate != null">
+        modifyDate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="historyId != null">
+        #{historyId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryId != null">
+        #{inventoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseFee != null">
+        #{purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdzy.mall.stock.model.vo.StockBatchHistoryExample" resultType="java.lang.Long">
+    select count(*) from stockBatchHistory
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update stockBatchHistory
+    <set>
+      <if test="record.historyId != null">
+        historyId = #{record.historyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateType != null">
+        operateType = #{record.operateType,jdbcType=INTEGER},
+      </if>
+      <if test="record.inventoryId != null">
+        inventoryId = #{record.inventoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null">
+        storeId = #{record.storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierId != null">
+        supplierId = #{record.supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierName != null">
+        supplierName = #{record.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        productId = #{record.productId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null">
+        productCode = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        productName = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.genericName != null">
+        genericName = #{record.genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standard != null">
+        standard = #{record.standard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.producingArea != null">
+        producingArea = #{record.producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceFactory != null">
+        produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalNumber != null">
+        approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dosageForm != null">
+        dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.produceDate != null">
+        produceDate = #{record.produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expiryDate != null">
+        expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        batchNo = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotNo != null">
+        lotNo = #{record.lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null">
+        count = #{record.count,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchasePrice != null">
+        purchasePrice = #{record.purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseFee != null">
+        purchaseFee = #{record.purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createUserName != null">
+        createUserName = #{record.createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        createDate = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyDate != null">
+        modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null">
+        deleteFlag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update stockBatchHistory
+    set historyId = #{record.historyId,jdbcType=VARCHAR},
+      operateType = #{record.operateType,jdbcType=INTEGER},
+      inventoryId = #{record.inventoryId,jdbcType=VARCHAR},
+      storeId = #{record.storeId,jdbcType=VARCHAR},
+      supplierId = #{record.supplierId,jdbcType=VARCHAR},
+      supplierName = #{record.supplierName,jdbcType=VARCHAR},
+      productId = #{record.productId,jdbcType=VARCHAR},
+      productCode = #{record.productCode,jdbcType=VARCHAR},
+      productName = #{record.productName,jdbcType=VARCHAR},
+      genericName = #{record.genericName,jdbcType=VARCHAR},
+      standard = #{record.standard,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      producingArea = #{record.producingArea,jdbcType=VARCHAR},
+      produceFactory = #{record.produceFactory,jdbcType=VARCHAR},
+      approvalNumber = #{record.approvalNumber,jdbcType=VARCHAR},
+      dosageForm = #{record.dosageForm,jdbcType=VARCHAR},
+      produceDate = #{record.produceDate,jdbcType=VARCHAR},
+      expiryDate = #{record.expiryDate,jdbcType=VARCHAR},
+      batchNo = #{record.batchNo,jdbcType=VARCHAR},
+      lotNo = #{record.lotNo,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=DECIMAL},
+      purchasePrice = #{record.purchasePrice,jdbcType=DECIMAL},
+      purchaseFee = #{record.purchaseFee,jdbcType=DECIMAL},
+      createUserName = #{record.createUserName,jdbcType=VARCHAR},
+      createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      createDate = #{record.createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{record.modifyDate,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      deleteFlag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.stock.model.StockBatchHistory">
+    update stockBatchHistory
+    <set>
+      <if test="operateType != null">
+        operateType = #{operateType,jdbcType=INTEGER},
+      </if>
+      <if test="inventoryId != null">
+        inventoryId = #{inventoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplierId = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplierName = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        productId = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        genericName = #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        producingArea = #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="produceDate != null">
+        produceDate = #{produceDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        expiryDate = #{expiryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        batchNo = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lotNo != null">
+        lotNo = #{lotNo,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null">
+        purchasePrice = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseFee != null">
+        purchaseFee = #{purchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="createUserName != null">
+        createUserName = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where historyId = #{historyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdzy.mall.stock.model.StockBatchHistory">
+    update stockBatchHistory
+    set operateType = #{operateType,jdbcType=INTEGER},
+      inventoryId = #{inventoryId,jdbcType=VARCHAR},
+      storeId = #{storeId,jdbcType=VARCHAR},
+      supplierId = #{supplierId,jdbcType=VARCHAR},
+      supplierName = #{supplierName,jdbcType=VARCHAR},
+      productId = #{productId,jdbcType=VARCHAR},
+      productCode = #{productCode,jdbcType=VARCHAR},
+      productName = #{productName,jdbcType=VARCHAR},
+      genericName = #{genericName,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      producingArea = #{producingArea,jdbcType=VARCHAR},
+      produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      produceDate = #{produceDate,jdbcType=VARCHAR},
+      expiryDate = #{expiryDate,jdbcType=VARCHAR},
+      batchNo = #{batchNo,jdbcType=VARCHAR},
+      lotNo = #{lotNo,jdbcType=VARCHAR},
+      count = #{count,jdbcType=DECIMAL},
+      purchasePrice = #{purchasePrice,jdbcType=DECIMAL},
+      purchaseFee = #{purchaseFee,jdbcType=DECIMAL},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      deleteFlag = #{deleteFlag,jdbcType=INTEGER}
+    where historyId = #{historyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="java.util.Map">
+     update  stockBatchHistory set  <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach>where historyId = #{modelId}
+  </update>
+  <update id="updateByParam" parameterType="java.util.Map">
+     update  stockBatchHistory set   <foreach collection="updateList" item="item" separator=",">${item.key} = #{item.value}</foreach> where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </update>
+  <delete id="deleteById" parameterType="String">
+     delete from  stockBatchHistory where historyId = #{modelId}
+  </delete>
+  <delete id="deleteByParam" parameterType="java.util.Map">
+     delete from   stockBatchHistory where 1=1  <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when> <otherwise> and ${item.key} ${item.opStr} #{item.value} </otherwise> </choose> </foreach>
+  </delete>
+  <select id="findById" resultMap="BaseResultMap">
+     select * from  stockBatchHistory where historyId = #{modelId}
+  </select>
+  <select id="listByPage" resultMap="BaseResultMap">
+     select * from  stockBatchHistory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="listByParam" resultMap="BaseResultMap">
+     select * from  stockBatchHistory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  <select id="findByParam" resultMap="BaseResultMap">
+     select * from  stockBatchHistory where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">  	and ${item.key} in   	<foreach collection="item.value" item="val" open="(" separator="," close=")">  	#{val}  	</foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+</mapper>

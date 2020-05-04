@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.xiaomi.report.mapper.SalePayOrderMapper">
+
+
+<insert id="insertSalePayOrder" parameterType="com.sdzy.xiaomi.report.model.SalePayOrder">
+    insert into salePayOrder (payOrderId, storeId, payType,
+    orderType, saleOrderNo, payOrderNo,
+    payDate, payMoney, otherMoney,
+    socialMoney, deleteFlag, authCode,
+    tradeNo, receiptAmount, invoiceAmount,
+    buyerPayAmount, realMoney, changeMoney,
+    seller, modifyDate, payMethod,
+    remark, modifyPayTypeDate, modifyPayTypeUserName
+    )
+    values (#{payOrderId,jdbcType=VARCHAR}, #{storeId,jdbcType=VARCHAR}, #{payType,jdbcType=INTEGER},
+    #{orderType,jdbcType=INTEGER}, #{saleOrderNo,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR},
+    #{payDate,jdbcType=TIMESTAMP}, #{payMoney,jdbcType=DECIMAL}, #{otherMoney,jdbcType=DECIMAL},
+    #{socialMoney,jdbcType=DECIMAL}, #{deleteFlag,jdbcType=INTEGER}, #{authCode,jdbcType=VARCHAR},
+    #{tradeNo,jdbcType=VARCHAR}, #{receiptAmount,jdbcType=DECIMAL}, #{invoiceAmount,jdbcType=DECIMAL},
+    #{buyerPayAmount,jdbcType=DECIMAL}, #{realMoney,jdbcType=DECIMAL}, #{changeMoney,jdbcType=DECIMAL},
+    #{seller,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}, #{payMethod,jdbcType=INTEGER},
+    #{remark,jdbcType=VARCHAR}, #{modifyPayTypeDate,jdbcType=TIMESTAMP}, #{modifyPayTypeUserName,jdbcType=VARCHAR}
+    )
+  </insert>
+</mapper>

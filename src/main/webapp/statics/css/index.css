@@ -1,0 +1,126 @@
+/*@import url(reset.css);*/
+
+html,body{background: #1a79c5;height: 100%;}
+
+.header{background: #f3f3f4;height: 55px;line-height: 55px;/*height: 75px;line-height: 75px;*/position: relative;top: 0;left: 0;z-index: 9999;border-bottom: 1px #e0e0e0 solid;}
+.header .logo{/* margin-top:6px; margin-left: 20px; */height: 40px;/*width: 250px;*/}
+.header .navbar-toggle .iconfont{font-size: 20px;color: #0076bc;}
+.header .son-sys{float: right;}
+.header .son-sys ul {list-style: none;padding-top: 10px;margin-left: 20px;}
+.header .son-sys ul li{font-size: 11px;cursor: pointer;color: #858585; text-align: center;line-height: 1.2;display: block;width: 70px;float: left;}
+.header .son-sys ul li:hover{color: #434343;}
+.header .son-sys ul li span.iconfont{font-size: 32px;}
+.header .son-sys > .pull-right {margin-right: 10px;font-size: 12px;}
+.header .son-sys > .pull-right .iconfont{margin-right: 8px;}
+.header .son-sys > .pull-right:link{color: #9D9D9D;}
+.header .son-sys > .pull-right:visited{color: #9D9D9D;}
+.header .son-sys > .pull-right:hover{color: #585858;text-decoration: none;}
+.header .son-sys > .pull-right:active{color: #9D9D9D;}
+
+.main.top .header .son-sys > .pull-right:link{color: #fff;}
+.main.top .header .son-sys > .pull-right:visited{color: #fff;}
+.main.top .header .son-sys > .pull-right:hover{color: #ccc;text-decoration: none;}
+.main.top .header .son-sys > .pull-right:active{color: #fff;}
+.main.top .header .navbar-toggle .iconfont{font-size: 20px;color: #0076bc;}
+
+#tree.topNav{list-style: none;margin:0 0 0 10px;line-height: 1;float: left;width: calc(100% - 450px);display: block;height: 53px;padding: 0;}
+#tree.topNav > li{font-size: 11px;cursor: pointer;color: #eee; text-align: center;line-height: 1.2;display: inline-block;float: left;height: 53px;box-sizing: border-box;position: relative;width: 80px;}
+#tree.topNav > li:hover{background: #2ea2ff;}
+#tree.topNav > li span.button{padding: 0;margin: 0;}
+#tree.topNav > li a{display: block;width: 100%;height: 100%;color: #fff;padding: 5px 5px 0;box-sizing: border-box;}
+#tree.topNav > li > a .node_name{margin-right: 0;}
+
+#tree.topNav > li>a span.iconfont{display: block;width: 100%;height: 25px;padding-top: 5px;box-sizing: border-box;font-size: 20px;color:#d8d30d;
+background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#bfbd66), to(#efdb00)); -webkit-background-clip: text;-webkit-text-fill-color: transparent;}
+#tree.topNav > li a:link{color: #fff;}
+#tree.topNav > li a:visited{color: #fff;}
+#tree.topNav > li a:hover{color: #fff;text-decoration: none;}
+#tree.topNav > li a:active{color: #fff;}
+#tree.topNav > li  ul{position: relative;width: 140px;padding: 0;margin:0;}
+#tree.topNav > li  ul > li{background: #1a79c5;position: relative;height: 35px;}
+#tree.topNav > li  ul > li:hover{background: #2ea2ff;}
+#tree.topNav > li > ul > li a{display: block;width: 100%;height: 100%;color: #fff;padding:10px;box-sizing: border-box;}
+#tree.topNav > li > ul > li a:link{padding: 10px;disp}
+#tree.topNav > li > ul > li a:visited{padding: 10px;}
+#tree.topNav > li > ul > li a:hover{padding: 10px;}
+#tree.topNav > li > ul > li a:active{padding: 10px;}
+#tree.topNav > li > ul > li span.iconfont, #tree.topNav > li > ul > li span.fa{font-size:14px;color:#d8d30d;background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#bfbd66), to(#efdb00));-webkit-background-clip: text;-webkit-text-fill-color: transparent;}
+#tree.topNav li a.curSelectedNode{background: none;border: 0;opacity: 1;}
+#tree.topNav>li>ul li span.switch{font-family: "iconfont" !important; font-size: 16px; font-style: normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale;text-indent: 0;z-index: 9;padding: 0;position: absolute;right: 0px;top: 12px;}
+#tree.topNav>li>ul li span.switch.noline_open:before{ content: "\e605"; }
+#tree.topNav>li>ul li span.switch.noline_close:before{ content: "\e605"; }
+#tree.topNav > li > ul > li >ul{position: absolute;left: 140px;top: 0;z-index: 999999;}
+#tree.topNav .ul-more{display: none;background: #0088CC;}
+#tree.topNav .ul-more li{height: 37px;}
+#tree.topNav .ul-more li > ul{overflow: visible!important;height: auto!important;display: none;}
+#tree.topNav .ul-more li > ul > li > ul{left: 140px;top: -37px;display: none;}
+
+.main{background: #1a79c5;height: 100%;overflow: hidden;box-sizing: border-box;position: relative;width: 100%;}
+.left-side{ margin-left: 225px; margin-top: 0;position: relative;z-index: 9; background: #008f82;height: 100%;/*overflow-y: scroll;*/}
+.main.top .left-side{margin-left: 0;}
+.main.top .left-side .header{background: #1a79c5;}
+
+
+/*闂傚倸鍊搁崐鎼佸磹閻戣姤鍤勯柛顐ｆ礀閸屻劎鎲搁弮鍫澪ラ柛鎰ㄦ櫆閸庣喖鏌曡箛瀣労婵炶尙顭堥—鍐Χ閸涱垳顔囬梺缁橆殔閿曨亜顕ｉ弻銉ョ濞达絽婀遍崣鍐ㄢ攽閳藉棗鐏熼悹锟介敃锟藉嵄闁归棿鐒﹂悡銉╂煟閺冨倻甯涙い銉ヮ樀閺岀喖鎳為妷褏鐓夐梺鐟扮－閸嬨倝寮婚崱妤婂悑闁告稓澧楅幉浼存⒒娓氾拷濞佳囁囬銏犵？闂侇剙绉撮懜褰掓煏婵炵偓娅嗛柛濠勬暬閺岋綁鎮㈤崨濠勫嚒濡炪倕娴氭禍婊堚�﹂崸妤佸仭闁绘鐗滃Λ銈呪攽閻愭潙鐏╅柡浣割煼瀵偊骞樼紒妯绘闂佽法鍣﹂幏锟�*/
+
+@media screen and (min-width: 770px) {
+.form-group{ margin-right: 5px!important; margin-bottom: 10px!important; }
+}
+
+@media screen and (max-width: 770px) {
+.left-cos{margin-left: 35px!important;}
+
+.left-side .contrain{margin:0!important;border-radius: 0!important;}
+
+.eName,.eNameLong{border-bottom: 1px #eee solid;}
+.text-info{width: 100%!important;text-align: left!important;position: relative!important;top: 0!important;}
+.panel-group .panel .panel-collapse .panel-body .panel-content{padding:0!important;}
+.re-line{display: none;}
+.sValue{display: inline!important;margin:0!important;}
+.main .sidebar .searchTree{display: none;}
+.form-horizontal .form-group{ margin: 0;padding:15px;background: #f8f8f8;}
+div.left-nav-wrap{display: none;}
+.frame{height: calc(100% - 48px)!important;}
+
+.header .son-sys > .pull-right{display: none;}
+
+}
+
+
+/* ========== */
+/* = 闂傚倸鍊搁崐鎼佸磹妞嬪海鐭嗗〒姘炬嫹妤犵偛顦甸弫鎾绘偐閸愯弓鐢婚梻渚�娼чˇ顐﹀疾濞戙垹纾奸柕濞炬櫆閻撴稓锟藉箍鍎辨鎼佺嵁閺嶎厽鐓熼柕鍫濐槺閻ｆ椽鏌＄仦璇诧拷婵嗙暦椤愶箑唯闁靛鍊曠�垫彃鈹戦悙鑼憼缂侇喖绉堕崚鎺楀箻鐠囪尪鎽曞┑鐐村灟閸╁嫰寮崘顔界叆婵犻潧妫欓ˉ鐘炽亜閿斿搫鍔︽慨濠冩そ瀹曘劍绻濋崘顏勫箺闂備胶顭堥柊锝嗙閸洖鐏抽柡鍐ㄧ墕缁�鍐┿亜閺傛寧顫嶇憸鏃堝蓟濞戙垹唯闁挎繂鎳庨‖澶娾攽椤曞棛鍒伴悗姘煎墴閳ユ棃宕橀鍢壯囨煕閳╁喚娈滈柛銈咁儔濮婃椽鎮烽弶鎸庮唨闂佺懓鍤栭幏锟� = */
+/* ========== */
+.left-nav-wrap{width: 100%;/*overflow-x: hidden;*/position: relative;background: #eee;}
+.left-nav-wrap .left-nav-con{width: 100%;overflow-x: hidden;}
+.left-nav{display: block;background: #eeeeee;list-style: none;padding-left: 30px;border-bottom: 2px #2ea2ff solid;width: 10000px; margin-bottom: 5px;}
+.left-nav li{color:#fff;display: block;padding: 0 20px;height: 30px;line-height: 30px;background: #58b5ff;position: relative;cursor: pointer;margin-right: 2px;z-index: 9;border-bottom: 2px #fff solid;float: left;}
+.left-nav li:hover,.left-nav li.on:hover{background: #2089de;color: #fff;border-bottom: 2px #2089de solid;}
+.left-nav li.on{background: #2ea2ff;color: #fff;border-bottom: 2px #2ea2ff solid;}
+.left-nav li:hover>span.iconfont,.left-nav li.on>span.iconfont{background: #fff;color: #434343;}
+.left-nav li>span.iconfont{position: absolute;top: 2px;right: 2px;padding: 4px;-moz-border-radius:50%; -webkit-border-radius:50%; border-radius:50%;font-size: 10px;line-height: 1;background: #d2d2d2;color: #fff;cursor: pointer;z-index: 10;-webkit-transform: scale(0.5);}
+.left-nav li>span.iconfont:hover{background: #434343;color: #fff;}
+.frame{height: calc(100% - 100px);overflow: hidden;_height:100%;*height:100%;background:#438ac3}
+.left-nav-wrap>span{position: absolute;top: 0;background: #fff;border-bottom: 2px #fff solid;height: 30px;line-height: 30px;display: block;cursor: pointer;z-index:9998;}
+.left-nav-wrap>span.iconfont{width: 30px;text-align: center;}
+.left-nav-wrap>span:hover{background: #1a79c5;color: #f2f2f2;border-bottom: 2px #1a79c5 solid;}
+.left-nav-wrap>span.icon-backward{left: 0;border-right: 2px #eeeeee solid;}
+.left-nav-wrap>span.icon-forward{right: 0;}
+.left-nav-wrap>span.close-controll{right: 30px;padding: 0 15px;border-left: 2px #eeeeee solid;border-right: 2px #eeeeee solid;}
+.left-nav-wrap>span.close-controll div{display:none;width: 50px;position: relative;z-index:9998;}
+.left-nav-wrap>span.close-controll:hover div{display: block;}
+.left-nav-wrap>span.close-controll div ul{position: absolute;display: block;width: 160px;padding: 10px;list-style: none;background: #1a79c5;right: -37px;text-align: center;}
+.left-nav-wrap>span.close-controll div ul li{height: 40px;line-height: 40px;}
+.left-nav-wrap>span.close-controll div ul li:hover{background: #2ea2ff;}
+/* ========== */
+/* = 闂傚倸鍊搁崐鎼佸磹閻戣姤鍤勯柛顐ｆ磵閿熸枻绠撳畷濂稿閳ュ啿绨ユ繝寰锋澘锟芥捇鎳楅崼鏇橈拷鍛村矗婢跺牅绨婚梺鍦劋閸ㄧ敻顢旈埡鍛厸閻庯絺鏅濈粣鏃堟煛鐏炵偓绀嬬�规洜鍘ч埞鎴﹀箛椤撳／鍥ㄢ拺缂備焦锚濞搭喚绱掗悩宕囧⒌鐎殿喖顭峰鎾偄閾忚鍟庨梻浣稿閻撳牓宕伴弽銊﹀弿閹兼番鍔嶉埛鎴︽偣閸ャ劌绲婚柛銈変憾閺岀喖宕欓妶鍡楊伓 = */
+/* ========== */
+a.f2:link{color: #F2F2F2;}
+a.f2:visited{color: #F2F2F2;}
+a.f2:hover{color: #ffffff;text-decoration: underline;}
+a.f2:active{color: #F2F2F2;}
+
+/* ========== */
+/* = 闂傚倸鍊搁崐鎼佸磹閹间礁纾归柣鎴ｅГ閸婂潡鏌ㄩ弴姘舵濞存粌缍婇弻娑㈠箛閸忓摜鏁栭梺娲诲幗閹瑰洭寮诲☉銏╂晝闁挎繂妫涢ˇ銊╂⒑缁嬫鍎涘ù婊庝邯瀵鈽夐姀鐘靛姶闂佸憡鍔楅崑鎾活敇瑜版帗鈷戠紓浣股戠亸顏堟煕鎼淬垻鍙�妤犵偛鐗撴俊鎼佸Ψ椤旇棄缂撻梻浣虹《閸撴繈銆冮崨杈剧稏闁冲搫鎳忛崑鐘虫叏濡搫鑸归柡瀣♁閹便劍绻濋崘鈹夸虎閻庤娲﹂崑濠傜暦閻旂厧鍨傛い鎰Р閸ㄨ棄顫忓ú顏勫窛濠电姴鍟棄宥囩磽娴ｇ瓔鍤欐俊顐ｇ箖娣囧﹪鎮界粙璺ㄧ杸闂佸搫顦冲▔鏇⑺囬妸鈺傗拺闁告劕寮堕幆鍫ユ煕閻樺疇澹橀棁澶愭煕閺囥劌鐏￠柍閿嬪灴閺岋綁骞橀崘宸妷闂佺懓寮堕幃鍌炲蓟閳╁啯濯撮柛娑橈工閺嗗牏绱撴担瑙勨拻闁哥姵鍔曢銉╁礋椤愩倖娈曢柣搴秵閸嬪嫰顢旂捄琛℃斀闁绘劘灏欐晶鏇㈡煟韫囨梻绠撻柍璇茬Т閳诲酣骞樼�电骞嶉梻浣告啞閸垶宕愰弽顐嫹濮樼偓瀚� = */
+/* ========== */
+.main .mCSB_inside > .mCSB_container{margin-right: 0;}
+.main .mCSB_scrollTools{width: 6px;}

@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdzy.mall.base.mapper.MallBaseProductMapper">
+<resultMap id="BaseResultMap" type="com.sdzy.mall.base.model.MallBaseProduct">
+    <id column="productId" jdbcType="VARCHAR" property="productId" />
+    <result column="storeId" jdbcType="VARCHAR" property="storeId" />
+    <result column="dataSource" jdbcType="VARCHAR" property="dataSource" />
+    <result column="categoryId" jdbcType="VARCHAR" property="categoryId" />
+    <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
+    <result column="productCode" jdbcType="VARCHAR" property="productCode" />
+    <result column="productName" jdbcType="VARCHAR" property="productName" />
+    <result column="genericName" jdbcType="VARCHAR" property="genericName" />
+    <result column="producingArea" jdbcType="VARCHAR" property="producingArea" />
+    <result column="supplierId" jdbcType="VARCHAR" property="supplierId" />
+    <result column="supplierName" jdbcType="VARCHAR" property="supplierName" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="mnemonicName" jdbcType="VARCHAR" property="mnemonicName" />
+    <result column="tradePrice" jdbcType="DECIMAL" property="tradePrice" />
+    <result column="totalStorage" jdbcType="DECIMAL" property="totalStorage" />
+    <result column="averagePrice" jdbcType="DECIMAL" property="averagePrice" />
+    <result column="retailPrice" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="localRetailPrice" jdbcType="DECIMAL" property="localRetailPrice" />
+    <result column="memberPrice" jdbcType="DECIMAL" property="memberPrice" />
+    <result column="sellingPrice1" jdbcType="DECIMAL" property="sellingPrice1" />
+    <result column="sellingPrice2" jdbcType="DECIMAL" property="sellingPrice2" />
+    <result column="sellingPrice3" jdbcType="DECIMAL" property="sellingPrice3" />
+    <result column="barCode" jdbcType="VARCHAR" property="barCode" />
+    <result column="localBarCode" jdbcType="VARCHAR" property="localBarCode" />
+    <result column="propertyId" jdbcType="VARCHAR" property="propertyId" />
+    <result column="propertyName" jdbcType="VARCHAR" property="propertyName" />
+    <result column="isRxDrug" jdbcType="INTEGER" property="isRxDrug" />
+    <result column="approvalNumber" jdbcType="VARCHAR" property="approvalNumber" />
+    <result column="produceFactory" jdbcType="VARCHAR" property="produceFactory" />
+    <result column="dosageForm" jdbcType="VARCHAR" property="dosageForm" />
+    <result column="acceptanceLevel" jdbcType="VARCHAR" property="acceptanceLevel" />
+    <result column="storageCondition" jdbcType="VARCHAR" property="storageCondition" />
+    <result column="standardCode" jdbcType="VARCHAR" property="standardCode" />
+    <result column="proviceStandard" jdbcType="VARCHAR" property="proviceStandard" />
+    <result column="expiryDate" jdbcType="DECIMAL" property="expiryDate" />
+    <result column="isYiBao" jdbcType="INTEGER" property="isYiBao" />
+    <result column="isGMP" jdbcType="INTEGER" property="isGMP" />
+    <result column="effect" jdbcType="VARCHAR" property="effect" />
+    <result column="characterInfo" jdbcType="VARCHAR" property="characterInfo" />
+    <result column="brandId" jdbcType="VARCHAR" property="brandId" />
+    <result column="isDrug" jdbcType="INTEGER" property="isDrug" />
+    <result column="drugCategoryId" jdbcType="VARCHAR" property="drugCategoryId" />
+    <result column="priceFloat" jdbcType="DECIMAL" property="priceFloat" />
+    <result column="goodsAllocation" jdbcType="VARCHAR" property="goodsAllocation" />
+    <result column="afterScatteredUnit" jdbcType="VARCHAR" property="afterScatteredUnit" />
+    <result column="scatteredCoefficient" jdbcType="VARCHAR" property="scatteredCoefficient" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="isAudit" jdbcType="INTEGER" property="isAudit" />
+    <result column="isCancel" jdbcType="INTEGER" property="isCancel" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="gspTypeId" jdbcType="VARCHAR" property="gspTypeId" />
+    <result column="storageUpper" jdbcType="DECIMAL" property="storageUpper" />
+    <result column="storageFloor" jdbcType="DECIMAL" property="storageFloor" />
+    <result column="mainClassId" jdbcType="VARCHAR" property="mainClassId" />
+    <result column="retailMiddleClass" jdbcType="VARCHAR" property="retailMiddleClass" />
+    <result column="retailSmallClass" jdbcType="VARCHAR" property="retailSmallClass" />
+    <result column="productCluster" jdbcType="VARCHAR" property="productCluster" />
+    <result column="conserveReason" jdbcType="VARCHAR" property="conserveReason" />
+    <result column="isMainConserve" jdbcType="INTEGER" property="isMainConserve" />
+    <result column="conserveMeasure" jdbcType="VARCHAR" property="conserveMeasure" />
+    <result column="isImportedDrug" jdbcType="INTEGER" property="isImportedDrug" />
+    <result column="isDrugPiece" jdbcType="INTEGER" property="isDrugPiece" />
+    <result column="instrumnetTypeId" jdbcType="VARCHAR" property="instrumnetTypeId" />
+    <result column="isEggPreparation" jdbcType="INTEGER" property="isEggPreparation" />
+    <result column="isTwoClassmentalDrug" jdbcType="INTEGER" property="isTwoClassmentalDrug" />
+    <result column="isEphedrine" jdbcType="INTEGER" property="isEphedrine" />
+    <result column="isThormone" jdbcType="INTEGER" property="isThormone" />
+    <result column="isMindDrug" jdbcType="INTEGER" property="isMindDrug" />
+    <result column="isDangerChemistry" jdbcType="INTEGER" property="isDangerChemistry" />
+    <result column="isAnesthetic" jdbcType="INTEGER" property="isAnesthetic" />
+    <result column="isMedicalToxicity" jdbcType="INTEGER" property="isMedicalToxicity" />
+    <result column="isVaccine" jdbcType="INTEGER" property="isVaccine" />
+    <result column="isDiagnosticReagent" jdbcType="INTEGER" property="isDiagnosticReagent" />
+    <result column="isStimulant" jdbcType="INTEGER" property="isStimulant" />
+    <result column="isEan1" jdbcType="INTEGER" property="isEan1" />
+    <result column="isEan2" jdbcType="INTEGER" property="isEan2" />
+    <result column="isHealthFood" jdbcType="INTEGER" property="isHealthFood" />
+    <result column="isFood" jdbcType="INTEGER" property="isFood" />
+    <result column="storeRequireClass" jdbcType="VARCHAR" property="storeRequireClass" />
+    <result column="otcClass" jdbcType="VARCHAR" property="otcClass" />
+    <result column="isTermination" jdbcType="INTEGER" property="isTermination" />
+    <result column="seasonClass" jdbcType="VARCHAR" property="seasonClass" />
+    <result column="coreItemClass" jdbcType="VARCHAR" property="coreItemClass" />
+    <result column="deliveryRequireClass" jdbcType="VARCHAR" property="deliveryRequireClass" />
+    <result column="arearangeName" jdbcType="VARCHAR" property="arearangeName" />
+    <result column="lowTemperature" jdbcType="INTEGER" property="lowTemperature" />
+    <result column="abcClass" jdbcType="VARCHAR" property="abcClass" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="auditUserId1" jdbcType="VARCHAR" property="auditUserId1" />
+    <result column="auditUserName1" jdbcType="VARCHAR" property="auditUserName1" />
+    <result column="auditDate1" jdbcType="TIMESTAMP" property="auditDate1" />
+    <result column="auditRemark1" jdbcType="VARCHAR" property="auditRemark1" />
+    <result column="auditUserId2" jdbcType="VARCHAR" property="auditUserId2" />
+    <result column="auditUserName2" jdbcType="VARCHAR" property="auditUserName2" />
+    <result column="auditDate2" jdbcType="TIMESTAMP" property="auditDate2" />
+    <result column="auditRemark2" jdbcType="VARCHAR" property="auditRemark2" />
+    <result column="deleteFlag" jdbcType="INTEGER" property="deleteFlag" />
+    <result column="exhibitionArea" jdbcType="VARCHAR" property="exhibitionArea" />
+    <result column="tradeOldPrice" jdbcType="DECIMAL" property="tradeOldPrice"/>
+    <result column="isWebSale" jdbcType="INTEGER" property="isWebSale"/>
+  </resultMap>
+  
+    <select id="selectProductByCategory" resultType="java.util.Map">
+        SELECT
+            b.*, IFNULL((select sum(s.saleCount) from  saleOrderDetail s where s.productId = b.productId and DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(s.createDate)  group by s.productId),0) AS totalCount
+        FROM
+            baseProduct b
+        WHERE
+        b.propertyId = #{propertyId}
+        AND b.storeId = #{storeId}
+        order by totalCount desc     
+        </select>
+    
+    <select id="selectByMap" resultMap="BaseResultMap">
+        SELECT * FROM baseProduct WHERE storeId=#{storeId}  AND productId=#{productId}
+    </select>
+    
+    <select id="selectProductAndStore" resultType="java.util.Map">
+        select bp.productId,bp.productCode,bp.productName,bp.genericName,bp.producingArea,bp.supplierId,
+        bp.supplierName,bp.unit,bp.standard,bp.mnemonicName,bp.totalStorage,bp.tradeOldPrice,
+        bp.tradePrice,bp.retailPrice,bp.memberPrice,bp.localRetailPrice,bp.barCode,bp.localBarCode,
+        bp.expiryDate,bs.latitude,bs.longitude,bs.storeId,
+        IFNULL((select sum(s.saleCount) from  saleOrderDetail s where s.productId = bp.productId and DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(s.createDate)  group by s.productId),0) AS saleCount
+        from baseProduct bp,baseStoreInfo bs where 
+        bp.storeId = bs.storeId  
+         and (bp.productName like '%${keyValue}%' or bs.storeName like '%${keyValue}%') group by bp.productId order by saleCount desc
+    </select>
+    
+    <select id="selectProductById" resultType="java.util.Map">
+        select bp.*,bs.storeAddress,
+        IFNULL((select sum(s.saleCount) from  saleOrderDetail s where s.productId = bp.productId and DATE_SUB(CURDATE(), INTERVAL 1 MONTH) &lt;= date(s.createDate)  group by s.productId),0) AS saleCount
+         from baseProduct bp,
+        baseStoreInfo bs where 
+        bp.storeId = bs.storeId 
+        and bp.storeId = #{storeId} and bp.productId=#{productId} 
+    </select>
+    
+     <update id="updateByPrimaryKeySelective" parameterType="com.sdzy.mall.base.model.MallBaseProduct">
+    update baseProduct
+    <set>
+      <if test="storeId != null">
+        storeId = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        dataSource = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        categoryId = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        categoryName = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        productCode = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        productName = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="genericName != null">
+        genericName = #{genericName,jdbcType=VARCHAR},
+      </if>
+      <if test="producingArea != null">
+        producingArea = #{producingArea,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplierId = #{supplierId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null">
+        supplierName = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="mnemonicName != null">
+        mnemonicName = #{mnemonicName,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePrice != null">
+        tradePrice = #{tradePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalStorage != null">
+        totalStorage = #{totalStorage,jdbcType=DECIMAL},
+      </if>
+      <if test="averagePrice != null">
+        averagePrice = #{averagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null">
+        retailPrice = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="localRetailPrice != null">
+        localRetailPrice = #{localRetailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memberPrice != null">
+        memberPrice = #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellingPrice1 != null">
+        sellingPrice1 = #{sellingPrice1,jdbcType=DECIMAL},
+      </if>
+      <if test="sellingPrice2 != null">
+        sellingPrice2 = #{sellingPrice2,jdbcType=DECIMAL},
+      </if>
+      <if test="sellingPrice3 != null">
+        sellingPrice3 = #{sellingPrice3,jdbcType=DECIMAL},
+      </if>
+      <if test="barCode != null">
+        barCode = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="localBarCode != null">
+        localBarCode = #{localBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyId != null">
+        propertyId = #{propertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyName != null">
+        propertyName = #{propertyName,jdbcType=VARCHAR},
+      </if>
+      <if test="isRxDrug != null">
+        isRxDrug = #{isRxDrug,jdbcType=INTEGER},
+      </if>
+      <if test="approvalNumber != null">
+        approvalNumber = #{approvalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="produceFactory != null">
+        produceFactory = #{produceFactory,jdbcType=VARCHAR},
+      </if>
+      <if test="dosageForm != null">
+        dosageForm = #{dosageForm,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceLevel != null">
+        acceptanceLevel = #{acceptanceLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="storageCondition != null">
+        storageCondition = #{storageCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="standardCode != null">
+        standardCode = #{standardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proviceStandard != null">
+        proviceStandard = #{proviceStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="expiryDate != null">
+        expiryDate = #{expiryDate,jdbcType=DECIMAL},
+      </if>
+      <if test="isYiBao != null">
+        isYiBao = #{isYiBao,jdbcType=INTEGER},
+      </if>
+      <if test="isGMP != null">
+        isGMP = #{isGMP,jdbcType=INTEGER},
+      </if>
+      <if test="effect != null">
+        effect = #{effect,jdbcType=VARCHAR},
+      </if>
+      <if test="characterInfo != null">
+        characterInfo = #{characterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        brandId = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="isDrug != null">
+        isDrug = #{isDrug,jdbcType=INTEGER},
+      </if>
+      <if test="drugCategoryId != null">
+        drugCategoryId = #{drugCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="priceFloat != null">
+        priceFloat = #{priceFloat,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsAllocation != null">
+        goodsAllocation = #{goodsAllocation,jdbcType=VARCHAR},
+      </if>
+      <if test="afterScatteredUnit != null">
+        afterScatteredUnit = #{afterScatteredUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="scatteredCoefficient != null">
+        scatteredCoefficient = #{scatteredCoefficient,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isAudit != null">
+        isAudit = #{isAudit,jdbcType=INTEGER},
+      </if>
+      <if test="isCancel != null">
+        isCancel = #{isCancel,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        createUserName = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="gspTypeId != null">
+        gspTypeId = #{gspTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="storageUpper != null">
+        storageUpper = #{storageUpper,jdbcType=DECIMAL},
+      </if>
+      <if test="storageFloor != null">
+        storageFloor = #{storageFloor,jdbcType=DECIMAL},
+      </if>
+      <if test="mainClassId != null">
+        mainClassId = #{mainClassId,jdbcType=VARCHAR},
+      </if>
+      <if test="retailMiddleClass != null">
+        retailMiddleClass = #{retailMiddleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="retailSmallClass != null">
+        retailSmallClass = #{retailSmallClass,jdbcType=VARCHAR},
+      </if>
+      <if test="productCluster != null">
+        productCluster = #{productCluster,jdbcType=VARCHAR},
+      </if>
+      <if test="conserveReason != null">
+        conserveReason = #{conserveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isMainConserve != null">
+        isMainConserve = #{isMainConserve,jdbcType=INTEGER},
+      </if>
+      <if test="conserveMeasure != null">
+        conserveMeasure = #{conserveMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="isImportedDrug != null">
+        isImportedDrug = #{isImportedDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isDrugPiece != null">
+        isDrugPiece = #{isDrugPiece,jdbcType=INTEGER},
+      </if>
+      <if test="instrumnetTypeId != null">
+        instrumnetTypeId = #{instrumnetTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isEggPreparation != null">
+        isEggPreparation = #{isEggPreparation,jdbcType=INTEGER},
+      </if>
+      <if test="isTwoClassmentalDrug != null">
+        isTwoClassmentalDrug = #{isTwoClassmentalDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isEphedrine != null">
+        isEphedrine = #{isEphedrine,jdbcType=INTEGER},
+      </if>
+      <if test="isThormone != null">
+        isThormone = #{isThormone,jdbcType=INTEGER},
+      </if>
+      <if test="isMindDrug != null">
+        isMindDrug = #{isMindDrug,jdbcType=INTEGER},
+      </if>
+      <if test="isDangerChemistry != null">
+        isDangerChemistry = #{isDangerChemistry,jdbcType=INTEGER},
+      </if>
+      <if test="isAnesthetic != null">
+        isAnesthetic = #{isAnesthetic,jdbcType=INTEGER},
+      </if>
+      <if test="isMedicalToxicity != null">
+        isMedicalToxicity = #{isMedicalToxicity,jdbcType=INTEGER},
+      </if>
+      <if test="isVaccine != null">
+        isVaccine = #{isVaccine,jdbcType=INTEGER},
+      </if>
+      <if test="isDiagnosticReagent != null">
+        isDiagnosticReagent = #{isDiagnosticReagent,jdbcType=INTEGER},
+      </if>
+      <if test="isStimulant != null">
+        isStimulant = #{isStimulant,jdbcType=INTEGER},
+      </if>
+      <if test="isEan1 != null">
+        isEan1 = #{isEan1,jdbcType=INTEGER},
+      </if>
+      <if test="isEan2 != null">
+        isEan2 = #{isEan2,jdbcType=INTEGER},
+      </if>
+      <if test="isHealthFood != null">
+        isHealthFood = #{isHealthFood,jdbcType=INTEGER},
+      </if>
+      <if test="isFood != null">
+        isFood = #{isFood,jdbcType=INTEGER},
+      </if>
+      <if test="storeRequireClass != null">
+        storeRequireClass = #{storeRequireClass,jdbcType=VARCHAR},
+      </if>
+      <if test="otcClass != null">
+        otcClass = #{otcClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isTermination != null">
+        isTermination = #{isTermination,jdbcType=INTEGER},
+      </if>
+      <if test="seasonClass != null">
+        seasonClass = #{seasonClass,jdbcType=VARCHAR},
+      </if>
+      <if test="coreItemClass != null">
+        coreItemClass = #{coreItemClass,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryRequireClass != null">
+        deliveryRequireClass = #{deliveryRequireClass,jdbcType=VARCHAR},
+      </if>
+      <if test="arearangeName != null">
+        arearangeName = #{arearangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="lowTemperature != null">
+        lowTemperature = #{lowTemperature,jdbcType=INTEGER},
+      </if>
+      <if test="abcClass != null">
+        abcClass = #{abcClass,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserId1 != null">
+        auditUserId1 = #{auditUserId1,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName1 != null">
+        auditUserName1 = #{auditUserName1,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate1 != null">
+        auditDate1 = #{auditDate1,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark1 != null">
+        auditRemark1 = #{auditRemark1,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserId2 != null">
+        auditUserId2 = #{auditUserId2,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserName2 != null">
+        auditUserName2 = #{auditUserName2,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDate2 != null">
+        auditDate2 = #{auditDate2,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRemark2 != null">
+        auditRemark2 = #{auditRemark2,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null">
+        deleteFlag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="tradeOldPrice != null">
+        tradeOldPrice = #{tradeOldPrice},
+      </if>
+      <if test="exhibitionArea != null">
+        exhibitionArea = #{exhibitionArea},
+      </if>
+      <if test="isWebSale != null">
+        isWebSale = #{isWebSale},
+      </if>
+    </set>
+    where productId = #{productId,jdbcType=VARCHAR}
+  </update>
+  
+  
+    <select id="listByParam" resultMap="BaseResultMap">
+    select * from  baseProduct where 1=1  <if test="whereList != null"> <foreach collection="whereList" item="item"> <choose>  <when test="item.opStr == 'in' ">    and ${item.key} in      <foreach collection="item.value" item="val" open="(" separator="," close=")">   #{val}      </foreach>   </when>   <when test="item.opStr == 'like'">      and ${item.key} ${item.opStr} CONCAT('%',#{item.value},'%')   </when>   <otherwise>      and ${item.key} ${item.opStr} #{item.value}   </otherwise>  </choose> </foreach> </if>
+  </select>
+  
+</mapper>
